@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.VehicleManageController">
+   <children>
+      <ChoiceBox fx:id="carOwners" layoutX="534.0" layoutY="109.0" prefWidth="150.0" />
+      <VBox alignment="CENTER" layoutX="-2.0" prefHeight="86.0" prefWidth="1100.0">
+         <children>
+            <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Vehicle Management">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Pane layoutY="377.0" prefHeight="223.0" prefWidth="1100.0">
+         <children>
+            <TableView fx:id="tblVehicle" layoutX="10.0" prefHeight="223.0" prefWidth="1080.0">
+              <columns>
+                <TableColumn fx:id="colVID" prefWidth="89.0" text="vehicle_id" />
+                <TableColumn fx:id="colOID" prefWidth="86.0" text="owner_id" />
+                  <TableColumn fx:id="colModel" prefWidth="265.0" text="model" />
+                  <TableColumn fx:id="colManufac" prefWidth="186.0" text="manufacturer" />
+                  <TableColumn fx:id="colType" prefWidth="144.0" text="type" />
+                  <TableColumn fx:id="colRate" prefWidth="155.0" text="rate_per_day" />
+                  <TableColumn fx:id="colOPrec" prefWidth="154.0" text="ownership_percentage" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <HBox alignment="CENTER" layoutX="227.0" layoutY="302.0" prefHeight="60.0" prefWidth="520.0" spacing="18.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#handleSaveVehicle" prefHeight="35.0" prefWidth="75.0" text="Save" />
+            <Button mnemonicParsing="false" onAction="#handleUpdateVehicle" prefHeight="35.0" prefWidth="75.0" text="Update" />
+            <Button mnemonicParsing="false" onAction="#handleDeleteVehicle" prefHeight="35.0" prefWidth="75.0" text="Delete" />
+            <Button mnemonicParsing="false" onAction="#handleResetlFields" prefHeight="35.0" prefWidth="75.0" text="Reset" />
+         </children>
+      </HBox>
+      <VBox layoutX="18.0" layoutY="74.0" prefHeight="231.0" prefWidth="511.0">
+         <children>
+            <GridPane hgap="10.0" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="160.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="10.0" prefWidth="341.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label prefHeight="18.0" prefWidth="175.0" text="Vehicle ID              :" />
+                  <Label prefHeight="18.0" prefWidth="161.0" text="Owner Name               :" GridPane.rowIndex="1" />
+                  <Label prefHeight="18.0" prefWidth="167.0" text="Model                     :" GridPane.rowIndex="2" />
+                  <Label prefHeight="18.0" prefWidth="164.0" text="Manufacture         :" GridPane.rowIndex="3" />
+                  <Label prefHeight="18.0" prefWidth="156.0" text="Type                        :" GridPane.rowIndex="4" />
+                  <Label prefHeight="18.0" prefWidth="164.0" text="Rate Per Day         : " GridPane.rowIndex="5" />
+                  <Label text="Ownership Rate(%)  :" GridPane.rowIndex="6" />
+                  <TextField fx:id="vehicleIdField" onKeyPressed="#handleSerchVehicle" GridPane.columnIndex="1" />
+                  <TextField fx:id="ownerIdField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="modelField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="manufacField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="typeField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="dayRateFied" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <TextField fx:id="ownerRateField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+               </children>
+            </GridPane>
+         </children>
+      </VBox>
+      <Label fx:id="ownerLabel" layoutX="540.0" layoutY="113.0" text="Select owner" />
+      <ChoiceBox fx:id="typeBox" layoutX="532.0" layoutY="212.0" prefWidth="150.0" />
+      <Label fx:id="typeLable" layoutX="537.0" layoutY="216.0" text="Select Type" />
+   </children>
+</AnchorPane>
