@@ -1,11 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CurrentRentCalculateController">
    <children>
-      <Label layoutX="509.0" layoutY="291.0" text="Current Rant Calculate" />
+      <VBox alignment="CENTER" prefHeight="85.0" prefWidth="1100.0">
+         <children>
+            <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Current Rental Calculatete" />
+         </children>
+      </VBox>
+      <VBox layoutX="58.0" layoutY="101.0" prefHeight="85.0" prefWidth="163.0">
+         <children>
+            <Label text="Search by Invoice ID" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="36.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <VBox layoutX="280.0" layoutY="100.0" prefHeight="72.0" prefWidth="330.0">
+         <children>
+            <Label text="Search by Customer Name" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="36.0" prefWidth="301.0" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+      <ComboBox layoutX="611.0" layoutY="123.0" prefHeight="32.0" prefWidth="163.0" />
+      <Label layoutX="616.0" layoutY="130.0" text="Select Customer">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <VBox layoutX="785.0" layoutY="109.0" prefHeight="44.0" prefWidth="306.0">
+         <children>
+            <Label text="Customer NIC/Passport No: " />
+            <TextField fx:id="customeNICField" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2px 0;" />
+         </children>
+      </VBox>
+      <VBox layoutX="45.0" layoutY="170.0" prefHeight="75.0" prefWidth="1035.0">
+         <children>
+            <Label text="Label" />
+         </children>
+      </VBox>
+      <VBox layoutX="45.0" layoutY="259.0" prefHeight="75.0" prefWidth="1035.0">
+         <children>
+            <Label text="Label" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

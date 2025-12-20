@@ -70,6 +70,9 @@ public class RentalManageController implements Initializable {
     @FXML
     private Label discountLable;
 
+    private String totalPrice;
+
+
     private final String RENTAL_ID_REGEX = "^[0-9]+$";
     private final String CUSTOMER_ID_REGEX = "^[0-9]+$";
     private final String VEHICLE_ID_REGEX = "^[0-9]+$";
@@ -172,6 +175,7 @@ public class RentalManageController implements Initializable {
         String sDate = sDateField.getText().trim();
         String days = daysField.getText().trim();
         String basePay = basePayField.getText().trim();
+        String edate = eDateField.getText().trim();
         String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
 
 
@@ -190,11 +194,7 @@ public class RentalManageController implements Initializable {
         }else{
             String total = totalPriceLable.getText();
 
-            //date calculation
-            LocalDate startDate = LocalDate.parse(sDate);
-            int rentDays = Integer.parseInt(days);
-            LocalDate endDate = startDate.plusDays(rentDays);
-            eDateField.setText(endDate.toString());
+
 
             Integer driverIdValue = null;
             if (!driverId.isEmpty()) {
@@ -217,7 +217,7 @@ public class RentalManageController implements Initializable {
                         driverIdValue,
                         LocalDate.parse(sDate),
                         Integer.parseInt(days),
-                        endDate);
+                        LocalDate.parse(edate));
 
                 boolean result = rentalModel.save(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
                 cleanFileds();
@@ -350,7 +350,12 @@ public class RentalManageController implements Initializable {
         String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
         String discoutID = discountModel.searchId(discountDesc);
         discountLable.setText("");
-        //double discountPrec = discountModel.searchDesForGetPrec(discountDesc);
+
+        if (discoutID != null){
+            double discountPrec = discountModel.searchDesForGetPrec(discountDesc);
+            double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
+            totalPriceLable.setText(String.valueOf(discountedTotal));
+        }
 
     }
     private void lordRentalTable(){
@@ -371,6 +376,7 @@ public class RentalManageController implements Initializable {
     private double calculatetotal(String driverId,String vehicleId,int days){
         //total pay calcuulation
         double total = 0.0;
+        String strdate = sDateField.getText();
 
         try {
             if (driverId.isEmpty()){
@@ -384,6 +390,13 @@ public class RentalManageController implements Initializable {
             e.printStackTrace();
         }
         totalPriceLable.setText(String.valueOf(total));
+        totalPrice = String.valueOf(total);
+
+        //date calculation
+        LocalDate startDate = LocalDate.parse(strdate);
+        LocalDate endDate = startDate.plusDays(days);
+        eDateField.setText(String.valueOf(endDate));
+
         return total;
     }
 
