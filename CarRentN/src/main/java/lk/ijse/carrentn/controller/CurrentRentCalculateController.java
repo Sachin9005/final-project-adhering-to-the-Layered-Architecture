@@ -23,7 +23,7 @@ public class CurrentRentCalculateController implements Initializable {
     private TextField customeNICField;
 
     @FXML
-    private ComboBox<?> customerCbox;
+    private ComboBox<String> customerCbox;
 
     @FXML
     private TextField customerNameField;

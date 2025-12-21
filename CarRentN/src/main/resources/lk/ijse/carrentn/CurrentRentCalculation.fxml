@@ -22,7 +22,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField prefHeight="36.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
+            <TextField fx:id="invoiceIDField" onKeyPressed="#handleSerchRentByInvoiceId" prefHeight="36.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
       <VBox layoutX="280.0" layoutY="85.0" prefHeight="72.0" prefWidth="330.0">
@@ -32,11 +32,11 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField prefHeight="36.0" prefWidth="301.0" VBox.vgrow="ALWAYS" />
+            <TextField fx:id="customerNameField" onKeyPressed="#handleSerchRentByCustomerName" prefHeight="36.0" prefWidth="301.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <ComboBox layoutX="611.0" layoutY="108.0" prefHeight="32.0" prefWidth="163.0" />
-      <Label layoutX="616.0" layoutY="115.0" text="Select Customer">
+      <ComboBox fx:id="customerCbox" layoutX="611.0" layoutY="108.0" onAction="#handleSelectCustomer" prefHeight="32.0" prefWidth="163.0" />
+      <Label fx:id="selectCustomerLable" layoutX="616.0" layoutY="115.0" text="Select Customer">
          <font>
             <Font size="14.0" />
          </font>
@@ -50,19 +50,19 @@
       <VBox layoutX="169.0" layoutY="188.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Model :" />
-            <Label fx:id="itemQtyLable" text="-" />
+            <Label fx:id="modelLable" text="-" />
          </children>
       </VBox>
       <VBox layoutX="328.0" layoutY="188.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
-            <Label fx:id="itemQtyLable1" text="-" />
+            <Label fx:id="vehicleRateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="70.0" layoutY="291.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="70.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Start Date : " />
-            <Label fx:id="itemQtyLable3" text="-" />
+            <Label fx:id="sDateLable" text="-" />
          </children>
       </VBox>
       <Label alignment="CENTER" layoutX="60.0" layoutY="186.0" prefHeight="50.0" prefWidth="55.0" text="Vehicle Details" wrapText="true">
@@ -86,13 +86,13 @@
       <VBox layoutX="328.0" layoutY="230.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
-            <Label fx:id="itemQtyLable31" text="-" />
+            <Label fx:id="driverRateField" text="-" />
          </children>
       </VBox>
       <VBox layoutX="169.0" layoutY="230.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Name :" />
-            <Label fx:id="itemQtyLable32" text="-" />
+            <Label fx:id="driverNameField" text="-" />
          </children>
       </VBox>
       <Label layoutX="545.0" layoutY="157.0" text="Days">
@@ -100,7 +100,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="itemQtyLable2" layoutX="555.0" layoutY="213.0" text="-">
+      <Label fx:id="daysLable" layoutX="555.0" layoutY="213.0" text="-">
          <font>
             <Font size="20.0" />
          </font>
@@ -110,111 +110,111 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="945.0" layoutY="188.0" prefHeight="30.0" prefWidth="55.0" text="-">
+      <Label fx:id="vehicleTotalLable" layoutX="945.0" layoutY="188.0" prefHeight="30.0" prefWidth="55.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="945.0" layoutY="244.0" prefHeight="30.0" prefWidth="55.0" text="-">
+      <Label fx:id="driverTotalLable" layoutX="945.0" layoutY="244.0" prefHeight="30.0" prefWidth="55.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <VBox layoutX="224.0" layoutY="291.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="224.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="End Date : " />
-            <Label fx:id="itemQtyLable33" text="-" />
+            <Label fx:id="eDateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="386.0" layoutY="291.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="386.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Returned Date : " />
-            <Label fx:id="itemQtyLable34" text="-" />
+            <Label fx:id="returnedDateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="546.0" layoutY="291.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="546.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Late Dates (1+) :" />
-            <Label fx:id="itemQtyLable35" text="-" />
+            <Label fx:id="lateDatesLable" text="-" />
          </children>
       </VBox>
-      <Label layoutX="693.0" layoutY="294.0" prefHeight="28.0" prefWidth="155.0" text="Late Payement Fee : ">
+      <Label layoutX="693.0" layoutY="291.0" prefHeight="28.0" prefWidth="155.0" text="Late Payement Fee : ">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="945.0" layoutY="292.0" prefHeight="30.0" prefWidth="55.0" text="-">
+      <Label fx:id="lateFeeLable" layoutX="945.0" layoutY="289.0" prefHeight="30.0" prefWidth="55.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="customeNICField1" alignment="CENTER" layoutX="860.0" layoutY="317.0" prefHeight="44.0" prefWidth="173.0" promptText="total" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 2 0 0 0;">
+      <TextField fx:id="totalField" alignment="CENTER" layoutX="860.0" layoutY="317.0" prefHeight="44.0" prefWidth="173.0" promptText="total" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 2 0 0 0;">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></TextField>
-      <Label layoutX="754.0" layoutY="354.0" prefHeight="21.0" prefWidth="117.0" text="Discount     :">
+      <Label layoutX="754.0" layoutY="353.0" prefHeight="21.0" prefWidth="117.0" text="Discount     :">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="698.0" layoutY="384.0" prefHeight="21.0" prefWidth="155.0" text="Base Payment         : ">
+      <Label layoutX="698.0" layoutY="381.0" prefHeight="21.0" prefWidth="155.0" text="Base Payment         : ">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="945.0" layoutY="384.0" prefHeight="21.0" prefWidth="55.0" text="-">
+      <Label fx:id="basePayField" layoutX="945.0" layoutY="381.0" prefHeight="21.0" prefWidth="55.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="945.0" layoutY="354.0" prefHeight="21.0" prefWidth="55.0" text="-">
+      <Label fx:id="discountLable" layoutX="945.0" layoutY="353.0" prefHeight="21.0" prefWidth="55.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="customeNICField11" alignment="CENTER" layoutX="860.0" layoutY="408.0" prefHeight="36.0" prefWidth="173.0" promptText="remain amount" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 2 0 0 0;">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </TextField>
-      <Label layoutX="605.0" layoutY="417.0" prefHeight="21.0" prefWidth="246.0" text="Remaining amount to be paid   :">
+      <Label layoutX="605.0" layoutY="414.0" prefHeight="21.0" prefWidth="246.0" text="Remaining amount to be paid   :">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="605.0" layoutY="452.0" prefHeight="21.0" prefWidth="246.0" text="                                paid amount   :">
+      <Label layoutX="605.0" layoutY="446.0" prefHeight="21.0" prefWidth="246.0" text="                                paid amount   :">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="customeNICField111" alignment="CENTER" layoutX="860.0" layoutY="476.0" prefHeight="44.0" prefWidth="173.0" promptText="balance" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 2 0 2 0;">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </TextField>
-      <Label layoutX="945.0" layoutY="449.0" prefHeight="21.0" prefWidth="55.0" text="-">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Label>
-      <Label layoutX="605.0" layoutY="491.0" prefHeight="21.0" prefWidth="246.0" text="                         Balance amount   :">
+      <Label layoutX="606.0" layoutY="478.0" prefHeight="21.0" prefWidth="246.0" text="                         Balance amount   :">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
       <VBox alignment="CENTER_LEFT" fillWidth="false" layoutX="694.0" layoutY="525.0" prefHeight="69.0" prefWidth="389.0">
          <children>
-            <Button mnemonicParsing="false" text="Comfirm Payment" translateX="190.0" translateY="20.0">
+            <Button mnemonicParsing="false" onAction="#handleComfirmPay" text="Comfirm Payment" translateX="190.0" translateY="20.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="85.0" text="Reset" translateX="10.0" translateY="-15.0">
+            <Button mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="85.0" text="Reset" translateX="10.0" translateY="-15.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
          </children>
       </VBox>
+      <TextField fx:id="customerPaidAmountField" alignment="CENTER" layoutX="861.0" layoutY="426.0" prefHeight="44.0" prefWidth="173.0" promptText="Paid Amount" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </TextField>
+      <Label fx:id="remainAmountLable" layoutX="945.0" layoutY="406.0" prefHeight="21.0" prefWidth="55.0" text="-">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="balanceLable" layoutX="945.0" layoutY="476.0" prefHeight="21.0" prefWidth="55.0" text="-">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
