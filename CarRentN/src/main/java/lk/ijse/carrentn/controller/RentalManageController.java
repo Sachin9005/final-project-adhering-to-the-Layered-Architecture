@@ -119,7 +119,7 @@ public class RentalManageController implements Initializable {
 
     private void lordCustomerNames(){
         try {
-            List<String> customerList = customerModel.getAllOCustomerIds();
+            List<String> customerList = customerModel.getAllOCustomerNames();
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(customerList);
             customeCbox.setItems(obList);
@@ -322,14 +322,14 @@ public class RentalManageController implements Initializable {
     private void handleResetlFields() {cleanFileds();}
 
     @FXML
-    void handleSelectCustomer(ActionEvent event) {
+    private void handleSelectCustomer(ActionEvent event) {
         String cusName = customeCbox.getSelectionModel().getSelectedItem();
         String cusId = customerModel.searchId(cusName);
         customerIdField.setText(cusId);
         customerLable.setText("");
     }
     @FXML
-    void handleSelectDriver(ActionEvent event) {
+    private void handleSelectDriver(ActionEvent event) {
         String driverName = driveerCbox.getSelectionModel().getSelectedItem();
         String driverID = driverModel.searchId(driverName);
         driverIdField.setText(driverID);
@@ -337,7 +337,7 @@ public class RentalManageController implements Initializable {
 
     }
     @FXML
-    void handleSelectVehicle(ActionEvent event) {
+    private void handleSelectVehicle(ActionEvent event) {
         String vehiclemodel = vehicleCbox.getSelectionModel().getSelectedItem();
         String vehicleId = vehicleModel.searchId(vehiclemodel);
         vehicleIDField.setText(vehicleId);
@@ -401,7 +401,7 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    void calculateTotal(KeyEvent event) {
+    private void calculateTotal(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
             String vehicleId = vehicleIDField.getText().trim();
             String driverId = driverIdField.getText().trim();

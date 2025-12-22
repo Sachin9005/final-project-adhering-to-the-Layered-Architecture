@@ -10,145 +10,145 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CurrentRentCalculateController">
    <children>
-      <VBox alignment="CENTER" prefHeight="85.0" prefWidth="1100.0">
+      <VBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="1100.0">
          <children>
             <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Current Rental Calculatete" />
          </children>
       </VBox>
-      <VBox layoutX="58.0" layoutY="86.0" prefHeight="85.0" prefWidth="163.0">
+      <VBox layoutX="58.0" layoutY="56.0" prefHeight="85.0" prefWidth="163.0">
          <children>
             <Label text="Search by Invoice ID" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="invoiceIDField" onKeyPressed="#handleSerchRentByInvoiceId" prefHeight="36.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
+            <TextField fx:id="invoiceIDField" onKeyPressed="#searchRental" prefHeight="36.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <VBox layoutX="280.0" layoutY="85.0" prefHeight="72.0" prefWidth="330.0">
+      <VBox layoutX="280.0" layoutY="55.0" prefHeight="72.0" prefWidth="330.0">
          <children>
             <Label text="Search by Customer Name" VBox.vgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="customerNameField" onKeyPressed="#handleSerchRentByCustomerName" prefHeight="36.0" prefWidth="301.0" VBox.vgrow="ALWAYS" />
+            <TextField fx:id="customerNameField" onKeyPressed="#searchRental" prefHeight="36.0" prefWidth="301.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <ComboBox fx:id="customerCbox" layoutX="611.0" layoutY="108.0" onAction="#handleSelectCustomer" prefHeight="32.0" prefWidth="163.0" />
-      <Label fx:id="selectCustomerLable" layoutX="616.0" layoutY="115.0" text="Select Customer">
+      <ComboBox fx:id="customerCbox" layoutX="611.0" layoutY="78.0" onAction="#handleSelectCustomer" prefHeight="32.0" prefWidth="163.0" />
+      <Label fx:id="selectCustomerLable" layoutX="616.0" layoutY="85.0" text="Select Customer">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <VBox layoutX="785.0" layoutY="94.0" prefHeight="44.0" prefWidth="306.0">
+      <VBox layoutX="785.0" layoutY="64.0" prefHeight="44.0" prefWidth="306.0">
          <children>
             <Label text="Customer NIC/Passport No: " />
             <TextField fx:id="customeNICField" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2px 0;" />
          </children>
       </VBox>
-      <VBox layoutX="169.0" layoutY="188.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="169.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Model :" />
             <Label fx:id="modelLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="328.0" layoutY="188.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="328.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
             <Label fx:id="vehicleRateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="70.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="70.0" layoutY="248.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Start Date : " />
             <Label fx:id="sDateLable" text="-" />
          </children>
       </VBox>
-      <Label alignment="CENTER" layoutX="60.0" layoutY="186.0" prefHeight="50.0" prefWidth="55.0" text="Vehicle Details" wrapText="true">
+      <Label alignment="CENTER" layoutX="60.0" layoutY="148.0" prefHeight="50.0" prefWidth="55.0" text="Vehicle Details" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <Label layoutX="60.0" layoutY="230.0" prefHeight="50.0" prefWidth="55.0" text="Driver Details" wrapText="true">
+      <Label layoutX="60.0" layoutY="192.0" prefHeight="50.0" prefWidth="55.0" text="Driver Details" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <Label layoutX="122.0" layoutY="177.0" prefHeight="72.0" prefWidth="47.0" text=":-">
+      <Label layoutX="122.0" layoutY="139.0" prefHeight="72.0" prefWidth="47.0" text=":-">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="122.0" layoutY="220.0" prefHeight="72.0" prefWidth="47.0" text=":-">
+      <Label layoutX="122.0" layoutY="182.0" prefHeight="72.0" prefWidth="47.0" text=":-">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <VBox layoutX="328.0" layoutY="230.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="328.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
             <Label fx:id="driverRateField" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="169.0" layoutY="230.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="169.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Name :" />
             <Label fx:id="driverNameField" text="-" />
          </children>
       </VBox>
-      <Label layoutX="545.0" layoutY="157.0" text="Days">
+      <Label layoutX="545.0" layoutY="119.0" text="Days">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="daysLable" layoutX="555.0" layoutY="213.0" text="-">
+      <Label fx:id="daysLable" layoutX="555.0" layoutY="175.0" text="-">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="920.0" layoutY="157.0" text="Price">
+      <Label layoutX="920.0" layoutY="119.0" text="Price">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="vehicleTotalLable" layoutX="945.0" layoutY="188.0" prefHeight="30.0" prefWidth="55.0" text="-">
+      <Label fx:id="vehicleTotalLable" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="150.0" prefHeight="30.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="driverTotalLable" layoutX="945.0" layoutY="244.0" prefHeight="30.0" prefWidth="55.0" text="-">
+      <Label fx:id="driverTotalLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="206.0" prefHeight="30.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <VBox layoutX="224.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="224.0" layoutY="248.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="End Date : " />
             <Label fx:id="eDateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="386.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="386.0" layoutY="248.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Returned Date : " />
             <Label fx:id="returnedDateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="546.0" layoutY="288.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="546.0" layoutY="248.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Late Dates (1+) :" />
             <Label fx:id="lateDatesLable" text="-" />
          </children>
       </VBox>
-      <Label layoutX="693.0" layoutY="291.0" prefHeight="28.0" prefWidth="155.0" text="Late Payement Fee : ">
+      <Label layoutX="693.0" layoutY="251.0" prefHeight="28.0" prefWidth="155.0" text="Late Payement Fee : ">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lateFeeLable" layoutX="945.0" layoutY="289.0" prefHeight="30.0" prefWidth="55.0" text="-">
+      <Label fx:id="lateFeeLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="249.0" prefHeight="30.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="totalField" alignment="CENTER" layoutX="860.0" layoutY="317.0" prefHeight="44.0" prefWidth="173.0" promptText="total" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 2 0 0 0;">
+      <TextField fx:id="vehicleDFField" alignment="CENTER" layoutX="860.0" layoutY="277.0" prefHeight="44.0" prefWidth="173.0" promptText="Vehicle Damage Fee" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></TextField>
@@ -162,12 +162,12 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="basePayField" layoutX="945.0" layoutY="381.0" prefHeight="21.0" prefWidth="55.0" text="-">
+      <Label fx:id="basePayField" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="381.0" prefHeight="21.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="discountLable" layoutX="945.0" layoutY="353.0" prefHeight="21.0" prefWidth="55.0" text="-">
+      <Label fx:id="discountLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="353.0" prefHeight="21.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -206,12 +206,27 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </TextField>
-      <Label fx:id="remainAmountLable" layoutX="945.0" layoutY="406.0" prefHeight="21.0" prefWidth="55.0" text="-">
+      <Label fx:id="remainAmountLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="406.0" prefHeight="21.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="balanceLable" layoutX="945.0" layoutY="476.0" prefHeight="21.0" prefWidth="55.0" text="-">
+      <Label fx:id="balanceLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="476.0" prefHeight="21.0" prefWidth="72.0" text="-">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="683.0" layoutY="289.0" prefHeight="28.0" prefWidth="173.0" text="Vehicle Damage Fee : ">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="782.0" layoutY="327.0" prefHeight="21.0" prefWidth="72.0" text="Total     :">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="totalLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="927.0" layoutY="325.0" prefHeight="21.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

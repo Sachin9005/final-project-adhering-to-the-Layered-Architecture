@@ -65,7 +65,7 @@ public class CustomerModel {
             return customerList;
         }
 
-    public List<String> getAllOCustomerIds() throws SQLException {
+    public List<String> getAllOCustomerNames() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT name FROM Customer ORDER BY customer_id DESC");
 
         ArrayList<String> cuatomerNameList = new ArrayList();

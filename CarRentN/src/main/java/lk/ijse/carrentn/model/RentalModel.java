@@ -107,7 +107,6 @@ public class RentalModel {
             totalPay = total;
         }
 
-
         if (result.next()) {
             int rentalId = result.getInt("rental_id");
             int cusID = result.getInt("customer_id");
@@ -151,6 +150,25 @@ public class RentalModel {
             rebtalIdList.add(String.valueOf(rs.getInt("rental_id")));
         }
         return rebtalIdList;
+    }
+
+    public RentalDTO searchRent(String id) throws SQLException {
+        RentalDTO rentalDTO = null;
+
+        ResultSet result = CrudUtil.execute("SELECT * FROM Rental WHERE customer_id = ? ORDER BY rental_id DESC LIMIT 1",id);
+
+        if (result.next()) {
+            int rentalId = result.getInt("rental_id");
+            int cusID = result.getInt("customer_id");
+            int vehicleId = result.getInt("vehicle_id");
+            int DriverId = result.getInt("driver_id");
+            Date sdate = result.getDate("start_DATE");
+            int days = result.getInt("dates_of_rent");
+            Date eDate = result.getDate("return_date");
+
+            rentalDTO = new RentalDTO(rentalId,cusID,vehicleId,DriverId,sdate.toLocalDate(),days,eDate.toLocalDate());
+        }
+        return rentalDTO;
     }
 
 }

@@ -1,7 +1,10 @@
 package lk.ijse.carrentn.model;
 
+import lk.ijse.carrentn.dto.RentalDTO;
+import lk.ijse.carrentn.dto.RentalDiscountDTO;
 import lk.ijse.carrentn.util.CrudUtil;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 public class RentalDiscountModel {
@@ -20,8 +23,20 @@ public class RentalDiscountModel {
         } else {
             throw new Exception("Somethin went Wrong");
         }
-
         return true;
+    }
 
+    public RentalDiscountDTO searchRentalById(String rentId) throws Exception{
+        RentalDiscountDTO rentalDiscountDTO = null;
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM Rental_Discount WHERE rental_id = ?", rentId);
+
+        if (resultSet.next()) {
+            int rentalId = resultSet.getInt("rental_id");
+            int discountId = resultSet.getInt("discount_id");
+            double discount_amount_applied = resultSet.getDouble("discount_amount_applied");
+
+            rentalDiscountDTO = new RentalDiscountDTO(rentalId, discountId, discount_amount_applied);
+        }
+        return rentalDiscountDTO;
     }
 }
