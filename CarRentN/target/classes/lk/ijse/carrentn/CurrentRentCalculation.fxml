@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CurrentRentCalculateController">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CurrentRentalCalculateController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="1100.0">
          <children>
@@ -148,9 +148,9 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="vehicleDFField" alignment="CENTER" layoutX="860.0" layoutY="277.0" prefHeight="44.0" prefWidth="173.0" promptText="Vehicle Damage Fee" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
+      <TextField fx:id="vehicleDFField" alignment="CENTER_RIGHT" layoutX="860.0" layoutY="277.0" onKeyPressed="#calculateTotal" prefHeight="44.0" prefWidth="155.0" promptText="Vehicle Damage Fee" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
          <font>
-            <Font name="System Bold" size="15.0" />
+            <Font name="System Bold" size="14.0" />
          </font></TextField>
       <Label layoutX="754.0" layoutY="353.0" prefHeight="21.0" prefWidth="117.0" text="Discount     :">
          <font>
@@ -201,7 +201,7 @@
             </Button>
          </children>
       </VBox>
-      <TextField fx:id="customerPaidAmountField" alignment="CENTER" layoutX="861.0" layoutY="426.0" prefHeight="44.0" prefWidth="173.0" promptText="Paid Amount" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
+      <TextField fx:id="customerPaidAmountField" alignment="CENTER" layoutX="861.0" layoutY="426.0" onKeyPressed="#calculateBalance" prefHeight="44.0" prefWidth="155.0" promptText="Paid Amount" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
