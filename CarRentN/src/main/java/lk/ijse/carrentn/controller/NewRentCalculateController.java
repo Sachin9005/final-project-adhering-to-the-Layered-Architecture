@@ -175,7 +175,7 @@ DiscountModel discountModel = new DiscountModel();
 
     private double calculatetotal(String driverId,String vehicleId,int days){
         //total pay calcuulation
-        double total = 0.0;
+        double total = 0.00;
         try {
             if (driverId.isEmpty()){
                 total = vehicleModel.searchPrioce(vehicleId) * days;
@@ -187,6 +187,8 @@ DiscountModel discountModel = new DiscountModel();
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        total = Math.round(total * 100.0) / 100.0;
         totalPriceLable.setText(String.valueOf(total));
         totalPrice = totalPriceLable.getText();
         return total;
