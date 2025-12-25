@@ -1,13 +1,11 @@
 package lk.ijse.carrentn.model;
 
 import lk.ijse.carrentn.dto.FirstPaymentDTO;
-import lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.util.CrudUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
 
 public class FirstPaymentModel {
     public boolean saveBasePayment(int rentId , double basePay , double totalPay)throws Exception{
@@ -26,7 +24,7 @@ public class FirstPaymentModel {
             }
         return true;
     }
-    public FirstPaymentDTO getFirstPayment(int rentId)throws Exception{
+    public FirstPaymentDTO getFirstPayment(int rentId)throws SQLException{
         FirstPaymentDTO firstPaymentDTO = null ;
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM First_Payment WHERE rental_id = ?", rentId);
 

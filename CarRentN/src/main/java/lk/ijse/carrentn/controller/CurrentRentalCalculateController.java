@@ -170,6 +170,7 @@ public class CurrentRentalCalculateController implements Initializable {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
