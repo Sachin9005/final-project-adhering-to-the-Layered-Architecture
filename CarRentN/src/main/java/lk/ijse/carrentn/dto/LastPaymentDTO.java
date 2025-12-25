@@ -1,6 +1,6 @@
 package lk.ijse.carrentn.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class LastPaymentDTO {
     private int last_payment_id;
@@ -10,12 +10,12 @@ public class LastPaymentDTO {
     private double balance_payment;
     private double fine_payment;
     private double last_payment;
-    private Date last_payment_date;
+    private LocalDate last_payment_date;
 
     public LastPaymentDTO() {
     }
 
-    public LastPaymentDTO(int first_payment_id, int rental_id, int late_days, double balance_payment, double fine_payment, double last_payment, Date last_payment_date) {
+    public LastPaymentDTO(int first_payment_id, int rental_id, int late_days, double balance_payment, double fine_payment, double last_payment, LocalDate last_payment_date) {
         this.first_payment_id = first_payment_id;
         this.rental_id = rental_id;
         this.late_days = late_days;
@@ -25,7 +25,7 @@ public class LastPaymentDTO {
         this.last_payment_date = last_payment_date;
     }
 
-    public LastPaymentDTO(int last_payment_id, int first_payment_id, int rental_id, int late_days, double balance_payment, double fine_payment, double last_payment, Date last_payment_date) {
+    public LastPaymentDTO(int last_payment_id, int first_payment_id, int rental_id, int late_days, double balance_payment, double fine_payment, double last_payment, LocalDate last_payment_date) {
         this.last_payment_id = last_payment_id;
         this.first_payment_id = first_payment_id;
         this.rental_id = rental_id;
@@ -92,11 +92,11 @@ public class LastPaymentDTO {
         this.last_payment = last_payment;
     }
 
-    public Date getLast_payment_date() {
+    public LocalDate getLast_payment_date() {
         return last_payment_date;
     }
 
-    public void setLast_payment_date(Date last_payment_date) {
+    public void setLast_payment_date(LocalDate last_payment_date) {
         this.last_payment_date = last_payment_date;
     }
 

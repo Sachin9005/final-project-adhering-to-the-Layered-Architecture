@@ -189,7 +189,7 @@
       </Label>
       <VBox alignment="CENTER_LEFT" fillWidth="false" layoutX="694.0" layoutY="525.0" prefHeight="69.0" prefWidth="389.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleComfirmPay" text="Comfirm Payment" translateX="190.0" translateY="20.0">
+            <Button mnemonicParsing="false" onAction="#handleConfirmPay" text="Comfirm Payment" translateX="190.0" translateY="20.0">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -201,7 +201,7 @@
             </Button>
          </children>
       </VBox>
-      <TextField fx:id="customerPaidAmountField" alignment="CENTER" layoutX="861.0" layoutY="426.0" onKeyPressed="#calculateBalance" prefHeight="44.0" prefWidth="155.0" promptText="Paid Amount" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
+      <TextField fx:id="customerPaidAmountField" alignment="CENTER_RIGHT" layoutX="861.0" layoutY="426.0" onKeyPressed="#calculateBalance" prefHeight="44.0" prefWidth="155.0" promptText="Paid Amount" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

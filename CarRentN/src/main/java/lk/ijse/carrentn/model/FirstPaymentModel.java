@@ -26,17 +26,18 @@ public class FirstPaymentModel {
             }
         return true;
     }
-    public FirstPaymentDTO getFirstPayment(String rentId)throws Exception{
+    public FirstPaymentDTO getFirstPayment(int rentId)throws Exception{
         FirstPaymentDTO firstPaymentDTO = null ;
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM First_Payment WHERE rental_id = ?", rentId);
 
         if (resultSet.next()) {
+            int firstPayId = resultSet.getInt("first_payment_id");
             int rentalId = resultSet.getInt("rental_id");
             double basePay = resultSet.getDouble("base_payment");
             double finalPay = resultSet.getDouble("final_payment");
             LocalDate basePaymentDate = resultSet.getDate("base_payment_date").toLocalDate();
 
-            firstPaymentDTO = new FirstPaymentDTO(rentalId,basePay,finalPay,basePaymentDate);
+            firstPaymentDTO = new FirstPaymentDTO(firstPayId,rentalId,basePay,finalPay,basePaymentDate);
         }
         return firstPaymentDTO ;
     }
