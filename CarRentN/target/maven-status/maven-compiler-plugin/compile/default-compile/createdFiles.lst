@@ -10,6 +10,7 @@ lk/ijse/carrentn/model/DriverModel.class
 lk/ijse/carrentn/dto/CarOwnerDTO.class
 lk/ijse/carrentn/controller/VehicleManageController.class
 lk/ijse/carrentn/model/CarOwnerModel.class
+lk/ijse/carrentn/controller/ProfileManageController.class
 lk/ijse/carrentn/model/VehicleModel.class
 lk/ijse/carrentn/dto/VehicleDTO.class
 lk/ijse/carrentn/controller/DiscountManageController.class
@@ -21,6 +22,8 @@ lk/ijse/carrentn/controller/NewRentCalculateController.class
 lk/ijse/carrentn/controller/RentalManageController.class
 lk/ijse/carrentn/dto/CustomerDTO.class
 lk/ijse/carrentn/model/RentalModel.class
+lk/ijse/carrentn/controller/ProfileController.class
 lk/ijse/carrentn/App.class
 lk/ijse/carrentn/controller/CustomerManageController.class
+lk/ijse/carrentn/controller/CredentialsManageController.class
 lk/ijse/carrentn/model/CustomerModel.class

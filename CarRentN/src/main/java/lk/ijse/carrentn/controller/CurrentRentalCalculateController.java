@@ -108,6 +108,8 @@ public class CurrentRentalCalculateController implements Initializable {
     private double driverTotal;
     private double remainPay;
 
+    private final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
+
 
     private CustomerModel customerModel = new CustomerModel();
     private RentalModel rentalModel = new RentalModel();
@@ -332,20 +334,25 @@ public class CurrentRentalCalculateController implements Initializable {
     private void calculateTotal(KeyEvent event) {
         String vehicleDFF = "";
         if (event.getCode() == KeyCode.ENTER) {
-            System.out.println(vehicleDFField.getText());
-            if (vehicleDFField.getText() == "" || vehicleDFField.getText() == null) vehicleDFF = null;
-            if (vehicleDFF != null) {
-                totalPay = Math.round(Double.parseDouble(vehicleDFField.getText()) + total * 100.0) / 100.0;
-                totalLable.setText(String.valueOf(totalPay)+0);
+            String vehicleDFD= vehicleDFField.getText();
+            if (vehicleDFD == PAYMENT_REGEX || vehicleDFField.getText() == "" || vehicleDFField.getText() == null ){
 
-            } else {
-                totalPay = Math.round(total * 100.0) / 100.0;
-                vehicleDFField.setText("0.00");
-                totalLable.setText(String.valueOf(totalPay)+0);
+                if (vehicleDFField.getText() == "" || vehicleDFField.getText() == null) vehicleDFF = null;
+
+                if (vehicleDFF != null) {
+                    totalPay = Math.round(Double.parseDouble(vehicleDFField.getText()) + total * 100.0) / 100.0;
+                    totalLable.setText(String.valueOf(totalPay)+0);
+                } else {
+                    totalPay = Math.round(total * 100.0) / 100.0;
+                    vehicleDFField.setText("0.00");
+                    totalLable.setText(String.valueOf(totalPay)+0);
+                }
+                remainPay = totalPay - basePay - discount;
+                remainPay = Math.round(remainPay * 100.0) / 100.0;
+                remainAmountLable.setText(String.valueOf(remainPay));
+            }else {
+                new Alert(Alert.AlertType.ERROR, "Please input valid fee Amount!").show();
             }
-            remainPay = totalPay - basePay - discount;
-            remainPay = Math.round(remainPay * 100.0) / 100.0;
-            remainAmountLable.setText(String.valueOf(remainPay));
 
         }
 
