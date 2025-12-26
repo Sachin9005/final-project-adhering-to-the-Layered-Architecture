@@ -40,7 +40,7 @@ public class ProfileController implements Initializable{
     }
 
     @FXML
-    void changeVisibility() {
+    private void changeVisibility() {
         if (checkBox.isSelected()){
             passwordShowField.setText(passwordFeild.getText());
             passwordShowField.setVisible(true);

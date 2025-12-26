@@ -36,5 +36,4 @@ public class PaymentCalculationController implements Initializable {
     private void back()throws IOException {
         App.setRoot("MainDashboard");
     }
-
 }
