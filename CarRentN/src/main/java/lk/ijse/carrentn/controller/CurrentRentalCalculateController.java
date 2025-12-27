@@ -335,10 +335,9 @@ public class CurrentRentalCalculateController implements Initializable {
         String vehicleDFF = "";
         if (event.getCode() == KeyCode.ENTER) {
             String vehicleDFD= vehicleDFField.getText();
-            if (vehicleDFD == PAYMENT_REGEX || vehicleDFField.getText() == "" || vehicleDFField.getText() == null ){
 
+            if (vehicleDFD.matches(PAYMENT_REGEX)|| vehicleDFField.getText() == "" || vehicleDFField.getText() == null ){
                 if (vehicleDFField.getText() == "" || vehicleDFField.getText() == null) vehicleDFF = null;
-
                 if (vehicleDFF != null) {
                     totalPay = Math.round(Double.parseDouble(vehicleDFField.getText()) + total * 100.0) / 100.0;
                     totalLable.setText(String.valueOf(totalPay)+0);

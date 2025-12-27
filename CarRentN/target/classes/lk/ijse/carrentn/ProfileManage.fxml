@@ -39,7 +39,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleCredentialShow" prefHeight="37.0" prefWidth="153.0" text="Change Credentials">
+            <Button mnemonicParsing="false" onAction="#changePasswordNav" prefHeight="37.0" prefWidth="153.0" text="Change Password">
                <VBox.margin>
                   <Insets top="50.0" />
                </VBox.margin>
@@ -47,9 +47,17 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" onAction="#handleCredentialShow" prefHeight="35.0" prefWidth="150.0" text="Change Details">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
             <Button mnemonicParsing="false" onAction="#back" prefHeight="26.0" prefWidth="72.0" text="Back">
                <VBox.margin>
-                  <Insets top="375.0" />
+                  <Insets top="275.0" />
                </VBox.margin>
             </Button>
          </children>

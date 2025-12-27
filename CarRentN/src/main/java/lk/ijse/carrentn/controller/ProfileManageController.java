@@ -36,6 +36,12 @@ public class ProfileManageController implements Initializable {
     }
 
     @FXML
+    private void changePasswordNav() throws IOException{
+        Parent customerFXML = App.loadFXML("PasswordManage");
+        mainContent.getChildren().setAll(customerFXML);
+    }
+
+    @FXML
     private void back()throws IOException {
         App.setRoot("MainDashboard");
     }
