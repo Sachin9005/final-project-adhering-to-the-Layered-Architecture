@@ -99,11 +99,12 @@
       </VBox>
       <Pane layoutX="2.0" layoutY="393.0" prefHeight="235.0" prefWidth="545.0">
          <children>
-            <TableView fx:id="tblAvaVehicles" layoutX="41.0" layoutY="33.0" prefHeight="200.0" prefWidth="420.0">
+            <TableView fx:id="tblAvaVehicles" layoutX="29.0" layoutY="33.0" prefHeight="200.0" prefWidth="488.0">
               <columns>
                 <TableColumn fx:id="colVehicleId" prefWidth="78.0" text="vehicle ID" />
-                <TableColumn fx:id="colVehicleModel" prefWidth="231.0" text="Vehicle Model" />
-                  <TableColumn fx:id="colVehicleRate" prefWidth="110.0" text="Rate Per Day" />
+                <TableColumn fx:id="colVehicleModel" prefWidth="179.0" text="Vehicle Model" />
+                  <TableColumn fx:id="colVehicleType" prefWidth="104.0" text="Type" />
+                  <TableColumn fx:id="colVehicleRate" prefWidth="126.0" text="Rate Per Day" />
               </columns>
             </TableView>
             <Label layoutX="178.0" layoutY="5.0" text="Available Vehicles">
@@ -114,11 +115,12 @@
          </children></Pane>
       <Pane layoutX="555.0" layoutY="392.0" prefHeight="235.0" prefWidth="545.0">
          <children>
-            <TableView fx:id="tblAvaDrivers" layoutX="73.0" layoutY="34.0" prefHeight="200.0" prefWidth="420.0">
+            <TableView fx:id="tblAvaDrivers" layoutX="14.0" layoutY="34.0" prefHeight="200.0" prefWidth="522.0">
               <columns>
-                <TableColumn fx:id="colDriverId" prefWidth="86.0" text="Driver ID" />
-                <TableColumn fx:id="colDriverName" prefWidth="218.0" text="Driver Name" />
-                  <TableColumn fx:id="colDriverRate" prefWidth="115.0" text="Rate Per Day" />
+                <TableColumn fx:id="colDriverId" prefWidth="69.0" text="Driver ID" />
+                <TableColumn fx:id="colDriverName" prefWidth="202.0" text="Driver Name" />
+                  <TableColumn fx:id="colDriverPhoneNo" prefWidth="143.0" text="Phone NO." />
+                  <TableColumn fx:id="colDriverRate" prefWidth="107.0" text="Rate Per Day" />
               </columns>
             </TableView>
             <Label layoutX="221.0" layoutY="5.0" text="Available Drivers">

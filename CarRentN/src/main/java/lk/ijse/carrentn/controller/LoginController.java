@@ -37,10 +37,8 @@ public class LoginController {
             
         } else {
             System.out.println("Invalid User Name or Password!");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Login Massage");
-            alert.setHeaderText("Invalid user name or password");
-            alert.show();
+            new Alert(Alert.AlertType.ERROR,"Invalid user name or password").show();
+
         }
     }
 

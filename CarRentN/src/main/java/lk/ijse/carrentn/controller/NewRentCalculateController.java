@@ -8,71 +8,66 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.App;
+import lk.ijse.carrentn.dto.TM.DriverTM;
+import lk.ijse.carrentn.dto.TM.VehicleTM;
+import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class NewRentCalculateController implements Initializable {
     @FXML
     private TableColumn<?, ?> colDriverId;
-
     @FXML
     private TableColumn<?, ?> colDriverName;
-
     @FXML
     private TableColumn<?, ?> colDriverRate;
+    @FXML
+    private TableColumn<?, ?> colDriverPhoneNo;
 
     @FXML
     private TableColumn<?, ?> colVehicleId;
-
     @FXML
     private TableColumn<?, ?> colVehicleModel;
-
+    @FXML
+    private TableColumn<?, ?> colVehicleType;
     @FXML
     private TableColumn<?, ?> colVehicleRate;
 
     @FXML
     private TextField daysField;
-
     @FXML
     private ComboBox<String> discountCbox;
-
     @FXML
     private TextField discountIdField;
-
     @FXML
     private Label discountLable;
-
     @FXML
     private ComboBox<String> driverCbox;
-
     @FXML
     private TextField driverIdField;
-
     @FXML
     private Label driverLable;
 
     @FXML
-    private TableView<?> tblAvaDrivers;
-
+    private TableView<DriverTM> tblAvaDrivers;
     @FXML
-    private TableView<?> tblAvaVehicles;
+    private TableView<VehicleTM> tblAvaVehicles;
 
     @FXML
     private Label totalPriceLable;
-
     @FXML
     private ComboBox<String> vehicleCbox;
-
     @FXML
     private TextField vehicleIdField;
-
     @FXML
     private Label vehicleLable;
 
@@ -87,9 +82,22 @@ DiscountModel discountModel = new DiscountModel();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        colVehicleId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colVehicleModel.setCellValueFactory(new PropertyValueFactory<>("model"));
+        colVehicleType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colVehicleRate.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
+
+        colDriverId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colDriverName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDriverPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phoneNO"));
+        colDriverRate.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
+
+
         lordDriverNames();
         lordVehicleNames();
         lordDiscountDes();
+        lordAvailableVehicleTable();
+        loadAvailableDrivers();
     }
 
     @FXML
@@ -233,6 +241,35 @@ DiscountModel discountModel = new DiscountModel();
         discountLable.setText("Select Discount");
         totalPriceLable.setText("-");
 
+    }
+
+    private void lordAvailableVehicleTable(){
+        try {
+            List<VehicleTM> vehicleTMS = vehicleModel.getAvailableVehicles(LocalDate.now());
+            ObservableList<VehicleTM> obList =FXCollections.observableArrayList();
+            for (VehicleTM vehicleTM : vehicleTMS) {
+                obList.add(vehicleTM);
+            }
+            tblAvaVehicles.setItems(obList);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadAvailableDrivers() {
+        try {
+            List<DriverTM> driverTMs = DriverModel.getAvailableDrivers(LocalDate.now());
+
+            ObservableList<DriverTM> obList =FXCollections.observableArrayList();
+
+            for (DriverTM driverTM : driverTMs){
+                obList.add(driverTM);
+            }
+            tblAvaDrivers.setItems(obList);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

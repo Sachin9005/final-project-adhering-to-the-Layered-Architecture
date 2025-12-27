@@ -1,12 +1,11 @@
 package lk.ijse.carrentn.model;
+import lk.ijse.carrentn.dto.TM.VehicleTM;
 import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.util.CrudUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +117,29 @@ public class VehicleModel {
         }
         return ratePerDay ;
     }
+
+    public List<VehicleTM> getAvailableVehicles(LocalDate startDate) throws SQLException {
+
+        String sql = "SELECT DISTINCT v.vehicle_id,v.model,v.type,v.rate_per_day FROM Vehicle v LEFT JOIN Rental r ON v.vehicle_id = r.vehicle_id AND r.return_date >= ? WHERE r.vehicle_id IS NULL";
+
+        ResultSet rs = CrudUtil.execute(
+                sql,
+                Date.valueOf(startDate)
+        );
+
+        List<VehicleTM> list = new ArrayList<>();
+
+        while (rs.next()) {
+            list.add(new VehicleTM(
+                    rs.getInt("vehicle_id"),
+                    rs.getString("model"),
+                    rs.getString("type"),
+                    rs.getDouble("rate_per_day")
+            ));
+        }
+        return list;
+    }
+
 
 
 }

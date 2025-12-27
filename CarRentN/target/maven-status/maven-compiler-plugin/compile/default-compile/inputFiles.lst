@@ -12,6 +12,7 @@
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/dto/CarOwnerDTO.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/dto/RentalDTO.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/module-info.java
+/home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/controller/ChangePasswordController.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/model/CarOwnerModel.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/dto/VehicleDTO.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/controller/LoginController.java

@@ -18,6 +18,8 @@ module-info.class
 lk/ijse/carrentn/controller/PaymentCalculationController.class
 lk/ijse/carrentn/dto/DriverDTO.class
 lk/ijse/carrentn/controller/ChangePasswordController.class
+lk/ijse/carrentn/dto/TM/DriverTM.class
+lk/ijse/carrentn/dto/TM/VehicleTM.class
 lk/ijse/carrentn/controller/DriverManageController.class
 lk/ijse/carrentn/controller/NewRentCalculateController.class
 lk/ijse/carrentn/controller/RentalManageController.class
