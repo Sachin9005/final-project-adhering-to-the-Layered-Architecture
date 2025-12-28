@@ -1,10 +1,12 @@
 package lk.ijse.carrentn.model;
-import javafx.scene.control.Alert;
 import lk.ijse.carrentn.db.DBConnection;
 import  lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.util.CrudUtil;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -13,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RentalModel {
     FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
@@ -169,6 +173,40 @@ public class RentalModel {
             rentalDTO = new RentalDTO(rentalId,cusID,vehicleId,DriverId,sdate.toLocalDate(),days,eDate.toLocalDate());
         }
         return rentalDTO;
+    }
+
+    public String getSaveLastRentalId()throws SQLException{
+        String id = null;
+        ResultSet result = CrudUtil.execute("SELECT rental_id FROM Rental ORDER BY rental_id DESC LIMIT 1");
+        if (result.next()){
+            id = String.valueOf(result.getInt("rental_id"));
+        }
+        return id;
+    }
+
+    public void printOrderInvoice(int basePaymentId) throws JRException, SQLException {
+
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        // Step 01
+        InputStream reportObject = getClass().getResourceAsStream("/lk/ijse/carrentn/reports/InvoiceForBasePay.jrxml");
+        if (reportObject == null) {
+            throw new RuntimeException("InvoiceForBasePay.jrxml not found in /reports folder");
+        }
+
+        // Step 02
+        JasperReport jr = JasperCompileManager.compileReport(reportObject); // this method thorws JRException
+
+        // Step 03
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("PAYMENT_ID", basePaymentId);
+
+        JasperPrint jp = JasperFillManager.fillReport(jr, params, conn); // fillReport(japerreport, params, connection_obj)
+
+        // Step 04
+        JasperViewer.viewReport(jp, false);
+
     }
 
 }

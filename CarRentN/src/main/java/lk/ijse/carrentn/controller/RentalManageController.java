@@ -84,11 +84,12 @@ public class RentalManageController implements Initializable {
     private final String DISCOUNT_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
 
 
-    RentalModel rentalModel =  new RentalModel();
-    CustomerModel customerModel = new CustomerModel();
-    VehicleModel vehicleModel = new VehicleModel();
-    DriverModel driverModel = new DriverModel();
-    DiscountModel discountModel = new DiscountModel();
+    private final RentalModel rentalModel =  new RentalModel();
+    private final CustomerModel customerModel = new CustomerModel();
+    private final VehicleModel vehicleModel = new VehicleModel();
+    private final DriverModel driverModel = new DriverModel();
+    private final DiscountModel discountModel = new DiscountModel();
+    private final FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -131,7 +132,7 @@ public class RentalManageController implements Initializable {
 
     public void lordVehicleNames(){
         try {
-            List<String> vehicleList = vehicleModel.getAllVehicleModels();
+            List<String> vehicleList = vehicleModel.getAllVehicleNo();
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(vehicleList);
             vehicleCbox.setItems(obList);
@@ -165,7 +166,6 @@ public class RentalManageController implements Initializable {
         }
     }
 
-
     @FXML
     private void handleSaveRental(ActionEvent event) {
 
@@ -193,9 +193,6 @@ public class RentalManageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Invalid Base Payment").show();
         }else{
             String total = totalPriceLable.getText();
-
-
-
             Integer driverIdValue = null;
             if (!driverId.isEmpty()) {
                 driverIdValue = Integer.parseInt(driverId);
@@ -270,7 +267,12 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void handleUpdateRental(ActionEvent event) {
+    private void handlePrint(ActionEvent event) {
+        try {
+            rentalModel.printOrderInvoice(firstPaymentModel.getFirstPayment(Integer.parseInt(rentalModel.getSaveLastRentalId())).getFirst_payment_id());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -422,7 +424,8 @@ public class RentalManageController implements Initializable {
 
             calculatetotal(driverId, vehicleId.trim(), Integer.parseInt(days.trim()));
         }
-
     }
 
-    }
+
+
+}

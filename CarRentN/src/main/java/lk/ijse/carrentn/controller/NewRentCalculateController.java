@@ -4,9 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -14,7 +12,6 @@ import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.App;
 import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
-import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.model.*;
 
 import java.io.IOException;
@@ -35,6 +32,8 @@ public class NewRentCalculateController implements Initializable {
 
     @FXML
     private TableColumn<?, ?> colVehicleId;
+    @FXML
+    private TableColumn<?, ?> colVehicleNo;
     @FXML
     private TableColumn<?, ?> colVehicleModel;
     @FXML
@@ -83,6 +82,7 @@ DiscountModel discountModel = new DiscountModel();
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         colVehicleId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colVehicleNo.setCellValueFactory(new PropertyValueFactory<>("vehicleNo"));
         colVehicleModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         colVehicleType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colVehicleRate.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
@@ -102,12 +102,7 @@ DiscountModel discountModel = new DiscountModel();
 
     @FXML
     void handleRent(ActionEvent event)throws IOException {
-        String vehicleId = vehicleIdField.getText();
-        String driverId = driverIdField.getText();
-        String days = daysField.getText();
-        String discount = discountIdField.getText();
-
-        App.setRoot("ManageDetails");
+       App.setRoot("ManageDetails");
     }
 
     @FXML
@@ -125,7 +120,6 @@ DiscountModel discountModel = new DiscountModel();
             double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
             totalPriceLable.setText(String.valueOf(discountedTotal));
         }
-
     }
 
     @FXML
@@ -147,7 +141,7 @@ DiscountModel discountModel = new DiscountModel();
 
     private void lordVehicleNames(){
         try {
-            List<String> vehicleList = vehicleModel.getAllVehicleModels();
+            List<String> vehicleList = vehicleModel.getAllVehicleNo();
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(vehicleList);
             vehicleCbox.setItems(obList);

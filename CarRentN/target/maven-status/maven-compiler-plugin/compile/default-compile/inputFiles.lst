@@ -5,7 +5,9 @@
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/controller/CredentialsManageController.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/model/LastPaymentModel.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/model/UserModel.java
+/home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/dto/TM/VehicleTM.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/controller/DiscountManageController.java
+/home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/dto/TM/DriverTM.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/model/CustomerModel.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/model/DiscountModel.java
 /home/sachin/IdeaProjects/CarRentN/src/main/java/lk/ijse/carrentn/App.java

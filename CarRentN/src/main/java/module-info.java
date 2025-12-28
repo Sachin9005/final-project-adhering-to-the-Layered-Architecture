@@ -4,6 +4,7 @@ module lk.ijse.carrentn {
     requires java.base;
     requires java.sql;
     requires java.desktop;
+    requires net.sf.jasperreports.core;
 
     opens lk.ijse.carrentn.controller to javafx.fxml;
     opens lk.ijse.carrentn.dto to java.base;

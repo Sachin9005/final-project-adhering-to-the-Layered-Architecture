@@ -20,7 +20,7 @@ import lk.ijse.carrentn.model.VehicleModel;
 
 public class VehicleManageController implements Initializable {
     @FXML
-    private TextField vehicleIdField;
+    private TextField vehicleNoField;
     @FXML
     private TextField ownerIdField;
     @FXML
@@ -58,8 +58,12 @@ public class VehicleManageController implements Initializable {
     private TableColumn colRate;
     @FXML
     private TableColumn colOPrec;
+    @FXML
+    private TableColumn colVehicleNo;
+
 
     private final String VEHICLE_ID_REGEX = "^[0-9]+$";
+    private final String VEHICLE_NO_REGEX = "^(?:[A-Z]{2,3}-\\d{3,4}|[A-Z]{2}-[A-Z]{2}-\\d{4})$";
     private final String VEHICLE_OWNE_ID_REGEX = "^[0-9]+$";
     private final String VEHICLE_MODEL_REGEX = "^[A-Za-z ]{2,50}$";
     private final String VEHICLE_MANUFACTURE_REGEX = "^[A-Za-z ]{2,50}$";
@@ -78,6 +82,7 @@ public class VehicleManageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Vehicle table loaded");
         colVID.setCellValueFactory(new PropertyValueFactory<>("vehicle_id"));
+        colVehicleNo.setCellValueFactory(new PropertyValueFactory<>("vehicleNo"));
         colOID.setCellValueFactory(new PropertyValueFactory<>("owner_id"));
         colModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         colManufac.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
@@ -124,6 +129,7 @@ public class VehicleManageController implements Initializable {
 
     @FXML
     private void handleSaveVehicle(){
+        String vehicleNO = vehicleNoField.getText().trim();
         String ownerId = ownerIdField.getText().trim();
         String model = modelField.getText().trim();
         String manufac = manufacField.getText().trim();
@@ -132,8 +138,9 @@ public class VehicleManageController implements Initializable {
         String ownerPrec = ownerRateField.getText().trim();
 
 
-
-        if (!ownerId.matches(VEHICLE_OWNE_ID_REGEX)) {
+        if (!vehicleNO.matches(VEHICLE_NO_REGEX)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid Vehicle Number").show();
+        }else if (!ownerId.matches(VEHICLE_OWNE_ID_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Owner Id").show();
         }else if(!model.matches(VEHICLE_MODEL_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Vehicle Model").show();
@@ -147,7 +154,7 @@ public class VehicleManageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Invalid Ownership Percentage ").show();
         }else{
             try {
-                VehicleDTO vehicleDTO = new VehicleDTO(Integer.parseInt(ownerId),model,manufac,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicleNO,Integer.parseInt(ownerId),model,manufac,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
                 boolean result = vehicleModel.save(vehicleDTO);
                 cleanFileds();
                 lordVehicleTable();
@@ -166,7 +173,7 @@ public class VehicleManageController implements Initializable {
 
     public void handleUpdateVehicle() {
         try {
-            String id = vehicleIdField.getText().trim();
+            String vehicleNo = vehicleNoField.getText().trim();
             String ownerId = ownerIdField.getText().trim();
             String model = modelField.getText().trim();
             String manufac = manufacField.getText().trim();
@@ -174,8 +181,8 @@ public class VehicleManageController implements Initializable {
             String dayRate = dayRateFied.getText().trim();
             String ownerPrec = ownerRateField.getText().trim();
 
-            if (!id.matches(VEHICLE_ID_REGEX)) {
-                new Alert(Alert.AlertType.ERROR, "Invalid id").show();
+            if (!vehicleNo.matches(VEHICLE_NO_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Invalid vehicleNo").show();
             }else if (!ownerId.matches(VEHICLE_OWNE_ID_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Invalid Owner Id").show();
             }else if(!model.matches(VEHICLE_MODEL_REGEX)) {
@@ -189,7 +196,7 @@ public class VehicleManageController implements Initializable {
             }else if(!ownerPrec.matches(VEHICLE_OWNER_PERCENTAGE_REGEX)){
                 new Alert(Alert.AlertType.ERROR, "Invalid Ownership Percentage ").show();
             }else{
-                VehicleDTO vehicleDTO = new VehicleDTO(Integer.parseInt(id),Integer.parseInt(ownerId),model,manufac,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicleNo,Integer.parseInt(ownerId),model,manufac,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
                 boolean result = vehicleModel.update(vehicleDTO);
                 cleanFileds();
                 lordVehicleTable();
@@ -209,10 +216,9 @@ public class VehicleManageController implements Initializable {
 
     public void handleDeleteVehicle() {
         try {
-            String id = vehicleIdField.getText();
-            if (id.matches(VEHICLE_ID_REGEX)) {
-
-                boolean result = vehicleModel.delete(id);
+            String vehicleNo = vehicleNoField.getText();
+            if (vehicleNo.matches(VEHICLE_NO_REGEX)) {
+                boolean result = vehicleModel.delete(vehicleNo);
                 lordVehicleTable();
 
                 if(result) {
@@ -233,9 +239,9 @@ public class VehicleManageController implements Initializable {
         try {
             if (event.getCode() == KeyCode.ENTER) {
                 System.out.println(event.getCode());
-                String id = vehicleIdField.getText();
-                if (id.matches(VEHICLE_ID_REGEX)) {
-                    VehicleDTO vehicleDTO = vehicleModel.search(id);
+                String vehicleNo = vehicleNoField.getText();
+                if (vehicleNo.matches(VEHICLE_NO_REGEX)) {
+                    VehicleDTO vehicleDTO = vehicleModel.search(vehicleNo);
 
                     if (vehicleDTO != null) {
                         ownerIdField.setText(String.valueOf(vehicleDTO.getOwner_id()));
@@ -263,7 +269,7 @@ public class VehicleManageController implements Initializable {
     }
 
     private void cleanFileds () {
-        vehicleIdField.setText("");
+        vehicleNoField.setText("");
         ownerIdField.setText("");
         modelField.setText("");
         manufacField.setText("");

@@ -47,13 +47,13 @@
             <TextField fx:id="customeNICField" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2px 0;" />
          </children>
       </VBox>
-      <VBox layoutX="169.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="269.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Model :" />
             <Label fx:id="modelLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="328.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="428.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
             <Label fx:id="vehicleRateLable" text="-" />
@@ -83,24 +83,24 @@
             <Font size="25.0" />
          </font>
       </Label>
-      <VBox layoutX="328.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="358.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
             <Label fx:id="driverRateField" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="169.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="199.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Name :" />
             <Label fx:id="driverNameField" text="-" />
          </children>
       </VBox>
-      <Label layoutX="545.0" layoutY="119.0" text="Days">
+      <Label layoutX="613.0" layoutY="119.0" text="Days">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="daysLable" layoutX="555.0" layoutY="175.0" text="-">
+      <Label fx:id="daysLable" layoutX="623.0" layoutY="175.0" text="-">
          <font>
             <Font size="20.0" />
          </font>
@@ -231,5 +231,11 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
+      <VBox layoutX="149.0" layoutY="153.0" prefHeight="44.0" prefWidth="100.0">
+         <children>
+            <Label text="No  :" />
+            <Label fx:id="NoLable" text="-" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

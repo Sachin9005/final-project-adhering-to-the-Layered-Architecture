@@ -87,23 +87,23 @@
       <HBox alignment="CENTER" layoutX="237.0" layoutY="297.0" prefHeight="60.0" prefWidth="557.0" spacing="18.0">
          <children>
             <Button mnemonicParsing="false" onAction="#handleSaveRental" prefHeight="35.0" prefWidth="75.0" text="Save" />
-            <Button mnemonicParsing="false" onAction="#handleUpdateRental" prefHeight="35.0" prefWidth="75.0" text="Update" />
             <Button mnemonicParsing="false" onAction="#handleDeleteRental" prefHeight="35.0" prefWidth="75.0" text="Delete" />
             <Button mnemonicParsing="false" onAction="#handleResetlFields" prefHeight="35.0" prefWidth="75.0" text="Reset" />
             <Button mnemonicParsing="false" onAction="#handleSearchCustomer" prefHeight="35.0" prefWidth="86.0" text="Serch Rent" />
+            <Button mnemonicParsing="false" onAction="#handlePrint" prefHeight="35.0" prefWidth="75.0" text="Print" />
          </children>
       </HBox>
       <Pane layoutX="7.0" layoutY="372.0" prefHeight="212.0" prefWidth="1084.0">
          <children>
             <TableView fx:id="tblRent" layoutX="12.0" layoutY="6.0" prefHeight="200.0" prefWidth="1064.0">
               <columns>
-                <TableColumn fx:id="colRentalId" prefWidth="96.0" text="Rental Id" />
-                <TableColumn fx:id="colCusId" prefWidth="100.0" text="Customer ID" />
-                  <TableColumn fx:id="colVehicleId" prefWidth="89.0" text="Vehicle Id" />
-                  <TableColumn fx:id="colDriverId" prefWidth="97.0" text="Driver ID" />
-                  <TableColumn fx:id="colSDate" prefWidth="267.0" text="Start Date" />
-                  <TableColumn fx:id="colDays" prefWidth="127.0" text="Days" />
-                  <TableColumn fx:id="colEDate" prefWidth="287.0" text="End Date" />
+                <TableColumn fx:id="colRentalId" prefWidth="123.0" text="Rental Id" />
+                <TableColumn fx:id="colCusId" prefWidth="110.0" text="Customer ID" />
+                  <TableColumn fx:id="colVehicleId" prefWidth="120.0" text="Vehicle Id" />
+                  <TableColumn fx:id="colDriverId" prefWidth="110.0" text="Driver ID" />
+                  <TableColumn fx:id="colSDate" prefWidth="232.0" text="Start Date" />
+                  <TableColumn fx:id="colDays" prefWidth="126.0" text="Days" />
+                  <TableColumn fx:id="colEDate" prefWidth="242.0" text="End Date" />
               </columns>
             </TableView>
          </children></Pane>
