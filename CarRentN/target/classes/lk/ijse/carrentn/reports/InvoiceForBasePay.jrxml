@@ -1,0 +1,425 @@
+<!-- Created with Jaspersoft Studio version 7.0.3.final using JasperReports Library version 7.0.3-41034ca841d452f3305ba55b9042260aaa1ab5dd  -->
+<jasperReport name="recept1" language="java" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="278e953f-3af6-4388-bacd-ae93a59c20c6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MY_Project -  CarRental"/>
+	<parameter name="PAYMENT_ID" class="java.lang.Integer"/>
+	<query language="SQL"><![CDATA[SELECT
+    bp.first_payment_id                 AS payment_id,
+    DATE_FORMAT(bp.base_payment_date, '%Y-%m-%d') AS payment_date,
+
+    c.name                              AS customer_name,
+    c.nic_or_passport_number            AS customer_id,
+    c.phone_number                      AS customer_contact,
+
+    v.vehicle_No                         AS vehicle_no,
+    v.model                              AS vehicle_model,
+    v.type                                AS vehicle_type,
+    v.rate_per_day          AS day_rate,
+
+    DATE_FORMAT(r.start_DATE, '%Y-%m-%d')   AS rental_start,
+    DATE_FORMAT(r.return_date, '%Y-%m-%d')  AS rental_end,
+    r.dates_of_rent                        AS rental_days,
+
+    bp.base_payment                       AS base_payment,
+    bp.final_payment                      AS final_payment,
+
+    d.name                                AS driver_name,
+    d.phone_number                         AS driver_contact,
+    d.license_number                       AS driver_license,
+    d.driver_rate_per_day         AS driver_rate,
+
+    rd.discount_amount_applied AS discount
+
+FROM First_Payment bp
+INNER JOIN Rental r
+        ON bp.rental_id = r.rental_id
+INNER JOIN Customer c
+        ON r.customer_id = c.customer_id
+INNER JOIN Vehicle v
+        ON r.vehicle_id = v.vehicle_id
+LEFT JOIN Rental_Discount rd
+        ON r.rental_id = rd.rental_id
+LEFT JOIN Driver d
+       ON r.driver_id = d.driver_id
+
+WHERE bp.first_payment_id = $P{PAYMENT_ID}]]></query>
+	<field name="payment_id" class="java.lang.Integer"/>
+	<field name="payment_date" class="java.sql.Date"/>
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="customer_contact" class="java.lang.String"/>
+	<field name="vehicle_no" class="java.lang.String"/>
+	<field name="vehicle_model" class="java.lang.String"/>
+	<field name="rental_start" class="java.sql.Date"/>
+	<field name="rental_end" class="java.sql.Date"/>
+	<field name="rental_days" class="java.lang.Integer"/>
+	<field name="base_payment" class="java.lang.Double"/>
+	<field name="final_payment" class="java.lang.Double"/>
+	<field name="driver_name" class="java.lang.String"/>
+	<field name="driver_contact" class="java.lang.String"/>
+	<field name="driver_license" class="java.lang.String"/>
+	<field name="customer_id" class="java.lang.String"/>
+	<field name="vehicle_type" class="java.lang.String"/>
+	<field name="day_rate" class="java.lang.Double"/>
+	<field name="driver_rate" class="java.lang.Double"/>
+	<field name="discount" class="java.lang.Double"/>
+	<background splitType="Stretch"/>
+	<title height="140" splitType="Stretch">
+		<element kind="staticText" uuid="c944eee6-0bb3-440e-bb4a-41bff8122cca" key="" x="139" y="0" width="310" height="30" forecolor="#CC1512" fontSize="20.0" bold="true" italic="false" underline="true" hTextAlign="Center">
+			<text><![CDATA[ABESUNDARA CAR RENTAL
+]]></text>
+		</element>
+		<element kind="staticText" uuid="ca11470c-a548-4382-a759-a5a1819c49af" x="215" y="34" width="150" height="30" fontSize="12.0" bold="true" underline="true" hTextAlign="Center">
+			<text><![CDATA[BASE PAYMENT RECEIPT]]></text>
+		</element>
+		<element kind="staticText" uuid="4ceb9ae7-0fd5-469e-8981-9713d7f267ed" x="0" y="79" width="235" height="20">
+			<text><![CDATA[Address : No 45, Dangedara Road, Galle]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="5e7566c9-923b-445f-9b9a-7234eaecd4ec" x="0" y="105" width="200" height="20">
+			<text><![CDATA[Contact : 077-1234567]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="line" uuid="54b43f6f-8f9f-4e62-9f12-6f528b368cf0" x="0" y="131" width="555" height="1">
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</title>
+	<pageHeader height="110" splitType="Stretch">
+		<element kind="staticText" uuid="d2f4c855-9a9e-4571-93c5-541f024033e8" x="0" y="0" width="90" height="20">
+			<text><![CDATA[Recipt No : ]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="9241295a-13f6-4ea1-9df7-33b6b18af537" x="60" y="0" width="200" height="20" hTextAlign="Left">
+			<expression><![CDATA["00"+$F{payment_id}]]></expression>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="1a076b9f-ed9f-4d61-b3f8-e420b69139e8" x="342" y="0" width="60" height="20">
+			<text><![CDATA[Date          :]]></text>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="0cac15da-b2d2-4acf-8914-6a33bff3b9c5" x="402" y="0" width="150" height="20" pattern="yyyy-MM-dd" hTextAlign="Left">
+			<expression><![CDATA[$F{payment_date}]]></expression>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="7f39fb8e-710e-4fd0-8d76-1e675963f0dd" x="0" y="30" width="90" height="20">
+			<text><![CDATA[Customer :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="textField" uuid="44ea7de6-ee2b-4088-89e3-14706d6b65ec" x="60" y="30" width="300" height="20" hTextAlign="Left">
+			<expression><![CDATA[$F{customer_name}]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="staticText" uuid="0a08a96a-071f-441e-b186-7460b9e9c257" x="0" y="60" width="200" height="20">
+			<text><![CDATA[NIC / Passport N0.  :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="textField" uuid="a34ee7d6-5f6c-4e35-9c1f-22f9ad4a04c8" x="100" y="60" width="200" height="20">
+			<expression><![CDATA[$F{customer_id}]]></expression>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="staticText" uuid="cd248121-6ce5-4a0e-9c78-7edc9128cf09" x="340" y="60" width="60" height="20">
+			<text><![CDATA[Contact     :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="textField" uuid="e8337dae-b0ea-410e-95a6-41ea9cda7519" x="400" y="60" width="154" height="20">
+			<expression><![CDATA[$F{customer_contact}]]></expression>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageHeader>
+	<columnHeader splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnHeader>
+	<detail>
+		<band height="160" splitType="Stretch">
+			<element kind="line" uuid="271db771-7825-4b11-80dd-2fba10c2d112" x="0" y="0" width="555" height="1">
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="staticText" uuid="adddabf4-0fe7-4562-b1a7-00b372fcafec" x="0" y="10" width="100" height="20">
+				<text><![CDATA[Vehicle No      : ]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="8077d707-f9a9-4bf7-87d8-55dc6912fd6f" x="80" y="10" width="100" height="20">
+				<expression><![CDATA[$F{vehicle_no}]]></expression>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="2fd2b8d0-8f06-4b59-ba21-3fb53341c819" x="185" y="10" width="100" height="20">
+				<text><![CDATA[Vehicle Model  :]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="ce662f46-e7d6-4146-9ef2-c44c3dacb9ac" x="380" y="10" width="100" height="20">
+				<text><![CDATA[Vehicle Type  :]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			</element>
+			<element kind="textField" uuid="29c2ef5d-a1a8-49d8-9360-fd3411c592f5" x="265" y="10" width="100" height="20">
+				<expression><![CDATA[$F{vehicle_model}]]></expression>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="5b085b33-78b0-422b-8f18-e3fcbb489e39" x="450" y="10" width="100" height="20">
+				<expression><![CDATA[$F{vehicle_type}]]></expression>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="10a41165-0696-458a-a60c-b53bf4533f72" x="0" y="50" width="80" height="20">
+				<text><![CDATA[Rental Period :]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="textField" uuid="973531e8-5b5f-471c-ade4-b5f1da5cf8dd" x="80" y="50" width="100" height="20" pattern="yyyy-MM-dd">
+				<expression><![CDATA[$F{rental_start}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="staticText" uuid="fbf262ef-3a89-4c09-b630-e58369b6fdd2" x="130" y="50" width="20" height="20" hTextAlign="Center">
+				<text><![CDATA[to]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="textField" uuid="4e8508ea-4141-4c46-8bd0-7f857d68fa3c" x="150" y="50" width="150" height="20" pattern="yyyy-MM-dd">
+				<expression><![CDATA[$F{rental_end}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<element kind="staticText" uuid="4c977794-354e-44c5-a522-ebcb54abf5bc" x="380" y="50" width="80" height="20">
+				<text><![CDATA[Rental Days :]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			</element>
+			<element kind="textField" uuid="c4786f93-c6f8-4097-bc31-ab82b22d2a38" x="445" y="50" width="100" height="20">
+				<expression><![CDATA[$F{rental_days}]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="134489bd-e65e-4487-bf25-c90deda98db7" x="310" y="123" width="100" height="20">
+				<text><![CDATA[Vehicle Total     :]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="762b0723-c4c3-4713-aa56-b3b5ebe71c3a" x="401" y="123" width="150" height="20" hTextAlign="Right">
+				<expression><![CDATA[new java.math.BigDecimal($F{day_rate} * $F{rental_days})
+    .setScale(2, java.math.RoundingMode.HALF_UP)]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
+	</detail>
+	<columnFooter splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</columnFooter>
+	<pageFooter splitType="Stretch">
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</pageFooter>
+	<summary height="380" splitType="Stretch">
+		<element kind="frame" uuid="4daf87fd-bff5-40c0-a625-a09beba00736" x="0" y="0" width="555" height="100">
+			<printWhenExpression><![CDATA[$F{driver_name} != null]]></printWhenExpression>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<element kind="staticText" uuid="b15de5e9-3e9f-4cbb-8770-06dd4080a6a2" x="0" y="0" width="555" height="20" fontSize="12.0" bold="true" hTextAlign="Left">
+				<text><![CDATA[Driver Details]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="e54f7175-06c9-4f13-80d3-a9c7fb04e7b1" x="0" y="25" width="100" height="20">
+				<text><![CDATA[Driver Name :]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="369918c5-3929-4d71-80b5-ae36f0c96442" x="0" y="50" width="100" height="20">
+				<text><![CDATA[License No    :]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="ab117f20-7850-426f-a45e-26a73c6530b3" x="0" y="75" width="100" height="20">
+				<text><![CDATA[Contact          :]]></text>
+				<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="b2149d3b-e560-4823-8e53-7a87b5a76f15" x="80" y="25" width="155" height="20">
+				<expression><![CDATA[$F{driver_name}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="74c11f03-7fd9-481c-8fe0-690de68cc41d" x="80" y="50" width="155" height="20">
+				<expression><![CDATA[$F{driver_license}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="4857f93c-9819-4395-9349-b2b4f5c61451" x="80" y="75" width="155" height="20">
+				<expression><![CDATA[$F{driver_contact}]]></expression>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="staticText" uuid="78afec1a-cafd-4842-86fe-06438a829971" x="310" y="75" width="100" height="20">
+				<text><![CDATA[Driver Total       :]]></text>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</element>
+			<element kind="textField" uuid="caeb2c22-7d28-4ec5-945c-9973f598c211" x="400" y="75" width="150" height="20" hTextAlign="Right">
+				<expression><![CDATA[new java.math.BigDecimal($F{driver_rate}* $F{rental_days})
+    .setScale(2, java.math.RoundingMode.HALF_UP)]]></expression>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			</element>
+		</element>
+		<element kind="line" uuid="1bd94829-07af-4ae5-bc03-38ff273a44f4" x="284" y="107" width="270" height="1">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="staticText" uuid="2fa86dee-6b6c-45d7-8081-fab5186371f0" x="308" y="110" width="150" height="20">
+			<text><![CDATA[Total Rental Fee :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="dffd2572-f2d6-4bbe-b9c6-8e08c060e44d" x="308" y="154" width="150" height="20">
+			<text><![CDATA[Base Rental Fee :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="staticText" uuid="88775176-f023-41c0-87cc-eac8045045d7" x="244" y="180" width="215" height="20">
+			<text><![CDATA[Remaining amount to be paid :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<element kind="line" uuid="a1fca11b-1010-4697-80d7-5733dbad1fb8" x="299" y="175" width="255" height="1">
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<pen lineStyle="Dashed"/>
+		</element>
+		<element kind="textField" uuid="aa014f59-fa55-4f7b-b97f-10e0f877d776" x="450" y="180" width="100" height="20" pattern="#,##0.00" hTextAlign="Right">
+			<expression><![CDATA[new java.math.BigDecimal($F{final_payment}-$F{base_payment})
+    .setScale(2, java.math.RoundingMode.HALF_UP)]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="net.sf.jasperreports.style.pattern" value=""/>
+		</element>
+		<element kind="textField" uuid="6f55a859-8595-4992-8fb6-6afc9a77a468" x="450" y="154" width="100" height="20" pattern="#,##0.00" hTextAlign="Right">
+			<expression><![CDATA[new java.math.BigDecimal($F{base_payment})
+    .setScale(2, java.math.RoundingMode.HALF_UP)]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="net.sf.jasperreports.style.pattern" value=""/>
+		</element>
+		<element kind="textField" uuid="8824ca92-b649-41fc-877d-264edfd188cf" x="450" y="110" width="100" height="20" markup="styled" pattern="#,##0.00" hTextAlign="Right">
+			<expression><![CDATA[new java.math.BigDecimal(
+    ($F{day_rate} * $F{rental_days})
+  + ($F{driver_rate} == null ? 0 : $F{driver_rate} * $F{rental_days})
+  ).setScale(2, java.math.RoundingMode.HALF_UP)]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="net.sf.jasperreports.style.pattern" value=""/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+		</element>
+		<element kind="line" uuid="ac94599d-e28d-4cd5-a341-cc2226dfc924" x="0" y="200" width="555" height="1">
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="staticText" uuid="9766170b-663b-4d4c-8251-9ee9ee9d74c7" x="0" y="205" width="215" height="20">
+			<text><![CDATA[Payment Method : Cash]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="staticText" uuid="8851897f-966b-4155-9f28-5b0afa8a71d7" x="0" y="227" width="215" height="20">
+			<text><![CDATA[Payment Status    : BASE PAYMENT PAID]]></text>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="staticText" uuid="0419f57d-30f0-40a7-87f9-a165ceea3e97" x="0" y="275" width="554" height="30" forecolor="#DE1714" fontSize="10.0">
+			<text><![CDATA[ **      This payment is received as the base payment for vehicle rental. Additional charges may apply for extra days,damages, or late returns]]></text>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+		</element>
+		<element kind="staticText" uuid="090d950a-d394-495e-a49f-2526d00a7515" x="0" y="318" width="241" height="26" hTextAlign="Left">
+			<text><![CDATA[Authorized Signature : _______________________]]></text>
+		</element>
+		<element kind="staticText" uuid="b699017e-8a0f-4372-928d-0993238b15c3" x="130" y="355" width="300" height="23" hTextAlign="Center">
+			<text><![CDATA[Thank You for Choosing Our Service!]]></text>
+		</element>
+		<element kind="line" uuid="10a6a201-d329-4b5c-912a-37f2fb703e2a" x="0" y="378" width="555" height="1">
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+		</element>
+		<element kind="textField" uuid="c1bb35d1-df15-4a3d-8915-37a02411c286" x="450" y="132" width="100" height="20" pattern="#,##0.00" hTextAlign="Right">
+			<printWhenExpression><![CDATA[$F{discount} != null]]></printWhenExpression>
+			<expression><![CDATA[new java.math.BigDecimal($F{discount})
+    .setScale(2, java.math.RoundingMode.HALF_UP)]]></expression>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="net.sf.jasperreports.style.pattern" value=""/>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+		</element>
+		<element kind="staticText" uuid="d0e17685-e554-41d6-8c1d-0daf0759e17a" x="308" y="132" width="150" height="20">
+			<printWhenExpression><![CDATA[$F{discount} != null]]></printWhenExpression>
+			<text><![CDATA[Discount             :]]></text>
+			<property name="com.jaspersoft.studio.unit.x" value="px"/>
+			<property name="com.jaspersoft.studio.unit.y" value="px"/>
+			<property name="com.jaspersoft.studio.unit.width" value="px"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</element>
+		<property name="com.jaspersoft.studio.unit.height" value="px"/>
+	</summary>
+</jasperReport>
