@@ -90,4 +90,17 @@ public class CustomerModel {
         }
         return id ;
     }
+
+    public List<String> getCustomersNotPaidLast(){
+        ArrayList<String> cuatomerNameList = new ArrayList();
+        try {
+            ResultSet rs = CrudUtil.execute("SELECT c.name FROM Rental r JOIN Customer c ON r.customer_id = c.customer_id LEFT JOIN last_Payment lp ON r.rental_id = lp.rental_id WHERE lp.last_payment_id IS NULL");
+            if (rs.next()) {
+                cuatomerNameList.add(rs.getString("name"));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return cuatomerNameList;
+    }
 }

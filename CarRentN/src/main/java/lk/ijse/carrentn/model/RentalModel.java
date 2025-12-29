@@ -159,7 +159,7 @@ public class RentalModel {
     public RentalDTO searchRent(String id) throws SQLException {
         RentalDTO rentalDTO = null;
 
-        ResultSet result = CrudUtil.execute("SELECT * FROM Rental WHERE customer_id = ? ORDER BY rental_id DESC LIMIT 1",id);
+        ResultSet result = CrudUtil.execute("SELECT * FROM Rental r JOIN Customer c ON r.customer_id = c.customer_id LEFT JOIN last_Payment lp ON r.rental_id = lp.rental_id WHERE lp.last_payment_id IS NULL AND r.customer_id = ?",id);
 
         if (result.next()) {
             int rentalId = result.getInt("rental_id");

@@ -86,6 +86,8 @@ public class CurrentRentalCalculateController implements Initializable {
     private double vehicleTotal;
     private double driverTotal;
     private double remainPay;
+    private double vehicleDamagefee;
+    private double customerPay;
 
     public final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
@@ -230,12 +232,11 @@ public class CurrentRentalCalculateController implements Initializable {
 
     @FXML
     private void handleSerchRentByInvoiceId() {
-
     }
 
     private void lordCustomerNames() {
         try {
-            List<String> customerList = customerModel.getAllOCustomerNames();
+            List<String> customerList = customerModel.getCustomersNotPaidLast();
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(customerList);
             customerCbox.setItems(obList);
@@ -296,7 +297,7 @@ public class CurrentRentalCalculateController implements Initializable {
         return lateFee;
     }
 
-    //calculate total of vehicle ,driver and late fine
+    //calculate total of vehicle ,driver , late fine and vehicle damage fine
     @FXML
     private void calculateTotal(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -305,6 +306,7 @@ public class CurrentRentalCalculateController implements Initializable {
             if (vehicleDFD.trim().isEmpty()) vehicleDFD = null;
 
             if (vehicleDFD != null) {
+                vehicleDamagefee = Double.parseDouble(vehicleDFD.trim());
                 if (vehicleDFD.matches(PAYMENT_REGEX)) {
                     totalPay = Math.round(Double.parseDouble((vehicleDFField.getText()) + total) * 100.0) / 100.0;
                     totalLable.setText(String.valueOf(totalPay) + 0);
@@ -312,6 +314,7 @@ public class CurrentRentalCalculateController implements Initializable {
                     new Alert(Alert.AlertType.ERROR, "Please input valid fee Amount!").show();
                 }
             }else {
+                vehicleDamagefee = 0.00;
                 totalPay = Math.round(total * 100.0) / 100.0;
                 vehicleDFField.setText("0.00");
                 totalLable.setText(String.valueOf(totalPay) + 0);
@@ -329,6 +332,7 @@ public class CurrentRentalCalculateController implements Initializable {
         if (event.getCode() == KeyCode.ENTER) {
             try {
                 double balance = Math.round((Double.parseDouble(customerPaidAmountField.getText()) - remainPay) * 100.0) / 100.0;
+                customerPay = Double.parseDouble(customerPaidAmountField.getText().trim());
                 if (balance < 0) {
                     new Alert(Alert.AlertType.ERROR, "Please input Valid Customer Paid Amount!").show();
                 } else {
@@ -340,15 +344,13 @@ public class CurrentRentalCalculateController implements Initializable {
 
         }
     }
+
+    @FXML
+    void handlePrint(ActionEvent event) {
+        try {
+            lastPaymentModel.printLastPayInvoice(Integer.parseInt(lastPaymentModel.getSaveLastPaymentId()),vehicleDamagefee,customerPay);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
-
-

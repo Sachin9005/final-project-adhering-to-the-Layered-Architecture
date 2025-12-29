@@ -101,7 +101,7 @@ public class RentalManageController implements Initializable {
         colSDate.setCellValueFactory(new PropertyValueFactory<>("start_date"));
         colDays.setCellValueFactory(new PropertyValueFactory<>("dates_of_rent"));
         colEDate.setCellValueFactory(new PropertyValueFactory<>("return_date"));
-        sDateField.setText(String.valueOf(LocalDate.now()).toString());
+        sDateField.setText(String.valueOf(LocalDate.now()));
         driverIdField.setText("");
 
         lordCustomerNames();
@@ -116,54 +116,6 @@ public class RentalManageController implements Initializable {
         vehicleIDField.setText(vehicleId);
         driverIdField.setText(driverId);
         daysField.setText(rentDays);
-    }
-
-    private void lordCustomerNames(){
-        try {
-            List<String> customerList = customerModel.getAllOCustomerNames();
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(customerList);
-            customeCbox.setItems(obList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
-        }
-    }
-
-    public void lordVehicleNames(){
-        try {
-            List<String> vehicleList = vehicleModel.getAllVehicleNo();
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(vehicleList);
-            vehicleCbox.setItems(obList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
-        }
-    }
-
-    public void lordDriverNames(){
-        try {
-            List<String> driverList = driverModel.getAllDriverNames();
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(driverList);
-            driveerCbox.setItems(obList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
-        }
-    }
-
-    public void lordDiscountDes(){
-        try {
-            List<String> discountList = discountModel.getAllDiscountDes();
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(discountList);
-            comboDiscountId.setItems(obList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
-        }
     }
 
     @FXML
@@ -275,28 +227,6 @@ public class RentalManageController implements Initializable {
         }
     }
 
-    private void cleanFileds () {
-        retalIDField.setText("");
-        customerIdField.setText("");
-        vehicleIDField.setText("");
-        driverIdField.setText("");
-        sDateField.setText("");
-        daysField.setText("");
-        eDateField.setText("");
-        customeCbox.getSelectionModel().clearSelection();
-        customerLable.setText("Select Customer");
-        vehicleCbox.getSelectionModel().clearSelection();
-        vehicleLable.setText("Select Vehicle");
-        driveerCbox.getSelectionModel().clearSelection();
-        driverLable.setText("Select Driver");
-        comboDiscountId.getSelectionModel().clearSelection();
-        discountLable.setText("Select Discount");
-        basePayField.setText("");
-        totalPriceLable.setText("-");
-        sDateField.setText(String.valueOf(LocalDate.now()).toString());
-
-    }
-
     @FXML
     private void handleDeleteRental() {
         try {
@@ -329,6 +259,7 @@ public class RentalManageController implements Initializable {
         customerIdField.setText(cusId);
         customerLable.setText("");
     }
+
     @FXML
     private void handleSelectDriver(ActionEvent event) {
         String driverName = driveerCbox.getSelectionModel().getSelectedItem();
@@ -337,6 +268,7 @@ public class RentalManageController implements Initializable {
         driverLable.setText("");
 
     }
+
     @FXML
     private void handleSelectVehicle(ActionEvent event) {
         String vehiclemodel = vehicleCbox.getSelectionModel().getSelectedItem();
@@ -359,6 +291,79 @@ public class RentalManageController implements Initializable {
         }
 
     }
+
+    @FXML
+    private void calculateTotal(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER){
+            String vehicleId = vehicleIDField.getText().trim();
+            String driverId = driverIdField.getText().trim();
+            String days = daysField.getText().trim();
+
+            if (vehicleId == null || vehicleId.isBlank()) {
+                new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
+                return;
+            }
+
+            if (days == null || !days.matches(DAY_REGEX)) {
+                new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
+                return;
+            }
+
+            // driver is OPTIONAL
+            driverId = (driverId == null) ? "" : driverId.trim();
+
+            calculatetotal(driverId, vehicleId.trim(), Integer.parseInt(days.trim()));
+        }
+    }
+
+    private void lordCustomerNames(){
+        try {
+            List<String> customerList = customerModel.getAllOCustomerNames();
+            ObservableList<String> obList = FXCollections.observableArrayList();
+            obList.addAll(customerList);
+            customeCbox.setItems(obList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+        }
+    }
+
+    private void lordVehicleNames(){
+        try {
+            List<String> vehicleList = vehicleModel.getAllVehicleNo();
+            ObservableList<String> obList = FXCollections.observableArrayList();
+            obList.addAll(vehicleList);
+            vehicleCbox.setItems(obList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+        }
+    }
+
+    private void lordDriverNames(){
+        try {
+            List<String> driverList = driverModel.getAllDriverNames();
+            ObservableList<String> obList = FXCollections.observableArrayList();
+            obList.addAll(driverList);
+            driveerCbox.setItems(obList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+        }
+    }
+
+    private void lordDiscountDes(){
+        try {
+            List<String> discountList = discountModel.getAllDiscountDes();
+            ObservableList<String> obList = FXCollections.observableArrayList();
+            obList.addAll(discountList);
+            comboDiscountId.setItems(obList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
+        }
+    }
+
     private void lordRentalTable(){
         try {
             List<RentalDTO> rentalDTOS = rentalModel.getAllRentals();
@@ -374,6 +379,7 @@ public class RentalManageController implements Initializable {
             e.printStackTrace();
         }
     }
+
     private double calculatetotal(String driverId,String vehicleId,int days){
         //total pay calcuulation
         double total = 0.0;
@@ -401,30 +407,26 @@ public class RentalManageController implements Initializable {
         return total;
     }
 
-    @FXML
-    private void calculateTotal(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
-            String vehicleId = vehicleIDField.getText().trim();
-            String driverId = driverIdField.getText().trim();
-            String days = daysField.getText().trim();
+    private void cleanFileds () {
+        retalIDField.setText("");
+        customerIdField.setText("");
+        vehicleIDField.setText("");
+        driverIdField.setText("");
+        sDateField.setText("");
+        daysField.setText("");
+        eDateField.setText("");
+        customeCbox.getSelectionModel().clearSelection();
+        customerLable.setText("Select Customer");
+        vehicleCbox.getSelectionModel().clearSelection();
+        vehicleLable.setText("Select Vehicle");
+        driveerCbox.getSelectionModel().clearSelection();
+        driverLable.setText("Select Driver");
+        comboDiscountId.getSelectionModel().clearSelection();
+        discountLable.setText("Select Discount");
+        basePayField.setText("");
+        totalPriceLable.setText("-");
+        sDateField.setText(String.valueOf(LocalDate.now()).toString());
 
-            if (vehicleId == null || vehicleId.isBlank()) {
-                new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
-                return;
-            }
-
-            if (days == null || !days.matches(DAY_REGEX)) {
-                new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
-                return;
-            }
-
-            // driver is OPTIONAL
-            driverId = (driverId == null) ? "" : driverId.trim();
-
-            calculatetotal(driverId, vehicleId.trim(), Integer.parseInt(days.trim()));
-        }
     }
-
-
 
 }
