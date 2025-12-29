@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.ProfileController">
+   <children>
+      <VBox alignment="CENTER" layoutY="2.0" prefHeight="85.0" prefWidth="1100.0">
+         <children>
+            <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Profile Details">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="46.0" layoutY="78.0" prefHeight="115.0" prefWidth="246.0">
+         <children>
+            <ImageView fitHeight="113.0" fitWidth="146.0" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets left="100.0" />
+               </VBox.margin>
+               <image>
+                  <Image url="@images/cs.png" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
+      <VBox layoutX="275.0" layoutY="85.0" prefHeight="38.0" prefWidth="366.0">
+         <children>
+            <Label fx:id="nameLable" prefHeight="37.0" prefWidth="366.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="275.0" layoutY="130.0" prefHeight="38.0" prefWidth="366.0">
+         <children>
+            <Label fx:id="roleLable" prefHeight="38.0" prefWidth="361.0">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="145.0" layoutY="275.0" prefHeight="49.0" prefWidth="375.0" style="-fx-border-color: black; -fx-border-width: 0 0 2 0;">
+         <children>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="UserName :" />
+            <Label fx:id="useNameLable" prefHeight="21.0" prefWidth="340.0" style="-fx-font-size: 15;">
+               <VBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="145.0" layoutY="375.0" prefHeight="49.0" prefWidth="375.0" style="-fx-border-color: black; -fx-border-width: 0 0 2 0;">
+         <children>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Email :" />
+            <Label fx:id="emailLabe" prefHeight="21.0" prefWidth="335.0" style="-fx-font-size: 15;">
+               <VBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="600.0" layoutY="375.0" prefHeight="49.0" prefWidth="354.0" style="-fx-border-color: black; -fx-border-width: 0 0 2 0;">
+         <children>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Phone No. :" />
+            <Label fx:id="phoneNoLable" prefHeight="21.0" prefWidth="313.0" style="-fx-font-size: 15;">
+               <VBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <VBox layoutX="145.0" layoutY="475.0" prefHeight="49.0" prefWidth="450.0" style="-fx-border-color: black; -fx-border-width: 0 0 2 0;">
+         <children>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Address :" />
+            <Label fx:id="adressLable" prefHeight="21.0" prefWidth="412.0" style="-fx-font-size: 15;">
+               <VBox.margin>
+                  <Insets left="30.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+      <CheckBox fx:id="checkBox" layoutX="957.0" layoutY="300.0" mnemonicParsing="false" onAction="#changeVisibility" text="Show Password" />
+      <Label layoutX="600.0" layoutY="278.0" style="-fx-font-size: 14; -fx-font-weight: bold;" text="Password :" />
+      <PasswordField fx:id="passwordFeild" editable="false" layoutX="600.0" layoutY="295.0" prefHeight="30.0" prefWidth="345.0" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;" />
+      <TextField fx:id="passwordShowField" editable="false" layoutX="600.0" layoutY="295.0" prefHeight="30.0" prefWidth="345.0" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2 0;" />
+   </children>
+</AnchorPane>
