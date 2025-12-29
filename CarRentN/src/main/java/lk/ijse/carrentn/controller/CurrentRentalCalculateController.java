@@ -25,73 +25,52 @@ public class CurrentRentalCalculateController implements Initializable {
 
     @FXML
     private Label balanceLable;
-
     @FXML
     private Label basePayField;
-
     @FXML
     private TextField customeNICField;
-
     @FXML
     private ComboBox<String> customerCbox;
-
     @FXML
     private TextField customerNameField;
-
     @FXML
     private TextField customerPaidAmountField;
-
     @FXML
     private Label daysLable;
-
     @FXML
     private Label discountLable;
-
     @FXML
     private Label driverNameField;
-
     @FXML
     private Label driverRateField;
-
     @FXML
     private Label driverTotalLable;
-
     @FXML
     private Label eDateLable;
-
     @FXML
     private TextField invoiceIDField;
-
     @FXML
     private Label lateDatesLable;
-
     @FXML
     private Label lateFeeLable;
-
     @FXML
     private Label modelLable;
-
+    @FXML
+    private Label NoLable;
     @FXML
     private Label remainAmountLable;
-
     @FXML
     private Label returnedDateLable;
-
     @FXML
     private Label sDateLable;
-
     @FXML
     private Label selectCustomerLable;
-
     @FXML
     private Label totalLable;
-
     @FXML
     private TextField vehicleDFField;
-
     @FXML
     private Label vehicleRateLable;
-
     @FXML
     private Label vehicleTotalLable;
 
@@ -108,19 +87,18 @@ public class CurrentRentalCalculateController implements Initializable {
     private double driverTotal;
     private double remainPay;
 
-    private final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
+    public final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-
-    private CustomerModel customerModel = new CustomerModel();
-    private RentalModel rentalModel = new RentalModel();
-    private VehicleModel vehicleModel = new VehicleModel();
-    private DriverModel driverModel = new DriverModel();
-    private FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
-    private RentalDiscountModel rentalDiscountModel = new RentalDiscountModel();
-    private LastPaymentModel lastPaymentModel = new LastPaymentModel();
+    private final CustomerModel customerModel = new CustomerModel();
+    private final RentalModel rentalModel = new RentalModel();
+    private final VehicleModel vehicleModel = new VehicleModel();
+    private final DriverModel driverModel = new DriverModel();
+    private final FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
+    private final RentalDiscountModel rentalDiscountModel = new RentalDiscountModel();
+    private final LastPaymentModel lastPaymentModel = new LastPaymentModel();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb){
+    public void initialize(URL url, ResourceBundle rb) {
         lordCustomerNames();
     }
 
@@ -131,16 +109,16 @@ public class CurrentRentalCalculateController implements Initializable {
         double vdTotal = total - lateFee - basePay;
 
         //fine payment = late fee + vehicle damage fee
-        double finePay = totalPay -(vehicleTotal+driverTotal);
-        LastPaymentDTO lastPaymentDTO = new LastPaymentDTO(firstPayId,rentalId,lateDays,vdTotal,finePay,(totalPay-discount),LocalDate.now());
+        double finePay = totalPay - (vehicleTotal + driverTotal);
+        LastPaymentDTO lastPaymentDTO = new LastPaymentDTO(firstPayId, rentalId, lateDays, vdTotal, finePay, (totalPay - discount), LocalDate.now());
         try {
             boolean isSaved = lastPaymentModel.saveFullPayment(lastPaymentDTO);
             cleanFields();
 
-            if (isSaved){
-                new Alert(Alert.AlertType.INFORMATION,"Payment Successful!").show();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Something Went Wrong!").show();
+            if (isSaved) {
+                new Alert(Alert.AlertType.INFORMATION, "Payment Successful!").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Something Went Wrong!").show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -150,7 +128,8 @@ public class CurrentRentalCalculateController implements Initializable {
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {cleanFields();
+    private void handleReset(ActionEvent event) {
+        cleanFields();
     }
 
     @FXML
@@ -181,13 +160,18 @@ public class CurrentRentalCalculateController implements Initializable {
         try {
             DriverDTO driverDTO = null;
             customeNICField.setText(customerModel.search(cusId).getNic_or_passport_number());
-            RentalDTO rentalDTO = rentalModel.searchRent(cusId);
 
+            RentalDTO rentalDTO = rentalModel.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();
 
-            VehicleDTO vehicleDTO = vehicleModel.search(String.valueOf(rentalDTO.getVehicle_id()));
+            String vehicleNo = vehicleModel.searchVehicle(String.valueOf(rentalDTO.getVehicle_id()));
+            System.out.println(rentalDTO.getVehicle_id());
+            System.out.println(vehicleNo);
+            VehicleDTO vehicleDTO = vehicleModel.search(vehicleNo);
+
             RentalDiscountDTO rentalDiscountDTO = rentalDiscountModel.searchRentalById(String.valueOf(rentalDTO.getRental_id()));
 
+            NoLable.setText(vehicleNo);
             modelLable.setText(vehicleDTO.getModel());
             vehicleRateLable.setText(String.valueOf(vehicleDTO.getRate_per_day()));
 
@@ -206,12 +190,13 @@ public class CurrentRentalCalculateController implements Initializable {
 
             if (driverId != null) {
                 driverDTO = driverModel.search(driverId);
+                driverTotal = calculateDriverTotal(driverDTO, rentalDTO);
                 driverNameField.setText(driverDTO.getName());
                 driverRateField.setText(String.valueOf(driverDTO.getDriver_rate_per_day()));
             }
 
             vehicleTotal = calculateVehicleTotal(vehicleDTO, rentalDTO);
-            driverTotal = calculateDriverTotal(driverDTO, rentalDTO);
+
             lateFee = calculateLateFee(rentalDTO, driverId);
 
             //total of vehicle, Driver and late fee
@@ -228,11 +213,11 @@ public class CurrentRentalCalculateController implements Initializable {
             sDateLable.setText(String.valueOf(rentalDTO.getStart_date()));
             eDateLable.setText(String.valueOf(rentalDTO.getReturn_date()));
             returnedDateLable.setText(String.valueOf(LocalDate.now()));
-            basePayField.setText(String.valueOf(basePay)+0);
+            basePayField.setText(String.valueOf(basePay) + 0);
             discountLable.setText(String.valueOf(discount));
-            vehicleTotalLable.setText(String.valueOf(vehicleTotal)+0);
-            driverTotalLable.setText(String.valueOf(driverTotal)+0);
-            lateFeeLable.setText(String.valueOf(lateFee)+0);
+            vehicleTotalLable.setText(String.valueOf(vehicleTotal) + 0);
+            driverTotalLable.setText(String.valueOf(driverTotal) + 0);
+            lateFeeLable.setText(String.valueOf(lateFee) + 0);
 
             lateDays = Integer.parseInt(lateDatesLable.getText());
 
@@ -242,11 +227,13 @@ public class CurrentRentalCalculateController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Invalid Customer Or Rent!").show();
         }
     }
+
     @FXML
     private void handleSerchRentByInvoiceId() {
 
     }
-    private void lordCustomerNames(){
+
+    private void lordCustomerNames() {
         try {
             List<String> customerList = customerModel.getAllOCustomerNames();
             ObservableList<String> obList = FXCollections.observableArrayList();
@@ -258,7 +245,7 @@ public class CurrentRentalCalculateController implements Initializable {
         }
     }
 
-    private void cleanFields(){
+    private void cleanFields() {
         invoiceIDField.setText("");
         customerNameField.setText("");
         customeNICField.setText("");
@@ -286,78 +273,82 @@ public class CurrentRentalCalculateController implements Initializable {
     }
 
     //payment for vehicle
-    private double calculateVehicleTotal(VehicleDTO vehicleDTO,RentalDTO rentalDTO){
-        double vehicleTotal = vehicleDTO.getRate_per_day()*rentalDTO.getDates_of_rent();
-        return vehicleTotal;
+    private double calculateVehicleTotal(VehicleDTO vehicleDTO, RentalDTO rentalDTO) {
+        return vehicleDTO.getRate_per_day() * rentalDTO.getDates_of_rent();
     }
 
     //payment for Driver
-    private double calculateDriverTotal(DriverDTO driverDTO,RentalDTO rentalDTO){
-        double driverTotal = driverDTO.getDriver_rate_per_day()*rentalDTO.getDates_of_rent();
-        return driverTotal;
+    private double calculateDriverTotal(DriverDTO driverDTO, RentalDTO rentalDTO) {
+        return driverDTO.getDriver_rate_per_day() * rentalDTO.getDates_of_rent();
     }
 
     //late payment fine
-    private double calculateLateFee(RentalDTO rentalDTO,String driverId) {
+    private double calculateLateFee(RentalDTO rentalDTO, String driverId) {
         double lateFee = 0;
         int lateDates = Integer.parseInt(String.valueOf(ChronoUnit.DAYS.between(rentalDTO.getReturn_date(), LocalDate.now())));
-        if (lateDates > 0 && lateDates != 1) {
+        if (lateDates > 1) {
             if (driverId != null) {
-                lateFee =  (500.00 * lateDates) + (250 * lateDates);
+                lateFee = (500.00 * lateDates) + (250 * lateDates);
             } else {
-                lateFee =  (500.00 * lateDates);
+                lateFee = (500.00 * lateDates);
             }
         }
         return lateFee;
     }
 
-    //customer s' Balance
+    //calculate total of vehicle ,driver and late fine
+    @FXML
+    private void calculateTotal(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            String vehicleDFD = vehicleDFField.getText();
+
+            if (vehicleDFD.trim().isEmpty()) vehicleDFD = null;
+
+            if (vehicleDFD != null) {
+                if (vehicleDFD.matches(PAYMENT_REGEX)) {
+                    totalPay = Math.round(Double.parseDouble((vehicleDFField.getText()) + total) * 100.0) / 100.0;
+                    totalLable.setText(String.valueOf(totalPay) + 0);
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Please input valid fee Amount!").show();
+                }
+            }else {
+                totalPay = Math.round(total * 100.0) / 100.0;
+                vehicleDFField.setText("0.00");
+                totalLable.setText(String.valueOf(totalPay) + 0);
+            }
+            remainPay = totalPay - basePay - discount;
+            remainPay = Math.round(remainPay * 100.0) / 100.0;
+            remainAmountLable.setText(String.valueOf(remainPay));
+        }
+    }
+
+    //customers Balance
     @FXML
     private void calculateBalance(KeyEvent event) {
 
         if (event.getCode() == KeyCode.ENTER) {
             try {
                 double balance = Math.round((Double.parseDouble(customerPaidAmountField.getText()) - remainPay) * 100.0) / 100.0;
-                if (balance < 0 ){
+                if (balance < 0) {
                     new Alert(Alert.AlertType.ERROR, "Please input Valid Customer Paid Amount!").show();
-                }else {
+                } else {
                     balanceLable.setText(String.valueOf(balance));
                 }
             } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Please input Customer Paid Amount!").show();
             }
 
-        }   }
-
-    //calculate total of vehicle ,driver and late fine
-    @FXML
-    private void calculateTotal(KeyEvent event) {
-        String vehicleDFF = "";
-        if (event.getCode() == KeyCode.ENTER) {
-            String vehicleDFD= vehicleDFField.getText();
-
-            if (vehicleDFD.matches(PAYMENT_REGEX)|| vehicleDFField.getText() == "" || vehicleDFField.getText() == null ){
-                if (vehicleDFField.getText() == "" || vehicleDFField.getText() == null) vehicleDFF = null;
-                if (vehicleDFF != null) {
-                    totalPay = Math.round(Double.parseDouble(vehicleDFField.getText()) + total * 100.0) / 100.0;
-                    totalLable.setText(String.valueOf(totalPay)+0);
-                } else {
-                    totalPay = Math.round(total * 100.0) / 100.0;
-                    vehicleDFField.setText("0.00");
-                    totalLable.setText(String.valueOf(totalPay)+0);
-                }
-                remainPay = totalPay - basePay - discount;
-                remainPay = Math.round(remainPay * 100.0) / 100.0;
-                remainAmountLable.setText(String.valueOf(remainPay));
-            }else {
-                new Alert(Alert.AlertType.ERROR, "Please input valid fee Amount!").show();
-            }
-
         }
-
-
     }
-
 }
+
+
+
+
+
+
+
+
+
 
 

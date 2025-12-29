@@ -231,7 +231,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <VBox layoutX="149.0" layoutY="153.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="159.0" layoutY="153.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="No  :" />
             <Label fx:id="NoLable" text="-" />

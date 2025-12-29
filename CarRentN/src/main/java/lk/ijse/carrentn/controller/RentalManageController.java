@@ -269,11 +269,10 @@ public class RentalManageController implements Initializable {
     @FXML
     private void handlePrint(ActionEvent event) {
         try {
-            rentalModel.printOrderInvoice(firstPaymentModel.getFirstPayment(Integer.parseInt(rentalModel.getSaveLastRentalId())).getFirst_payment_id());
+            rentalModel.printBasePayInvoice(firstPaymentModel.getFirstPayment(Integer.parseInt(rentalModel.getSaveLastRentalId())).getFirst_payment_id());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     private void cleanFileds () {

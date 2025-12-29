@@ -104,6 +104,20 @@ public class VehicleModel {
         return id ;
     }
 
+    public String searchVehicle(String id) {
+        String vehicleNO = null;
+        try {
+            ResultSet result = CrudUtil.execute("SELECT vehicle_No FROM Vehicle WHERE vehicle_id = ?", id);
+            if (result.next()) {
+                String vehicleNo = result.getString("vehicle_No");
+                vehicleNO = String.valueOf(vehicleNo);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return vehicleNO;
+    }
+
     public double searchPrioce(String id) throws SQLException {
         double ratePerDay =0.0;
         try {

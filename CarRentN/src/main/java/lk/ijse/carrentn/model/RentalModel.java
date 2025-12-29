@@ -184,7 +184,7 @@ public class RentalModel {
         return id;
     }
 
-    public void printOrderInvoice(int basePaymentId) throws JRException, SQLException {
+    public void printBasePayInvoice(int basePaymentId) throws JRException, SQLException {
 
         Connection conn = DBConnection.getInstance().getConnection();
 
