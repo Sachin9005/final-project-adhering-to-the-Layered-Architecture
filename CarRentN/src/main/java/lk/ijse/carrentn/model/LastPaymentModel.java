@@ -16,7 +16,7 @@ import java.util.Map;
 public class LastPaymentModel {
 
     public boolean saveFullPayment(LastPaymentDTO lastPaymentDTO)throws SQLException {
-        boolean isSaved = CrudUtil.execute(
+        return CrudUtil.execute(
                 "INSERT INTO last_Payment (first_payment_id, rental_id, late_days, balance_payment, fine_payment,last_payment , last_payment_date) VALUES (?,?,?,?,?,?,?)",
                 lastPaymentDTO.getFirst_payment_id(),
                 lastPaymentDTO.getRental_id(),
@@ -25,7 +25,6 @@ public class LastPaymentModel {
                 lastPaymentDTO.getFine_payment(),
                 lastPaymentDTO.getLast_payment(),
                 lastPaymentDTO.getLast_payment_date());
-        return isSaved;
     }
 
     public void printLastPayInvoice(int finalPaymentId,double vehicleDamage,double customerPay) throws JRException, SQLException {

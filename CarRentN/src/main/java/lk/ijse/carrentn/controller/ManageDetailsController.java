@@ -19,8 +19,9 @@ public class ManageDetailsController implements Initializable {
     @FXML
     public AnchorPane mainContent;
 
-   @Override
+    @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         try {
             clickRentalNav();
         }catch (Exception e){
@@ -52,7 +53,7 @@ public class ManageDetailsController implements Initializable {
         mainContent.getChildren().setAll(customerFXML);
     }
 
-   @FXML
+    @FXML
     private void clickVehicleNav() throws IOException {
         Parent customerFXML = App.loadFXML("VehicleManage");
         mainContent.getChildren().setAll(customerFXML);
@@ -68,8 +69,4 @@ public class ManageDetailsController implements Initializable {
     private void back() throws Exception {
         App.setRoot("MainDashboard");
     }
-
-
-
-    
 }

@@ -2,7 +2,6 @@ package lk.ijse.carrentn.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -130,12 +129,12 @@ public class CurrentRentalCalculateController implements Initializable {
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {
+    private void handleReset() {
         cleanFields();
     }
 
     @FXML
-    private void handleSelectCustomer(ActionEvent event) {
+    private void handleSelectCustomer() {
         String cusName = customerCbox.getSelectionModel().getSelectedItem();
         customerNameField.setText(cusName);
         selectCustomerLable.setText("");
@@ -160,7 +159,6 @@ public class CurrentRentalCalculateController implements Initializable {
     @FXML
     private void handleSearchRentByCustomerName() {
         try {
-            DriverDTO driverDTO = null;
             customeNICField.setText(customerModel.search(cusId).getNic_or_passport_number());
 
             RentalDTO rentalDTO = rentalModel.searchRent(cusId);
@@ -191,7 +189,7 @@ public class CurrentRentalCalculateController implements Initializable {
             }
 
             if (driverId != null) {
-                driverDTO = driverModel.search(driverId);
+                DriverDTO driverDTO = driverModel.search(driverId);
                 driverTotal = calculateDriverTotal(driverDTO, rentalDTO);
                 driverNameField.setText(driverDTO.getName());
                 driverRateField.setText(String.valueOf(driverDTO.getDriver_rate_per_day()));
@@ -289,9 +287,9 @@ public class CurrentRentalCalculateController implements Initializable {
         int lateDates = Integer.parseInt(String.valueOf(ChronoUnit.DAYS.between(rentalDTO.getReturn_date(), LocalDate.now())));
         if (lateDates > 1) {
             if (driverId != null) {
-                lateFee = (500.00 * lateDates) + (250 * lateDates);
+                lateFee = (500.00 * lateDates-1) + (250 * lateDates-1);
             } else {
-                lateFee = (500.00 * lateDates);
+                lateFee = (500.00 * lateDates-1);
             }
         }
         return lateFee;
@@ -308,8 +306,9 @@ public class CurrentRentalCalculateController implements Initializable {
             if (vehicleDFD != null) {
                 vehicleDamagefee = Double.parseDouble(vehicleDFD.trim());
                 if (vehicleDFD.matches(PAYMENT_REGEX)) {
-                    totalPay = Math.round(Double.parseDouble((vehicleDFField.getText()) + total) * 100.0) / 100.0;
-                    totalLable.setText(String.valueOf(totalPay) + 0);
+                    double vehicleDF = Double.parseDouble(vehicleDFField.getText());
+                    totalPay = Math.round((vehicleDF + total) * 100.0) / 100.0;
+                    totalLable.setText(String.valueOf(totalPay));
                 } else {
                     new Alert(Alert.AlertType.ERROR, "Please input valid fee Amount!").show();
                 }
@@ -346,7 +345,7 @@ public class CurrentRentalCalculateController implements Initializable {
     }
 
     @FXML
-    void handlePrint(ActionEvent event) {
+    void handlePrint() {
         try {
             lastPaymentModel.printLastPayInvoice(Integer.parseInt(lastPaymentModel.getSaveLastPaymentId()),vehicleDamagefee,customerPay);
         }catch (Exception e){

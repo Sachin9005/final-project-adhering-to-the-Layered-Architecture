@@ -12,23 +12,18 @@ import java.util.List;
 
 
 public class CarOwnerModel {
-
     public boolean save(CarOwnerDTO carOwnerDTO) throws SQLException {
-
-        boolean result = CrudUtil.execute("INSERT INTO CarOwner (name,phone, bank_account) VALUES (?,?,?)", carOwnerDTO.getName(),carOwnerDTO.getPhone(),carOwnerDTO.getBank_account());
-        return result;
+        return CrudUtil.execute("INSERT INTO CarOwner (name,phone, bank_account) VALUES (?,?,?)", carOwnerDTO.getName(),carOwnerDTO.getPhone(),carOwnerDTO.getBank_account());
     }
 
     public boolean update(CarOwnerDTO carOwnerDTO) throws SQLException {
 
-        boolean result = CrudUtil.execute("UPDATE CarOwner SET name = ?, phone = ?, bank_account = ? WHERE owner_id  = ?", carOwnerDTO.getName(), carOwnerDTO.getPhone(), carOwnerDTO.getBank_account(),carOwnerDTO.getOwner_id());
-        return result;
+        return CrudUtil.execute("UPDATE CarOwner SET name = ?, phone = ?, bank_account = ? WHERE owner_id  = ?", carOwnerDTO.getName(), carOwnerDTO.getPhone(), carOwnerDTO.getBank_account(),carOwnerDTO.getOwner_id());
     }
 
     public boolean delete(String id) throws SQLException {
         CrudUtil.execute("DELETE FROM Vehicle WHERE owner_id = ?", id);
-        boolean result = CrudUtil.execute("DELETE FROM CarOwner WHERE owner_id = ?",id);
-        return result;
+        return CrudUtil.execute("DELETE FROM CarOwner WHERE owner_id = ?",id);
     }
 
     public CarOwnerDTO search(String id) throws SQLException {
@@ -41,7 +36,6 @@ public class CarOwnerModel {
             String carOwnerPhoneNumber = result.getString("phone");
             String carOwnerBankAccount = result.getString("bank_account");
 
-
             carOwnerDTO = new CarOwnerDTO(carOwnerID,carOwnerName,carOwnerPhoneNumber,carOwnerBankAccount);
         }
         return carOwnerDTO;
@@ -53,10 +47,8 @@ public class CarOwnerModel {
         String sql = "SELECT * FROM CarOwner ORDER BY owner_id DESC";
 
         PreparedStatement pstm = conn.prepareStatement(sql);
-
         ResultSet rs = pstm.executeQuery();
-
-        ArrayList<CarOwnerDTO> carOwnerList = new ArrayList();
+        ArrayList<CarOwnerDTO> carOwnerList = new ArrayList<>();
 
         while(rs.next()) {
             CarOwnerDTO carOwnerDTO = new CarOwnerDTO(
@@ -67,15 +59,12 @@ public class CarOwnerModel {
 
             carOwnerList.add(carOwnerDTO);
         }
-
         return carOwnerList;
     }
 
     public List<String> getAllOwnersIds() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT name FROM CarOwner ORDER BY owner_id DESC");
-
-        ArrayList<String> carOwnerNameList = new ArrayList();
-
+        ArrayList<String> carOwnerNameList = new ArrayList<>();
         while(rs.next()) {
             carOwnerNameList.add(rs.getString("name"));
         }
@@ -89,12 +78,7 @@ public class CarOwnerModel {
         if (result.next()) {
             int carOwnerID = result.getInt("owner_id");
             id = String.valueOf(carOwnerID);
-
         }
         return id ;
-
     }
-
-
-
 }

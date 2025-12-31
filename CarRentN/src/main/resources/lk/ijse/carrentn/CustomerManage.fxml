@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,140 +9,150 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" fx:id="customerContent" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CustomerManageController">
+<AnchorPane id="AnchorPane" fx:id="customerContent" prefHeight="600.0" prefWidth="1100.0" stylesheets="@cssFiles/Main.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CustomerManageController">
     <children>
-        <VBox alignment="CENTER" layoutX="-1.0" layoutY="-3.0" prefHeight="50.0" prefWidth="1140.0" style="-fx-background-color: #ffa378;">
+        <VBox alignment="CENTER" layoutX="-1.0" layoutY="-3.0" prefHeight="50.0" prefWidth="1140.0" styleClass="top-bar">
             <children>
                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Manage">
                     <font>
-                        <Font size="26.0" />
+                        <Font name="System Bold" size="22.0" />
                     </font>
                 </Text>
             </children>
         </VBox>
-        <VBox layoutY="45.0" prefHeight="341.0" prefWidth="823.0">
-            <children>
-                <Pane prefHeight="277.0" prefWidth="902.0">
-                    <children>
-                        <HBox alignment="CENTER" layoutX="129.0" layoutY="280.0" prefHeight="72.0" prefWidth="599.0">
-                            <children>
-                                <Button mnemonicParsing="false" onAction="#hanleSaveCustomer" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: green;" text="Save" textFill="WHITE">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </HBox.margin>
-                                </Button>
-                                <Button mnemonicParsing="false" onAction="#handleCustomerUpdate" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: blue;" text="Update" textFill="WHITE">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </HBox.margin>
-                                </Button>
-                                <Button mnemonicParsing="false" onAction="#handleCustomerDelete" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </HBox.margin>
-                                </Button>
-                                <Button mnemonicParsing="false" onAction="#handleReset" prefHeight="50.0" prefWidth="100.0" style="-fx-background-color: orange;" text="Reset">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets left="5.0" right="5.0" />
-                                    </HBox.margin>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <VBox layoutX="120.0" layoutY="14.0" prefHeight="40.0" prefWidth="261.0">
-                            <children>
-                                <Label text="ID">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="idField" onKeyPressed="#handleSearchCustomer" prefHeight="26.0" prefWidth="384.0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="121.0" layoutY="77.0" prefHeight="40.0" prefWidth="261.0">
-                            <children>
-                                <Label text="Name">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="nameField" prefHeight="26.0" prefWidth="384.0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="121.0" layoutY="137.0" prefHeight="40.0" prefWidth="261.0">
-                            <children>
-                                <Label text="Email">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="emailField" prefHeight="26.0" prefWidth="384.0" />
-                            </children>
-                        </VBox>
-                        <VBox layoutX="424.0" layoutY="148.0" prefHeight="105.0" prefWidth="261.0">
-                            <children>
-                                <Label text="Address">
-                                    <font>
-                                        <Font size="20.0" />
-                                    </font>
-                                </Label>
-                                <TextArea fx:id="addressField" prefHeight="93.0" prefWidth="261.0" />
-                            </children>
-                        </VBox>
-                  <VBox layoutX="120.0" layoutY="198.0" prefHeight="40.0" prefWidth="261.0">
-                     <children>
-                        <Label text="PhoneNumber">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="phNoField" prefHeight="26.0" prefWidth="384.0" />
-                     </children>
-                  </VBox>
-                  <VBox layoutX="423.0" layoutY="66.0" prefHeight="40.0" prefWidth="261.0">
-                     <children>
-                        <Label text="NIC or Passport Number">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="NicField" prefHeight="26.0" prefWidth="384.0" />
-                     </children>
-                  </VBox>
-                    </children>
-                </Pane>
-            </children>
-        </VBox>
-      <Pane layoutY="406.0" prefHeight="277.0" prefWidth="1132.0">
+      <Pane layoutX="15.0" layoutY="406.0" prefHeight="277.0" prefWidth="1122.0">
          <children>
-            <TableView fx:id="tblCustomer" layoutX="2.0" layoutY="19.0" prefHeight="258.0" prefWidth="1129.0">
+            <TableView fx:id="tblCustomer" layoutX="9.0" layoutY="11.0" prefHeight="258.0" prefWidth="1100.0">
                <columns>
-                  <TableColumn fx:id="colId" prefWidth="75.0" text="ID" />
-                  <TableColumn fx:id="colName" prefWidth="279.0" text="Name" />
-                  <TableColumn fx:id="coleEmail" prefWidth="215.0" text="Email" />
-                  <TableColumn fx:id="colPNo" prefWidth="154.0" text="phoneNumber" />
-                  <TableColumn fx:id="colNOP" prefWidth="172.0" text="NIC or Passport Number" />
-                  <TableColumn fx:id="colAddess" prefWidth="233.0" text="Address" />
+                  <TableColumn fx:id="colId" prefWidth="68.0" text="ID" />
+                  <TableColumn fx:id="colName" prefWidth="264.0" text="Name" />
+                  <TableColumn fx:id="coleEmail" prefWidth="206.0" text="Email" />
+                  <TableColumn fx:id="colPNo" prefWidth="152.0" text="phoneNumber" />
+                  <TableColumn fx:id="colNOP" prefWidth="185.0" text="NIC or Passport Number" />
+                  <TableColumn fx:id="colAddess" prefWidth="253.0" text="Address" />
                </columns>
             </TableView>
          </children>
       </Pane>
+            <HBox alignment="CENTER" layoutX="219.0" layoutY="327.0" prefHeight="72.0" prefWidth="599.0">
+                <children>
+                    <Button fx:id="btnSave" mnemonicParsing="false" onAction="#hanleSaveCustomer" prefHeight="50.0" prefWidth="130.0" styleClass="btn-save" text=" Save">
+
+                        <graphic>
+                            <FontAwesomeIconView fill="WHITE" glyphName="SAVE" size="18" />
+                        </graphic>
+
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+
+                        <HBox.margin>
+                            <Insets left="5.0" right="5.0" />
+                        </HBox.margin>
+                    </Button>
+
+                    <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#handleCustomerUpdate" prefHeight="50.0" prefWidth="130.0" styleClass="btn-update" text=" Update">
+                        <graphic>
+                            <FontAwesomeIconView fill="WHITE" glyphName="EDIT" size="18" />
+                        </graphic>
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets left="5.0" right="5.0" />
+                        </HBox.margin>
+                    </Button>
+                    <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#handleCustomerDelete" prefHeight="50.0" prefWidth="130.0" styleClass="btn-delete" text=" Delete">
+                        <graphic>
+                            <FontAwesomeIconView fill="WHITE" glyphName="TRASH" size="18" />
+                        </graphic>
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets left="5.0" right="5.0" />
+                        </HBox.margin>
+                    </Button>
+                    <Button fx:id="btnReset" mnemonicParsing="false" onAction="#handleReset" prefHeight="50.0" prefWidth="100.0" styleClass="btn-reset" text=" Reset">
+                        <graphic>
+                            <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="18" />
+                        </graphic>
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                        <HBox.margin>
+                            <Insets left="5.0" right="5.0" />
+                        </HBox.margin>
+                    </Button>
+                </children>
+            </HBox>
+      <VBox layoutX="24.0" layoutY="65.0" prefHeight="250.0" prefWidth="620.0">
+         <children>
+            <GridPane hgap="10.0" prefHeight="248.0" prefWidth="586.0" vgap="5.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.0" minWidth="10.0" prefWidth="171.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="459.0" minWidth="10.0" prefWidth="434.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                          <Label text="ID  :">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <Label text="Name  :" GridPane.rowIndex="1">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <Label text="Email  :" GridPane.rowIndex="2">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                  <Label text="PhoneNumber  :" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="18.0" prefWidth="174.0" text="NIC or Passport Number :" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                          <Label text="Address  : " GridPane.rowIndex="5">
+                              <font>
+                                  <Font size="20.0" />
+                              </font>
+                          </Label>
+                          <TextField fx:id="idField" onKeyPressed="#handleSearchCustomer" prefHeight="26.0" prefWidth="384.0" GridPane.columnIndex="1" />
+                          <TextField fx:id="nameField" prefHeight="26.0" prefWidth="384.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                          <TextField fx:id="emailField" prefHeight="26.0" prefWidth="384.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="phNoField" prefHeight="26.0" prefWidth="384.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="NicField" prefHeight="26.0" prefWidth="384.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                          <TextArea fx:id="addressField" prefHeight="93.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+               </children>
+            </GridPane>
+         </children>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </VBox>
     </children>
 </AnchorPane>

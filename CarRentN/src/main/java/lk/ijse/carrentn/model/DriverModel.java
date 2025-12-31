@@ -15,29 +15,26 @@ public class DriverModel {
 
     public boolean save(DriverDTO driverDTO) throws SQLException {
 
-        boolean result = CrudUtil.execute("INSERT INTO Driver (name,phone_number, license_number, driver_rate_per_day) VALUES (?,?,?,?)",
+        return CrudUtil.execute("INSERT INTO Driver (name,phone_number, license_number, driver_rate_per_day) VALUES (?,?,?,?)",
                 driverDTO.getName(),
                 driverDTO.getPhone_number(),
                 driverDTO.getLicense_number(),
                 driverDTO.getDriver_rate_per_day());
-        return result;
     }
 
     public boolean update(DriverDTO driverDTO) throws SQLException {
 
-        boolean result = CrudUtil.execute("UPDATE Driver SET name = ?, phone_number = ?, license_number = ? , driver_rate_per_day = ? WHERE driver_id  = ?",
+        return CrudUtil.execute("UPDATE Driver SET name = ?, phone_number = ?, license_number = ? , driver_rate_per_day = ? WHERE driver_id  = ?",
                 driverDTO.getName(),
                 driverDTO.getPhone_number(),
                 driverDTO.getLicense_number(),
                 driverDTO.getDriver_rate_per_day(),
                 driverDTO.getDriver_id());
-        return result;
     }
 
     public boolean delete(String id) throws SQLException {
         CrudUtil.execute("DELETE FROM Rental WHERE driver_id = ?", id);
-        boolean result = CrudUtil.execute("DELETE FROM Driver WHERE driver_id = ?",id);
-        return result;
+        return CrudUtil.execute("DELETE FROM Driver WHERE driver_id = ?",id);
     }
 
     public DriverDTO search(String id) throws SQLException {
@@ -60,7 +57,7 @@ public class DriverModel {
     public List<DriverDTO> getAllDrivers() throws SQLException {
        ResultSet rs = CrudUtil.execute("SELECT * FROM Driver ORDER BY driver_id DESC");
 
-        ArrayList<DriverDTO> driverDTOList = new ArrayList();
+        ArrayList<DriverDTO> driverDTOList = new ArrayList<>();
 
         while(rs.next()) {
             DriverDTO driverDTO = new DriverDTO(
@@ -78,7 +75,7 @@ public class DriverModel {
     public List<String> getAllDriverNames() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT name FROM Driver ORDER BY driver_id DESC");
 
-        ArrayList<String> driverNameList = new ArrayList();
+        ArrayList<String> driverNameList = new ArrayList<>();
 
         while(rs.next()) {
             driverNameList.add(rs.getString("name"));
@@ -104,27 +101,20 @@ public class DriverModel {
         double  driverRatePerDay = 0.0;
         try {
             ResultSet result = CrudUtil.execute("SELECT driver_rate_per_day FROM Driver WHERE driver_id = ?", id);
-
-
             if (result.next()) {
-                double driverRate = result.getInt("driver_rate_per_day");
-                driverRatePerDay = driverRate;
-
+                driverRatePerDay = result.getInt("driver_rate_per_day");
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-
         return driverRatePerDay ;
     }
+
      public static List<DriverTM> getAvailableDrivers(LocalDate startDate) throws SQLException {
 
             String sql = "SELECT DISTINCT d.driver_id, d.name, d.phone_number, d.driver_rate_per_day FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
 
-            ResultSet rs = CrudUtil.execute(
-                    sql,
-                    Date.valueOf(startDate)
-            );
+            ResultSet rs = CrudUtil.execute(sql,Date.valueOf(startDate));
 
             List<DriverTM> list = new ArrayList<>();
 
@@ -133,11 +123,26 @@ public class DriverModel {
                         rs.getInt("driver_id"),
                         rs.getString("name"),
                         rs.getString("phone_number"),
-                        rs.getDouble("driver_rate_per_day")
-                ));
+                        rs.getDouble("driver_rate_per_day")));
             }
             return list;
         }
+
+    public List<String> getAvailableDriverNames(LocalDate startDate) throws SQLException {
+
+        String sql = "SELECT DISTINCT d.name FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
+
+        ResultSet rs = CrudUtil.execute(sql,Date.valueOf(startDate));
+
+        List<String> list = new ArrayList<>();
+
+        while (rs.next()) {
+            list.add(
+                    rs.getString("name")
+            );
+        }
+        return list;
+    }
 
 
 

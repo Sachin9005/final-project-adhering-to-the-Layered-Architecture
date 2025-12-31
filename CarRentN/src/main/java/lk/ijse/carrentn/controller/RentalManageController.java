@@ -14,6 +14,7 @@ import lk.ijse.carrentn.model.*;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -79,10 +80,7 @@ public class RentalManageController implements Initializable {
     private final String DRIVER_ID_REGEX = "^$|^[0-9]+$";
     private final String START_DATE_REGEX = "^(19|20)\\d\\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
     private final String DAY_REGEX = "^[0-9]+$";
-    private final String RETURN_DATE_REGEX = "^(19|20)\\d\\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
     private final String BASE_PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
-    private final String DISCOUNT_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
-
 
     private final RentalModel rentalModel =  new RentalModel();
     private final CustomerModel customerModel = new CustomerModel();
@@ -112,12 +110,6 @@ public class RentalManageController implements Initializable {
 
     }
 
-    public void setData(String vehicleId , String driverId ,String rentDays , String disId){
-        vehicleIDField.setText(vehicleId);
-        driverIdField.setText(driverId);
-        daysField.setText(rentDays);
-    }
-
     @FXML
     private void handleSaveRental(ActionEvent event) {
 
@@ -141,7 +133,7 @@ public class RentalManageController implements Initializable {
             new Alert(Alert.AlertType.ERROR, "Invalid Start Date").show();
         }else if(!days.matches(DAY_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Rent Days").show();
-        }else if(!basePay.matches(BASE_PAYMENT_REGEX)){
+        }else if(!basePay.matches(BASE_PAYMENT_REGEX) || Integer.parseInt(basePay) < 2000) {
             new Alert(Alert.AlertType.ERROR, "Invalid Base Payment").show();
         }else{
             String total = totalPriceLable.getText();
@@ -171,6 +163,8 @@ public class RentalManageController implements Initializable {
                 boolean result = rentalModel.save(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
                 cleanFileds();
                 lordRentalTable();
+                lordVehicleNames();
+                lordDriverNames();
                 sDateField.setText(String.valueOf(LocalDate.now()));
 
 
@@ -253,11 +247,20 @@ public class RentalManageController implements Initializable {
     private void handleResetlFields() {cleanFileds();}
 
     @FXML
-    private void handleSelectCustomer(ActionEvent event) {
+    private void handleSelectCustomer() {
+        customerIdField.clear();
         String cusName = customeCbox.getSelectionModel().getSelectedItem();
+
+        List<String> customerHaveUnpaid = customerModel.getCustomersNotPaidLast();
+        if (customerHaveUnpaid.contains(cusName)) {
+            new Alert(Alert.AlertType.INFORMATION, "Customer Has Unpaid Rent!").show();
+            customerLable.setText("");
+            return;
+        }
         String cusId = customerModel.searchId(cusName);
         customerIdField.setText(cusId);
         customerLable.setText("");
+
     }
 
     @FXML
@@ -296,7 +299,7 @@ public class RentalManageController implements Initializable {
     private void calculateTotal(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
             String vehicleId = vehicleIDField.getText().trim();
-            String driverId = driverIdField.getText().trim();
+            String driverId = driverIdField.getText();
             String days = daysField.getText().trim();
 
             if (vehicleId == null || vehicleId.isBlank()) {
@@ -330,7 +333,7 @@ public class RentalManageController implements Initializable {
 
     private void lordVehicleNames(){
         try {
-            List<String> vehicleList = vehicleModel.getAllVehicleNo();
+            List<String> vehicleList = vehicleModel.getAvailableVehiclesNo(LocalDate.now());
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(vehicleList);
             vehicleCbox.setItems(obList);
@@ -342,7 +345,7 @@ public class RentalManageController implements Initializable {
 
     private void lordDriverNames(){
         try {
-            List<String> driverList = driverModel.getAllDriverNames();
+            List<String> driverList = driverModel.getAvailableDriverNames(LocalDate.now());
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(driverList);
             driveerCbox.setItems(obList);

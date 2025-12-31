@@ -26,15 +26,15 @@ public class CarOwnerManageController implements Initializable {
     private TextField bankNoFielde;
 
     @FXML
-    private TableView tblOwners;
+    private TableView<CarOwnerDTO>tblOwners;
     @FXML
-    private TableColumn colOwnerId;
+    private TableColumn<CarOwnerDTO , Integer> colOwnerId;
     @FXML
-    private TableColumn colName;
+    private TableColumn<CarOwnerDTO , String> colName;
     @FXML
-    private TableColumn colPhone;
+    private TableColumn<CarOwnerDTO , String> colPhone;
     @FXML
-    private TableColumn colBank;
+    private TableColumn<CarOwnerDTO , String> colBank;
 
     private final String CAR_OWNER_ID_REGEX = "^[0-9]+$";
     private final String CAR_OWNER_NAME_REGEX = "^[A-Za-z ]{2,50}$";
@@ -182,12 +182,8 @@ public class CarOwnerManageController implements Initializable {
     private void lordCarOwnerTable(){
         try {
             List<CarOwnerDTO> carOwnerDTOS = carOwnerModel.getAllOwners();
-
             ObservableList<CarOwnerDTO> obList = FXCollections.observableArrayList();
-
-            for (CarOwnerDTO carOwnerDTO : carOwnerDTOS) {
-                obList.add(carOwnerDTO);
-            }
+            obList.addAll(carOwnerDTOS);
             tblOwners.setItems(obList);
 
         } catch (Exception e) {

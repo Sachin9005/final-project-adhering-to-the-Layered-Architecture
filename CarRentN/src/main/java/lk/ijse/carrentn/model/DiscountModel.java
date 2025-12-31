@@ -11,21 +11,16 @@ import java.util.List;
 public class DiscountModel {
 
     public boolean save(DiscountDTO discountDTO) throws SQLException {
-
-        boolean result = CrudUtil.execute("INSERT INTO Discount (description,percentage) VALUES (?,?)", discountDTO.getDescription(), discountDTO.getPercentage());
-        return result;
+        return CrudUtil.execute("INSERT INTO Discount (description,percentage) VALUES (?,?)", discountDTO.getDescription(), discountDTO.getPercentage());
     }
 
     public boolean update(DiscountDTO discountDTO) throws SQLException {
-
-        boolean result = CrudUtil.execute("UPDATE Discount SET description = ?, percentage = ? WHERE discount_id  = ?", discountDTO.getDescription(), discountDTO.getPercentage(), discountDTO.getDiscount_id());
-        return result;
+        return CrudUtil.execute("UPDATE Discount SET description = ?, percentage = ? WHERE discount_id  = ?", discountDTO.getDescription(), discountDTO.getPercentage(), discountDTO.getDiscount_id());
     }
 
     public boolean delete(String id) throws SQLException {
         CrudUtil.execute("DELETE FROM Rental_Discount WHERE discount_id = ?", id);
-        boolean result = CrudUtil.execute("DELETE FROM Discount WHERE discount_id = ?",id);
-        return result;
+        return CrudUtil.execute("DELETE FROM Discount WHERE discount_id = ?",id);
     }
 
     public DiscountDTO search(String id) throws SQLException {
@@ -35,7 +30,7 @@ public class DiscountModel {
         if (result.next()) {
             int discountId = result.getInt("discount_id");
             String discountDisc = result.getString("description");
-            Double discountPerc = result.getDouble("percentage");
+            double discountPerc = result.getDouble("percentage");
 
             discountDTO = new DiscountDTO(discountId, discountDisc, discountPerc);
         }
@@ -45,7 +40,7 @@ public class DiscountModel {
     public List<DiscountDTO> getAllDiscounts() throws SQLException {
         ResultSet rs = CrudUtil.execute( "SELECT * FROM Discount ORDER BY discount_id DESC");
 
-        ArrayList<DiscountDTO> discountList = new ArrayList();
+        ArrayList<DiscountDTO> discountList = new ArrayList<>();
 
         while(rs.next()) {
             DiscountDTO discountDTO = new DiscountDTO(
@@ -61,7 +56,7 @@ public class DiscountModel {
     public List<String> getAllDiscountDes() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT description FROM Discount ORDER BY discount_id DESC");
 
-        ArrayList<String> carOwnerNameList = new ArrayList();
+        ArrayList<String> carOwnerNameList = new ArrayList<>();
 
         while(rs.next()) {
             carOwnerNameList.add(rs.getString("description"));
@@ -83,13 +78,12 @@ public class DiscountModel {
         return id ;
     }
 
-    public double searchDesForGetPrec (String description) {
+    public Double searchDesForGetPrec (String description) {
         Double prec = null;
         try {
             ResultSet result = CrudUtil.execute("SELECT percentage FROM Discount WHERE description = ?", description);
          if (result.next()) {
-                double disPrec = result.getDouble("percentage");
-                prec = disPrec;
+             prec = result.getDouble("percentage");
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -102,8 +96,7 @@ public class DiscountModel {
         try {
             ResultSet result = CrudUtil.execute("SELECT percentage FROM Discount WHERE discount_id = ?", id);
         if (result.next()) {
-                double disPrec = result.getDouble("percentage");
-                prec = disPrec;
+            prec = result.getDouble("percentage");
             }
         }catch (Exception e){
             e.printStackTrace();

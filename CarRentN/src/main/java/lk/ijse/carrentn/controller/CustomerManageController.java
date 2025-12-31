@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.CustomerDTO;
 import lk.ijse.carrentn.model.CustomerModel;
 
@@ -32,19 +33,19 @@ public class CustomerManageController implements Initializable {
     @FXML
     private TextArea addressField;
     @FXML
-    private TableView tblCustomer;
+    private TableView<CustomerDTO> tblCustomer;
     @FXML
-    private TableColumn colId;
+    private TableColumn<CarOwnerDTO, Integer> colId;
     @FXML
-    private TableColumn colName;
+    private TableColumn<CarOwnerDTO , String> colName;
     @FXML
-    private TableColumn coleEmail;
+    private TableColumn<CarOwnerDTO , String> coleEmail;
     @FXML
-    private TableColumn colPNo;
+    private TableColumn<CarOwnerDTO , String> colPNo;
     @FXML
-    private TableColumn colNOP;
+    private TableColumn<CarOwnerDTO , String> colNOP;
     @FXML
-    private TableColumn colAddess;
+    private TableColumn<CarOwnerDTO , String> colAddess;
 
     private final String CUSTOMER_ID_REGEX = "^[0-9]+$";
     private final String CUSTOMER_NAME_REGEX = "^[A-Za-z ]{2,50}$";
@@ -187,8 +188,7 @@ public class CustomerManageController implements Initializable {
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Customer not found").show();
                     }
-                }
-                else{
+                }else{
                     new Alert(Alert.AlertType.ERROR, "Invalid Id").show();
                 }
             }
@@ -208,19 +208,14 @@ public class CustomerManageController implements Initializable {
         phNoField.setText("");
         NicField.setText("");
         addressField.setText("");
-
     }
+
     private void lordCustomerTable(){
         try {
             List<CustomerDTO> cusDTO= cusModel.getAllCustomer();
-
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
-
-            for (CustomerDTO customerDTO : cusDTO) {
-                obList.add(customerDTO);
-            }
+            obList.addAll(cusDTO);
             tblCustomer.setItems(obList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

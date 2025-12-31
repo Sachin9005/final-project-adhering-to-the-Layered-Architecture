@@ -1,7 +1,6 @@
 package lk.ijse.carrentn.controller;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,8 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.DriverDTO;
-import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.model.DriverModel;
 
 
@@ -31,17 +30,17 @@ public class DriverManageController implements Initializable {
     private TextField rateFiled;
 
     @FXML
-    private TableView tblDrivers;
+    private TableView<DriverDTO> tblDrivers;
     @FXML
-    private TableColumn colDriverId;
+    private TableColumn<CarOwnerDTO, Integer> colDriverId;
     @FXML
-    private TableColumn colName;
+    private TableColumn<CarOwnerDTO , String> colName;
     @FXML
-    private TableColumn colPhone;
+    private TableColumn<CarOwnerDTO , String> colPhone;
     @FXML
-    private TableColumn colLicense;
+    private TableColumn<CarOwnerDTO , String> colLicense;
     @FXML
-    private TableColumn colRate;
+    private TableColumn<CarOwnerDTO , Double> colRate;
 
     private final String DRIVER_ID_REGEX = "^[0-9]+$";
     private final String DRIVER_NAME_REGEX = "^[A-Za-z ]{2,50}$";
@@ -51,7 +50,6 @@ public class DriverManageController implements Initializable {
 
     DriverModel driverModel =  new DriverModel();
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Driver table loaded");
@@ -60,7 +58,6 @@ public class DriverManageController implements Initializable {
         colPhone.setCellValueFactory(new PropertyValueFactory<>("phone_number"));
         colLicense.setCellValueFactory(new PropertyValueFactory<>("license_number"));
         colRate.setCellValueFactory(new PropertyValueFactory<>("driver_rate_per_day"));
-
         lordDriverTable();
     }
 
@@ -70,7 +67,6 @@ public class DriverManageController implements Initializable {
         String pNO = phoneField.getText().trim();
         String licenNo = licenseField.getText().trim();
         String rate = rateFiled.getText().trim();
-
 
         if (!name.matches(DRIVER_NAME_REGEX)) {
             new Alert(Alert.AlertType.ERROR, "Invalid Name").show();
@@ -165,7 +161,6 @@ public class DriverManageController implements Initializable {
                 String id = driverIdField.getText();
                 if (id.matches(DRIVER_ID_REGEX)) {
                     DriverDTO carOwnerDTO = driverModel.search(id);
-
                     if (carOwnerDTO != null) {
                         nameFiled.setText(carOwnerDTO.getName());
                         phoneField.setText(carOwnerDTO.getPhone_number());
@@ -174,8 +169,7 @@ public class DriverManageController implements Initializable {
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Driver not found").show();
                     }
-                }
-                else{
+                }else{
                     new Alert(Alert.AlertType.ERROR, "Invalid Id").show();
                 }
             }
@@ -199,15 +193,9 @@ public class DriverManageController implements Initializable {
     private void lordDriverTable(){
         try {
             List<DriverDTO> driverDTOS = driverModel.getAllDrivers();
-
             ObservableList<DriverDTO> obList = FXCollections.observableArrayList();
-
-            for (DriverDTO driverDTO : driverDTOS) {
-                obList.add(driverDTO);
-            }
+            obList.addAll(driverDTOS);
             tblDrivers.setItems(obList);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -15,11 +15,10 @@ public class FirstPaymentModel {
                     basePay,
                     totalPay,
                     LocalDate.now().toString());
-
             if (isSaved) {
                 System.out.println("Base Payment Saved Successfully");
             } else {
-                throw new Exception("Somethin went Wrong");
+                throw new Exception("Something went Wrong");
 
             }
         return true;
@@ -27,7 +26,6 @@ public class FirstPaymentModel {
     public FirstPaymentDTO getFirstPayment(int rentId)throws SQLException{
         FirstPaymentDTO firstPaymentDTO = null ;
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM First_Payment WHERE rental_id = ?", rentId);
-
         if (resultSet.next()) {
             int firstPayId = resultSet.getInt("first_payment_id");
             int rentalId = resultSet.getInt("rental_id");

@@ -21,7 +21,6 @@ import java.util.Map;
 
 public class RentalModel {
     FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
-    LastPaymentModel lastPaymentModel = new LastPaymentModel();
     RentalDiscountModel rentalDiscountModel = new RentalDiscountModel();
 
     public boolean save(RentalDTO rentalDTO,double basPay,double totalPay,Integer discountId) throws Exception {
@@ -73,7 +72,7 @@ public class RentalModel {
 
     public boolean update(RentalDTO rentalDTO) throws SQLException {
 
-        boolean result = CrudUtil.execute("UPDATE Rental SET " +
+        return CrudUtil.execute("UPDATE Rental SET " +
                         "customer_id = ?, " +
                         "vehicle_id = ? , " +
                         "driver_id = ?, " +
@@ -88,16 +87,13 @@ public class RentalModel {
                 rentalDTO.getDates_of_rent(),
                 rentalDTO.getReturn_date()
                 );
-
-        return result;
     }
 
     public boolean delete(String id) throws SQLException {
         CrudUtil.execute("DELETE FROM Rental_Discount WHERE rental_id = ?", id);
         CrudUtil.execute("DELETE FROM last_Payment WHERE rental_id = ?", id);
         CrudUtil.execute("DELETE FROM First_Payment WHERE rental_id = ?", id);
-        boolean result = CrudUtil.execute("DELETE FROM Rental WHERE rental_id = ?",id);
-        return result;
+        return CrudUtil.execute("DELETE FROM Rental WHERE rental_id = ?",id);
     }
 
     public RentalDTO search(String id) throws SQLException {
@@ -107,8 +103,7 @@ public class RentalModel {
         ResultSet result = CrudUtil.execute("SELECT * FROM Rental WHERE rental_id = ?",id);
 
         if (resu.next()) {
-            double total = resu.getDouble("base_payment");
-            totalPay = total;
+            totalPay = resu.getDouble("base_payment");
         }
 
         if (result.next()) {
@@ -120,7 +115,6 @@ public class RentalModel {
             int days = result.getInt("dates_of_rent");
             Date eDate = result.getDate("return_date");
 
-
             rentalDTO = new RentalDTO(rentalId,cusID,vehicleId,DriverId,sdate.toLocalDate(),days,eDate.toLocalDate(),totalPay);
         }
         return rentalDTO;
@@ -129,7 +123,7 @@ public class RentalModel {
     public List<RentalDTO> getAllRentals() throws SQLException {
         ResultSet rs = CrudUtil.execute( "SELECT * FROM Rental ORDER BY rental_id DESC");
 
-        ArrayList<RentalDTO> rentalList = new ArrayList();
+        ArrayList<RentalDTO> rentalList = new ArrayList<>();
 
         while(rs.next()) {
                 RentalDTO rentalDTOs = new RentalDTO(
@@ -148,7 +142,7 @@ public class RentalModel {
     public List<String> getAllRentalIds() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT rental_id FROM Rental ORDER BY rental_id DESC");
 
-        ArrayList<String> rebtalIdList = new ArrayList();
+        ArrayList<String> rebtalIdList = new ArrayList<>();
 
         while(rs.next()) {
             rebtalIdList.add(String.valueOf(rs.getInt("rental_id")));

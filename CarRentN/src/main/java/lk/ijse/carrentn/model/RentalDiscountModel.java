@@ -1,14 +1,11 @@
 package lk.ijse.carrentn.model;
 
-import lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.dto.RentalDiscountDTO;
 import lk.ijse.carrentn.util.CrudUtil;
-
 import java.sql.ResultSet;
-import java.time.LocalDate;
 
 public class RentalDiscountModel {
-    private DiscountModel discountModel = new DiscountModel();
+    private final DiscountModel discountModel = new DiscountModel();
     public boolean saveRentalDiscount(int rentId , Integer discountId ,double totalPay)throws Exception{
         double prec = discountModel.searchIdtoGetPrec(String.valueOf(discountId));
         double disAmount = (totalPay * prec)/100;
@@ -21,7 +18,7 @@ public class RentalDiscountModel {
         if (isSaved) {
             System.out.println("Base Payment Saved Successfully");
         } else {
-            throw new Exception("Somethin went Wrong");
+            throw new Exception("Something went Wrong");
         }
         return true;
     }

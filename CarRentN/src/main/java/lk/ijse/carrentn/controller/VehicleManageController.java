@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.model.CarOwnerModel;
 import javafx.scene.control.*;
@@ -43,26 +44,24 @@ public class VehicleManageController implements Initializable {
     private Label typeLable;
 
     @FXML
-    private TableView tblVehicle;
+    private TableView<VehicleDTO> tblVehicle;
     @FXML
-    private TableColumn colVID;
+    private TableColumn<CarOwnerDTO, Integer> colVID;
     @FXML
-    private TableColumn colOID;
+    private TableColumn<CarOwnerDTO , Integer> colOID;
     @FXML
-    private TableColumn colModel;
+    private TableColumn<CarOwnerDTO , String> colModel;
     @FXML
-    private TableColumn colManufac;
+    private TableColumn<CarOwnerDTO , String> colManufac;
     @FXML
-    private TableColumn colType;
+    private TableColumn<CarOwnerDTO , String> colType;
     @FXML
-    private TableColumn colRate;
+    private TableColumn<CarOwnerDTO , Double> colRate;
     @FXML
-    private TableColumn colOPrec;
+    private TableColumn<CarOwnerDTO , Double> colOPrec;
     @FXML
-    private TableColumn colVehicleNo;
+    private TableColumn<CarOwnerDTO , String> colVehicleNo;
 
-
-    private final String VEHICLE_ID_REGEX = "^[0-9]+$";
     private final String VEHICLE_NO_REGEX = "^(?:[A-Z]{2,3}-\\d{3,4}|[A-Z]{2}-[A-Z]{2}-\\d{4})$";
     private final String VEHICLE_OWNE_ID_REGEX = "^[0-9]+$";
     private final String VEHICLE_MODEL_REGEX = "^[A-Za-z ]{2,50}$";
@@ -71,12 +70,9 @@ public class VehicleManageController implements Initializable {
     private final String VEHICLE_DAY_RATE_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
     private final String VEHICLE_OWNER_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
 
-
     CarOwnerModel carOwnerModel =  new CarOwnerModel();
     VehicleModel vehicleModel = new VehicleModel();
-
     String[] typeList = {"Car","Van","SUV"};
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -129,6 +125,7 @@ public class VehicleManageController implements Initializable {
 
     @FXML
     private void handleSaveVehicle(){
+
         String vehicleNO = vehicleNoField.getText().trim();
         String ownerId = ownerIdField.getText().trim();
         String model = modelField.getText().trim();
@@ -176,7 +173,7 @@ public class VehicleManageController implements Initializable {
             String vehicleNo = vehicleNoField.getText().trim();
             String ownerId = ownerIdField.getText().trim();
             String model = modelField.getText().trim();
-            String manufac = manufacField.getText().trim();
+            String manufacture = manufacField.getText().trim();
             String type = typeField.getText().trim();
             String dayRate = dayRateFied.getText().trim();
             String ownerPrec = ownerRateField.getText().trim();
@@ -187,7 +184,7 @@ public class VehicleManageController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Invalid Owner Id").show();
             }else if(!model.matches(VEHICLE_MODEL_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Invalid Vehicle Model").show();
-            }else if(!manufac.matches(VEHICLE_MANUFACTURE_REGEX)) {
+            }else if(!manufacture.matches(VEHICLE_MANUFACTURE_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Invalid Vehicle Manufacture Name").show();
             }else if(!type.matches(VEHICLE_TYPE_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Invalid Vehicle Type").show();
@@ -196,7 +193,7 @@ public class VehicleManageController implements Initializable {
             }else if(!ownerPrec.matches(VEHICLE_OWNER_PERCENTAGE_REGEX)){
                 new Alert(Alert.AlertType.ERROR, "Invalid Ownership Percentage ").show();
             }else{
-                VehicleDTO vehicleDTO = new VehicleDTO(vehicleNo,Integer.parseInt(ownerId),model,manufac,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
+                VehicleDTO vehicleDTO = new VehicleDTO(vehicleNo,Integer.parseInt(ownerId),model, manufacture,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
                 boolean result = vehicleModel.update(vehicleDTO);
                 cleanFileds();
                 lordVehicleTable();
@@ -285,14 +282,9 @@ public class VehicleManageController implements Initializable {
     private void lordVehicleTable(){
         try {
             List<VehicleDTO> vehicleDTOS = vehicleModel.getAllVehicles();
-
             ObservableList<VehicleDTO> obList = FXCollections.observableArrayList();
-
-            for (VehicleDTO vehicleDTO : vehicleDTOS) {
-                obList.add(vehicleDTO);
-            }
+            obList.addAll(vehicleDTOS);
             tblVehicle.setItems(obList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

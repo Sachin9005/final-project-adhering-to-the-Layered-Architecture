@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.DiscountDTO;
 import lk.ijse.carrentn.model.DiscountModel;
 
@@ -24,13 +25,13 @@ public class DiscountManageController implements Initializable {
     private TextField percentageField;
 
     @FXML
-    private TableView tblDiscounts;
+    private TableView<DiscountDTO> tblDiscounts;
     @FXML
-    private TableColumn colDiscountId;
+    private TableColumn<CarOwnerDTO, Integer> colDiscountId;
     @FXML
-    private TableColumn colDescription;
+    private TableColumn<CarOwnerDTO , String> colDescription;
     @FXML
-    private TableColumn colPercentage;
+    private TableColumn<CarOwnerDTO , Double> colPercentage;
 
     private final String DISCOUNT_ID_REGEX = "^[0-9]+$";
     private final String DISCOUNT_DESCRIPTION_REGEX = "^[A-Za-z0-9 ]{2,50}$";
@@ -38,14 +39,12 @@ public class DiscountManageController implements Initializable {
 
     DiscountModel discountModel =  new DiscountModel();
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Discount table loaded");
         colDiscountId.setCellValueFactory(new PropertyValueFactory<>("discount_id"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colPercentage.setCellValueFactory(new PropertyValueFactory<>("percentage"));
-
         lordDiscountTable();
     }
 
@@ -145,8 +144,7 @@ public class DiscountManageController implements Initializable {
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Discount not found").show();
                     }
-                }
-                else{
+                }else{
                     new Alert(Alert.AlertType.ERROR, "Invalid Id").show();
                 }
             }
@@ -163,22 +161,16 @@ public class DiscountManageController implements Initializable {
         discountIdFiled.setText("");
         descriptionField.setText("");
         percentageField.setText("");
-
     }
+
     private void lordDiscountTable(){
         try {
             List<DiscountDTO> discountDTOS = discountModel.getAllDiscounts();
-
             ObservableList<DiscountDTO> obList = FXCollections.observableArrayList();
-
-            for (DiscountDTO discountDTO : discountDTOS) {
-                obList.add(discountDTO);
-            }
+            obList.addAll(discountDTOS);
             tblDiscounts.setItems(obList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
-

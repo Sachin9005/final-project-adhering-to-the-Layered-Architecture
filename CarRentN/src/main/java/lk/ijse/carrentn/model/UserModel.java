@@ -27,32 +27,26 @@ public class UserModel {
     }
 
     public boolean updatePassword(String password) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE user SET password = ? WHERE user_id = 1 ",password );
-        return result;
+        return CrudUtil.execute("UPDATE user SET password = ? WHERE user_id = 1 ",password );
     }
 
     public boolean updateEmail(String email) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE user SET email = ? WHERE user_id = 1 ",email );
-        return result;
+        return CrudUtil.execute("UPDATE user SET email = ? WHERE user_id = 1 ",email );
     }
 
     public boolean updatePhoneNo(String phoneNo) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE user SET phone_number = ? WHERE user_id = 1 ",phoneNo );
-        return result;
+        return CrudUtil.execute("UPDATE user SET phone_number = ? WHERE user_id = 1 ",phoneNo );
     }
 
     public boolean updateName(String name) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE user SET name = ? WHERE user_id = 1 ",name );
-        return result;
+        return CrudUtil.execute("UPDATE user SET name = ? WHERE user_id = 1 ",name );
     }
     public boolean updateaddress(String address) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE user SET address = ? WHERE user_id = 1 ",address );
-        return result;
+        return CrudUtil.execute("UPDATE user SET address = ? WHERE user_id = 1 ",address );
     }
 
     public boolean updateUserName(String useName) throws SQLException {
-        boolean result = CrudUtil.execute("UPDATE user SET user_name = ? WHERE user_id = 1 ",useName );
-        return result;
+        return CrudUtil.execute("UPDATE user SET user_name = ? WHERE user_id = 1 ",useName );
     }
     
 }
