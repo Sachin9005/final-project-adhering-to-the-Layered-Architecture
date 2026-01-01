@@ -161,16 +161,17 @@ public class RentalManageController implements Initializable {
                         LocalDate.parse(edate));
 
                 boolean result = rentalModel.save(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
-                cleanFileds();
-                lordRentalTable();
-                lordVehicleNames();
-                lordDriverNames();
                 sDateField.setText(String.valueOf(LocalDate.now()));
 
 
                 if(result) {
                     System.out.println("Rental saved successfully!");
-                    new Alert(Alert.AlertType.INFORMATION, "Rental saved successfully!").show();
+                    cleanFileds();
+                    lordRentalTable();
+                    lordVehicleNames();
+                    lordDriverNames();
+                    lordCustomerNames();
+                   new Alert(Alert.AlertType.INFORMATION, "Rental saved successfully!").show();
                 } else {
                     System.out.println("Sorry! Something went wrong!");
                     new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();}
@@ -230,6 +231,10 @@ public class RentalManageController implements Initializable {
                 lordRentalTable();
                 if(result) {
                     System.out.println("Rental Delete successfully!");
+                    cleanFileds();
+                    lordRentalTable();
+                    lordDriverNames();
+                    lordVehicleNames();
                     new Alert(Alert.AlertType.INFORMATION, "Rental Delete successfully!").show();
                 } else {
                     System.out.println("Sorry! Something went wrong!");
@@ -269,7 +274,6 @@ public class RentalManageController implements Initializable {
         String driverID = driverModel.searchId(driverName);
         driverIdField.setText(driverID);
         driverLable.setText("");
-
     }
 
     @FXML
@@ -278,7 +282,6 @@ public class RentalManageController implements Initializable {
         String vehicleId = vehicleModel.searchId(vehiclemodel);
         vehicleIDField.setText(vehicleId);
         vehicleLable.setText("");
-
     }
 
     @FXML

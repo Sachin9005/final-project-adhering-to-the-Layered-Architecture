@@ -47,8 +47,6 @@ public class CurrentRentalCalculateController implements Initializable {
     @FXML
     private Label eDateLable;
     @FXML
-    private TextField invoiceIDField;
-    @FXML
     private Label lateDatesLable;
     @FXML
     private Label lateFeeLable;
@@ -99,9 +97,7 @@ public class CurrentRentalCalculateController implements Initializable {
     private final LastPaymentModel lastPaymentModel = new LastPaymentModel();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        lordCustomerNames();
-    }
+    public void initialize(URL url, ResourceBundle rb) {lordCustomerNames();}
 
     @FXML
     private void handleConfirmPay() {
@@ -115,6 +111,7 @@ public class CurrentRentalCalculateController implements Initializable {
         try {
             boolean isSaved = lastPaymentModel.saveFullPayment(lastPaymentDTO);
             cleanFields();
+            lordCustomerNames();
 
             if (isSaved) {
                 new Alert(Alert.AlertType.INFORMATION, "Payment Successful!").show();
@@ -124,8 +121,6 @@ public class CurrentRentalCalculateController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @FXML
@@ -145,11 +140,7 @@ public class CurrentRentalCalculateController implements Initializable {
     public void searchRental(KeyEvent event) {
         try {
             if (event.getCode() == KeyCode.ENTER) {
-                if (invoiceIDField.getText().isEmpty()) {
-                    handleSearchRentByCustomerName();
-                } else {
-                    handleSerchRentByInvoiceId();
-                }
+                handleSearchRentByCustomerName();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -228,11 +219,7 @@ public class CurrentRentalCalculateController implements Initializable {
         }
     }
 
-    @FXML
-    private void handleSerchRentByInvoiceId() {
-    }
-
-    private void lordCustomerNames() {
+     private void lordCustomerNames() {
         try {
             List<String> customerList = customerModel.getCustomersNotPaidLast();
             ObservableList<String> obList = FXCollections.observableArrayList();
@@ -245,7 +232,7 @@ public class CurrentRentalCalculateController implements Initializable {
     }
 
     private void cleanFields() {
-        invoiceIDField.setText("");
+
         customerNameField.setText("");
         customeNICField.setText("");
         driverNameField.setText("-");

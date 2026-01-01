@@ -1,0 +1,87 @@
+/* Root */
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: #f4f6f9;
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #2f363c;
+    -fx-padding: 15;
+}
+
+/* Top bar */
+.top-bar {
+    -fx-background-color: #3e4a52;
+    -fx-padding: 12;
+}
+
+/* Welcome text */
+.welcome-text {
+    -fx-text-fill: #f1f5f9;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+/* Profile */
+.profile-btn {
+    -fx-background-radius: 20;
+    -fx-background-color: #000000;
+    -fx-text-fill: #ef4444;
+}
+
+/* Dashboard buttons */
+.dash-btn {
+    -fx-background-color: linear-gradient(to bottom right, #ffffff, #e5e7eb);
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-font-size: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);
+}
+
+.dash-btn:hover {
+    -fx-background-color: linear-gradient(to bottom right, #2563eb, #1e40af);
+}
+
+.dash-btn:hover .label {
+    -fx-text-fill: white;
+}
+
+/* Logout */
+.logout-btn {
+    -fx-background-color: #dc2626;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+}
+
+.logout-btn:hover {
+    -fx-background-color: #b91c1c;
+}
+.header-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+#timeLable {
+    -fx-font-weight: bold;
+    -fx-text-fill: #38bdf8;
+    -fx-font-size: 20px;
+}
+#dateLable {
+    -fx-font-weight: bold;
+}
+.root-pane {
+    -fx-background-color: #f4f6f9;
+}
+.root-pane {
+    -fx-background-image: url("../images/logo.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: cover;
+    -fx-background-position: center;
+}
+.bg-overlay {
+    -fx-background-color: rgba(255, 255, 255, 0.75);
+}
+
+
+

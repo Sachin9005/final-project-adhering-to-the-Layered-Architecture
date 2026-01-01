@@ -39,7 +39,7 @@
 }
 
 .label {
-    -fx-font-size: 13px;
+    -fx-font-size: 14px;
     -fx-text-fill: #2c3e50;
     -fx-font-weight: bold;
 }
@@ -97,3 +97,78 @@
             #dce3f0
     );
 }
+/* Confirm Payment Button */
+.confirm-pay-btn {
+    -fx-background-color: linear-gradient(to right, #27ae60, #2ecc71);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 12;
+    -fx-padding: 5 10 5 10;
+
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 6, 0.3, 0, 3);
+}
+
+/* Hover */
+.confirm-pay-btn:hover {
+    -fx-background-color: linear-gradient(to right, #219150, #27ae60);
+}
+
+/* Pressed */
+.confirm-pay-btn:pressed {
+    -fx-background-color: #1e8449;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 3, 0.2, 0, 1);
+}
+
+/* Make Rent Button */
+.make-rent-btn {
+    -fx-background-color: linear-gradient(to right, #f39c12, #f1c40f);
+    -fx-text-fill: #2c2c2c;
+
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+
+    -fx-background-radius: 10;
+    -fx-padding: 6 16 6 16;
+
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0.3, 0, 2);
+}
+
+/* Hover */
+.make-rent-btn:hover {
+    -fx-background-color: linear-gradient(to right, #e67e22, #f39c12);
+}
+
+/* Pressed */
+.make-rent-btn:pressed {
+    -fx-background-color: #d35400;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 3, 0.2, 0, 1);
+}
+.combo-box {
+    -fx-pref-height: 25;
+    -fx-pref-width: 150;
+    -fx-font-size: 14px;
+    -fx-background-radius: 6;
+}
+
+.combo-box:hover {
+    -fx-border-color: #2563eb;
+    -fx-border-radius: 6;
+}
+
+.combo-box-base {
+    -fx-background-color: white;
+}
+.total-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2563eb;
+}
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+

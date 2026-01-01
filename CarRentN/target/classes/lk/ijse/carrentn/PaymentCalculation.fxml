@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.PaymentCalculationController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@cssFiles/ManageDetails.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.PaymentCalculationController">
    <top>
       <HBox alignment="CENTER_LEFT" prefHeight="105.0" prefWidth="1280.0" style="-fx-background-color: #3e4a52;" BorderPane.alignment="CENTER">
          <children>
@@ -47,7 +47,7 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="75.0" text="Back">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="75.0" text="Back">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

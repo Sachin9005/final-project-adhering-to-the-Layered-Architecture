@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.NewRentCalculateController">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" stylesheets="@cssFiles/Main.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.NewRentCalculateController">
    <children>
       <VBox alignment="CENTER" layoutY="-1.0" prefHeight="85.0" prefWidth="1100.0">
          <children>
@@ -47,7 +48,7 @@
                   </Label>
                   <Label style="-fx-font-weight: bold;" text="Driver        : " GridPane.rowIndex="1">
                      <font>
-                        <Font size="15.0" />
+                        <Font size="16.0" />
                      </font>
                   </Label>
                   <Label style="-fx-font-weight: bold;" text="Days          : " GridPane.rowIndex="2">
@@ -64,31 +65,40 @@
             </GridPane>
          </children>
       </VBox>
-      <ComboBox fx:id="vehicleCbox" layoutX="405.0" layoutY="111.0" onAction="#handleSelectVehicle" prefHeight="32.0" prefWidth="116.0" />
-      <ComboBox fx:id="driverCbox" layoutX="404.0" layoutY="162.0" onAction="#handleSelectDriver" prefHeight="32.0" prefWidth="116.0" />
-      <Label fx:id="vehicleLable" layoutX="405.0" layoutY="118.0" text="select vehicle" />
-      <Label fx:id="driverLable" layoutX="405.0" layoutY="169.0" text="select driver" />
+       <ComboBox fx:id="vehicleCbox" layoutX="405.0" layoutY="109.0" onAction="#handleSelectVehicle" styleClass="combo-box" GridPane.columnIndex="1" />
+       <ComboBox fx:id="driverCbox" layoutX="404.0" layoutY="160.0" onAction="#handleSelectDriver" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Label fx:id="vehicleLable" layoutX="410.0" layoutY="118.0" text="select vehicle">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Label fx:id="driverLable" layoutX="407.0" layoutY="169.0" text="select driver">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
       <VBox layoutX="721.0" layoutY="101.0" prefHeight="71.0" prefWidth="373.0">
          <children>
-            <Label text="Total(RS):" />
-            <Label fx:id="totalPriceLable" text="-" textFill="#0040ff">
-               <font>
-                  <Font name="System Bold" size="26.0" />
-               </font>
-            </Label>
+             <Label text="Total (Rs.)" />
+             <Label fx:id="totalPriceLable" styleClass="total-label" text="0.00" />
          </children>
       </VBox>
       <ComboBox fx:id="discountCbox" layoutX="405.0" layoutY="273.0" onAction="#handleSelectDiscount" prefHeight="32.0" prefWidth="117.0" />
-      <Label fx:id="discountLable" layoutX="405.0" layoutY="280.0" text="select Discount" />
-      <VBox alignment="BOTTOM_LEFT" fillWidth="false" layoutX="721.0" layoutY="220.0" prefHeight="101.0" prefWidth="268.0">
+      <Label fx:id="discountLable" layoutX="406.0" layoutY="280.0" text="select Discount">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <VBox alignment="BOTTOM_LEFT" fillWidth="false" layoutX="721.0" layoutY="220.0" prefHeight="101.0" prefWidth="291.0">
          <children>
-            <Button fx:id="rentBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleRent" prefHeight="35.0" prefWidth="101.0" text="Make Rent" translateY="20.0">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleReset" prefHeight="35.0" prefWidth="75.0" text="Reset" translateX="150.0" translateY="-14.0">
-               <font>
+             <Button fx:id="rentBtn" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#handleRent" prefHeight="40.0" prefWidth="120.0" styleClass="make-rent-btn" text="Make Rent" translateY="20.0">
+                 <font>
+                     <Font name="System Bold" size="14.0" />
+                 </font>
+             </Button>
+
+             <Button fx:id="btnReset" alignment="CENTER" mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="120.0" styleClass="btn-reset" text="Reset" translateX="150.0" translateY="-20.0">
+                <graphic>
+                    <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="18" />
+                </graphic>
+                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
                <VBox.margin>
@@ -108,11 +118,7 @@
                   <TableColumn fx:id="colVehicleRate" prefWidth="114.0" text="Rate Per Day" />
               </columns>
             </TableView>
-            <Label layoutX="178.0" layoutY="5.0" text="Available Vehicles">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
+             <Label layoutX="185.0" layoutY="4.0" styleClass="form-label" text="Available Vehicles" underline="true" />
          </children></Pane>
       <Pane layoutX="555.0" layoutY="392.0" prefHeight="235.0" prefWidth="545.0">
          <children>
@@ -124,11 +130,7 @@
                   <TableColumn fx:id="colDriverRate" prefWidth="107.0" text="Rate Per Day" />
               </columns>
             </TableView>
-            <Label layoutX="221.0" layoutY="5.0" text="Available Drivers">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
+             <Label layoutX="216.0" layoutY="4.0" styleClass="form-label" text="Available Drivers" underline="true" />
          </children></Pane>
    </children>
 </AnchorPane>

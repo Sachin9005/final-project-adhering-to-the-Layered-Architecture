@@ -8,15 +8,18 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.MainDashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" styleClass="root-pane" fx:id="rootPane"  stylesheets="@cssFiles/Dashbord.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.MainDashboardController">
    <left>
-      <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="785.0" prefWidth="175.0" spacing="10.0" style="-fx-background-color: #2f363c; -fx-padding: 15;" BorderPane.alignment="CENTER">
-         <children>
-            <Button alignment="CENTER" defaultButton="true" lineSpacing="10.0" mnemonicParsing="false" onAction="#logOut" prefHeight="34.0" prefWidth="119.0" style="-fx-background-radius: 10;" text="LogOut" textFill="#570b0b">
-               <font>
+      <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="785.0" prefWidth="175.0" spacing="10.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+
+      <children>
+         <Button alignment="CENTER" mnemonicParsing="false" onAction="#logOut" prefHeight="34.0" prefWidth="119.0" styleClass="logout-btn" text="LogOut">
+
+         <font>
                   <Font name="System Bold" size="15.0" />
                </font>
                <graphic>
@@ -30,8 +33,9 @@
          </children></VBox>
    </left>
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="110.0" prefWidth="1024.0" spacing="5.0" style="-fx-background-color: #3e4a52; -fx-padding: 12;" BorderPane.alignment="TOP_RIGHT">
-         <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="110.0" prefWidth="1024.0" spacing="5.0" styleClass="top-bar" BorderPane.alignment="TOP_RIGHT">
+
+      <children>
             <ImageView fitHeight="90.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
                   <Image url="@images/name.png" />
@@ -43,12 +47,9 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
-            <Label prefHeight="0.0" prefWidth="1121.0" text="            Welcome To System" textFill="#eeeded" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold Italic" size="28.0" />
-               </font>
-            </Label>
-            <Button contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#profile" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: black; -fx-background-radius: 20;" text="Profile" textFill="#eb0c0c">
+         <Label prefHeight="61.0" prefWidth="1077.0" styleClass="welcome-text" text="           Welcome to Car Rental System" />
+
+         <Button contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#profile" prefHeight="36.0" prefWidth="67.0" style="-fx-background-color: black; -fx-background-radius: 20;" styleClass="profile-btn" text="Profile" textFill="#eb0c0c">
                <graphic>
                   <ImageView fitHeight="54.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -64,61 +65,79 @@
       </HBox>
    </top>
    <center>
-      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="TOP_LEFT">
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" styleClass="bg-overlay" >
          <children>
-            <HBox prefHeight="85.0" prefWidth="1145.0">
+            <HBox layoutX="814.0" layoutY="30.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: none; -fx-border-color: black;">
                <children>
-                  <Button mnemonicParsing="false" onAction="#paymentCal" prefHeight="85.0" prefWidth="163.0">
+                  <Label text="Time :">
                      <HBox.margin>
-                        <Insets left="120.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
-                     <graphic>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Rental">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Calculate">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </graphic>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#detailsManage" prefHeight="91.0" prefWidth="158.0">
+                  </Label>
+                  <Label fx:id="timeLable" text="Label">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
                      <HBox.margin>
-                        <Insets left="500.0" />
+                        <Insets left="10.0" />
                      </HBox.margin>
-                     <graphic>
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-                           <children>
-                              <Label text="Details">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Mange">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </graphic>
-                  </Button>
+                  </Label>
                </children>
-               <opaqueInsets>
-                  <Insets right="100.0" />
-               </opaqueInsets>
             </HBox>
+            <HBox layoutX="40.0" layoutY="30.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: none; -fx-border-color: black;">
+               <children>
+                  <Label text="Date : ">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="dateLable" text="Label">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Button layoutX="671.0" layoutY="485.0" mnemonicParsing="false" onAction="#detailsManage" prefHeight="91.0" prefWidth="158.0" styleClass="dash-btn">
+               <graphic>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Details">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Mange">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </graphic>
+            </Button>
+            <Button layoutX="185.0" layoutY="485.0" mnemonicParsing="false" onAction="#paymentCal" prefHeight="85.0" prefWidth="163.0" styleClass="dash-btn">
+               <graphic>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Rental">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label text="Calculate">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </graphic>
+            </Button>
          </children>
-         <BorderPane.margin>
-            <Insets bottom="20.0" />
-         </BorderPane.margin>
-      </VBox>
+      </Pane>
    </center>
 </BorderPane>

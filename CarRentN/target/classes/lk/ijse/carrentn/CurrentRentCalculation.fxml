@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -10,24 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CurrentRentalCalculateController">
+<AnchorPane prefHeight="600.0" prefWidth="1100.0" stylesheets="@cssFiles/Main.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.CurrentRentalCalculateController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="1100.0">
          <children>
             <Label style="-fx-font-size: 22; -fx-font-weight: bold;" text="Current Rental Calculatete" />
          </children>
       </VBox>
-      <VBox layoutX="58.0" layoutY="56.0" prefHeight="85.0" prefWidth="163.0">
-         <children>
-            <Label text="Search by Invoice ID" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="invoiceIDField" onKeyPressed="#searchRental" prefHeight="36.0" prefWidth="163.0" VBox.vgrow="ALWAYS" />
-         </children>
-      </VBox>
-      <VBox layoutX="280.0" layoutY="55.0" prefHeight="72.0" prefWidth="330.0">
+      <VBox layoutX="58.0" layoutY="56.0" prefHeight="85.0" prefWidth="163.0" />
+      <VBox layoutX="83.0" layoutY="50.0" prefHeight="72.0" prefWidth="330.0">
          <children>
             <Label text="Search by Customer Name" VBox.vgrow="ALWAYS">
                <font>
@@ -37,25 +29,25 @@
             <TextField fx:id="customerNameField" onKeyPressed="#searchRental" prefHeight="36.0" prefWidth="301.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <ComboBox fx:id="customerCbox" layoutX="611.0" layoutY="78.0" onAction="#handleSelectCustomer" prefHeight="32.0" prefWidth="163.0" />
-      <Label fx:id="selectCustomerLable" layoutX="616.0" layoutY="85.0" text="Select Customer">
+      <ComboBox fx:id="customerCbox" layoutX="414.0" layoutY="73.0" onAction="#handleSelectCustomer" prefHeight="32.0" prefWidth="163.0" />
+      <Label fx:id="selectCustomerLable" layoutX="419.0" layoutY="80.0" text="Select Customer">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <VBox layoutX="785.0" layoutY="64.0" prefHeight="44.0" prefWidth="306.0">
+      <VBox layoutX="702.0" layoutY="57.0" prefHeight="44.0" prefWidth="306.0">
          <children>
             <Label text="Customer NIC/Passport No: " />
             <TextField fx:id="customeNICField" style="-fx-background-color: none; -fx-border-color: black; -fx-border-width: 0 0 2px 0;" />
          </children>
       </VBox>
-      <VBox layoutX="269.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="269.0" layoutY="136.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Model :" />
             <Label fx:id="modelLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="428.0" layoutY="150.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="428.0" layoutY="136.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="Rate Per Day :" />
             <Label fx:id="vehicleRateLable" text="-" />
@@ -67,20 +59,20 @@
             <Label fx:id="sDateLable" text="-" />
          </children>
       </VBox>
-      <Label alignment="CENTER" layoutX="60.0" layoutY="148.0" prefHeight="50.0" prefWidth="55.0" text="Vehicle Details" wrapText="true">
+      <Label alignment="CENTER" layoutX="42.0" layoutY="139.0" prefHeight="50.0" prefWidth="55.0" text="Vehicle Details" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <Label layoutX="60.0" layoutY="192.0" prefHeight="50.0" prefWidth="55.0" text="Driver Details" wrapText="true">
+      <Label layoutX="42.0" layoutY="192.0" prefHeight="50.0" prefWidth="55.0" text="Driver Details" wrapText="true">
          <font>
             <Font name="System Bold" size="15.0" />
          </font></Label>
-      <Label layoutX="122.0" layoutY="139.0" prefHeight="72.0" prefWidth="47.0" text=":-">
+      <Label layoutX="104.0" layoutY="130.0" prefHeight="72.0" prefWidth="47.0" text=":-">
          <font>
             <Font size="25.0" />
          </font>
       </Label>
-      <Label layoutX="122.0" layoutY="182.0" prefHeight="72.0" prefWidth="47.0" text=":-">
+      <Label layoutX="104.0" layoutY="182.0" prefHeight="72.0" prefWidth="47.0" text=":-">
          <font>
             <Font size="25.0" />
          </font>
@@ -91,7 +83,7 @@
             <Label fx:id="driverRateField" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="199.0" layoutY="192.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="194.0" layoutY="192.0" prefHeight="44.0" prefWidth="117.0">
          <children>
             <Label text="Name :" />
             <Label fx:id="driverNameField" text="-" />
@@ -102,22 +94,22 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="daysLable" layoutX="623.0" layoutY="175.0" text="-">
+      <Label fx:id="daysLable" layoutX="623.0" layoutY="173.0" text="-">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="920.0" layoutY="119.0" text="Price">
+      <Label layoutX="920.0" layoutY="117.0" text="Price">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="vehicleTotalLable" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="150.0" prefHeight="30.0" prefWidth="72.0" text="-">
+      <Label fx:id="vehicleTotalLable" alignment="TOP_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="141.0" prefHeight="30.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="driverTotalLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="206.0" prefHeight="30.0" prefWidth="72.0" text="-">
+      <Label fx:id="driverTotalLable" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="928.0" layoutY="204.0" prefHeight="30.0" prefWidth="72.0" text="-">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -128,13 +120,13 @@
             <Label fx:id="eDateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="386.0" layoutY="248.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="386.0" layoutY="248.0" prefHeight="44.0" prefWidth="114.0">
          <children>
             <Label text="Returned Date : " />
             <Label fx:id="returnedDateLable" text="-" />
          </children>
       </VBox>
-      <VBox layoutX="546.0" layoutY="248.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="546.0" layoutY="248.0" prefHeight="44.0" prefWidth="114.0">
          <children>
             <Label text="Late Dates (1+) :" />
             <Label fx:id="lateDatesLable" text="-" />
@@ -219,7 +211,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <VBox layoutX="159.0" layoutY="153.0" prefHeight="44.0" prefWidth="100.0">
+      <VBox layoutX="159.0" layoutY="138.0" prefHeight="44.0" prefWidth="100.0">
          <children>
             <Label text="No  :" />
             <Label fx:id="NoLable" text="-" />
@@ -227,7 +219,10 @@
       </VBox>
       <HBox layoutX="640.0" layoutY="543.0" prefHeight="46.0" prefWidth="455.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#handleReset" prefHeight="30.0" prefWidth="87.0" text="Reset">
+            <Button fx:id="btnReset" mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="100.0" styleClass="btn-reset" text=" Reset">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="18" />
+               </graphic>
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -235,15 +230,20 @@
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handleConfirmPay" text="Comfirm Payment">
+            <Button mnemonicParsing="false" onAction="#handleConfirmPay" prefHeight="40.0" prefWidth="180.0" styleClass="confirm-pay-btn" text="Confirm Payment">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
+
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#handlePrint" prefHeight="38.0" prefWidth="85.0" text="Print">
+
+            <Button fx:id="btnPrint" mnemonicParsing="false" onAction="#handlePrint" prefHeight="40.0" prefWidth="100.0" styleClass="btn-print" text="Print">
+               <graphic>
+                  <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="18" />
+               </graphic>
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>

@@ -129,10 +129,15 @@
              </Button>
 
              <Button fx:id="btnPrint" mnemonicParsing="false" onAction="#handlePrint" prefHeight="50.0" prefWidth="120.0" styleClass="btn-print" text=" Print">
-
                  <graphic>
                      <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="18" />
                  </graphic>
+                 <font>
+                     <Font size="16.0" />
+                 </font>
+                 <HBox.margin>
+                     <Insets left="5.0" right="5.0" />
+                 </HBox.margin>
              </Button>
 
          </children>

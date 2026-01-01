@@ -66,11 +66,11 @@
             </HBox.margin>
          </Button>
       </HBox>
-      <Pane layoutX="1.0" layoutY="351.0" prefHeight="249.0" prefWidth="1100.0">
+      <Pane layoutY="346.0" prefHeight="250.0" prefWidth="1090.0">
          <children>
       
       
-            <TableView fx:id="tblDrivers" layoutX="9.0" prefHeight="250" prefWidth="1086.0">
+            <TableView fx:id="tblDrivers" layoutX="9.0" prefHeight="250" prefWidth="1080.0">
                <columns>
                   <TableColumn fx:id="colDriverId" prefWidth="110.0" text="Driver ID" />
                   <TableColumn fx:id="colName" prefWidth="288.0" text="Name" />

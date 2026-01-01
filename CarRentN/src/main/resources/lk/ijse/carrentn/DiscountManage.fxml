@@ -20,7 +20,7 @@
    <children>
 
 
-      <HBox alignment="CENTER" layoutX="170.0" layoutY="245.0" prefHeight="62.0" prefWidth="518.0" spacing="10">
+      <HBox alignment="CENTER" layoutX="154.0" layoutY="240.0" prefHeight="62.0" prefWidth="518.0" spacing="10">
          <Button fx:id="btnSave" mnemonicParsing="false" onAction="#handleSaveDiscount" prefHeight="50.0" prefWidth="130.0" styleClass="btn-save" text="Save">
             <graphic>
                <FontAwesomeIconView fill="WHITE" glyphName="SAVE" size="18" />
@@ -66,11 +66,11 @@
             </HBox.margin>
          </Button>
       </HBox>
-      <Pane layoutX="35.0" layoutY="345.0" prefHeight="250.0" prefWidth="1090.0">
+      <Pane layoutX="6.0" layoutY="342.0" prefHeight="250.0" prefWidth="1090.0">
          <children>
       
       
-            <TableView fx:id="tblDiscounts" layoutX="58.0" prefHeight="250.0" prefWidth="800.0">
+            <TableView fx:id="tblDiscounts" layoutX="58.0" layoutY="-1.0" prefHeight="250.0" prefWidth="800.0">
                <columns>
                   <TableColumn fx:id="colDiscountId" prefWidth="126.0" text="ID" />
                   <TableColumn fx:id="colDescription" prefWidth="423.0" text="Description" />
@@ -79,7 +79,7 @@
             </TableView>
          </children>
       </Pane>
-      <VBox layoutX="45.0" layoutY="96.0" prefHeight="164.0" prefWidth="489.0">
+      <VBox layoutX="110.0" layoutY="91.0" prefHeight="164.0" prefWidth="489.0">
          <children>
       
       
