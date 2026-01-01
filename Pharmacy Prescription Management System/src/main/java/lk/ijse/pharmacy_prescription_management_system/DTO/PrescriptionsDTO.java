@@ -22,12 +22,6 @@ public class PrescriptionsDTO {
         this.medicineId = medicineId;
     }
 
-    public PrescriptionsDTO(int id, int patientId, int medicineId, LocalDate prescribedDate) {
-        this.id = id;
-        this.patientId = patientId;
-        this.medicineId = medicineId;
-        this.prescribedDate = prescribedDate;
-    }
 
     public int getId() {
         return id;

@@ -19,18 +19,22 @@ public class MainView {
         System.out.println("1.Patient Management");
         System.out.println("2.Medicines Management");
         System.out.println("3.Prescription");
-        System.out.println("4.Exit");
+        System.out.println("4.get Inventory Reports");
+        System.out.println("5.Cancel Prescription");
+        System.out.println("6.Exit");
         System.out.print("Enter your choice :");
         int choice = sc.nextInt();
         switch (choice) {
             case 1 ->patientController.addPatient();
             case 2 -> medicinesController.addMedicine();
             case 3 -> prescriptionsController.addPrescription();
-            case 4 -> System.exit(0);
-
+            case 4 -> medicinesController.getInventoryReport();
+            case 5 -> prescriptionsController.cancelPrescription();
+            case 6 -> System.exit(0);
+            default -> System.out.println("Invalid choice");
         }
-
-
-
+    }
+    public static void main(String[] args) {
+        view();
     }
 }

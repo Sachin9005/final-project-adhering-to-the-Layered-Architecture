@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MedicinesModel {
     public boolean saveMedicine(MedicinesDTO medicinesDTO)throws SQLException {
@@ -55,5 +57,22 @@ public class MedicinesModel {
             );
         }
         return medicinesDTO;
+    }
+    public List<MedicinesDTO> getAllMedicines()throws SQLException {
+        Connection conn = DBConnection.getInstance().getConnection();
+
+        String sql = "SELECT * FROM medicines";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        ResultSet rs = pstmt.executeQuery();
+        List<MedicinesDTO> medicinesDTOList = new ArrayList<>();
+        if (rs.next()) {
+            medicinesDTOList.add(new MedicinesDTO(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getDouble("unit_price"),
+                    rs.getInt("stock_quantity")
+            ));
+        }
+        return medicinesDTOList;
     }
 }
