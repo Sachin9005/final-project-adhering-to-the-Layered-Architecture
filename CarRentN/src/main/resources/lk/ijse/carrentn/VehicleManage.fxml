@@ -33,14 +33,14 @@
          <children>
             <TableView fx:id="tblVehicle" layoutX="16.0" prefHeight="221.0" prefWidth="1074.0">
               <columns>
-                <TableColumn fx:id="colVID" prefWidth="75.0" text="vehicle_id" />
-                  <TableColumn fx:id="colVehicleNo" prefWidth="163.0" text="Vehicle No" />
-                  <TableColumn fx:id="colModel" prefWidth="183.0" text="model" />
-                  <TableColumn fx:id="colManufac" prefWidth="161.0" text="Manufacture" />
+                <TableColumn fx:id="colVID" prefWidth="90.0" text="vehicle_id" />
+                  <TableColumn fx:id="colVehicleNo" prefWidth="148.0" text="Vehicle No" />
+                  <TableColumn fx:id="colModel" prefWidth="202.0" text="model" />
+                  <TableColumn fx:id="colManufac" prefWidth="157.0" text="Manufacture" />
                   <TableColumn fx:id="colType" prefWidth="97.0" text="Type" />
-                  <TableColumn fx:id="colRate" prefWidth="155.0" text="Rate Per Day" />
-                <TableColumn fx:id="colOID" prefWidth="122.0" text="owner_id" />
-                  <TableColumn fx:id="colOPrec" prefWidth="116.0" text="OwnershipRate" />
+                  <TableColumn fx:id="colRate" prefWidth="154.0" text="Rate Per Day" />
+                <TableColumn fx:id="colOID" prefWidth="115.0" text="owner_id" />
+                  <TableColumn fx:id="colOPrec" prefWidth="104.0" text="OwnershipRate" />
               </columns>
             </TableView>
          </children>

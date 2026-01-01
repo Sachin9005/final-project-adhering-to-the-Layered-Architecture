@@ -72,7 +72,7 @@ public class VehicleManageController implements Initializable {
 
     CarOwnerModel carOwnerModel =  new CarOwnerModel();
     VehicleModel vehicleModel = new VehicleModel();
-    String[] typeList = {"Car","Van","SUV"};
+    String[] typeList = {"CAR","VAN","SUV"};
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -215,7 +215,7 @@ public class VehicleManageController implements Initializable {
         try {
             String vehicleNo = vehicleNoField.getText();
             if (vehicleNo.matches(VEHICLE_NO_REGEX)) {
-                boolean result = vehicleModel.delete(vehicleNo);
+                boolean result = vehicleModel.delete(vehicleModel.searchId(vehicleNo));
                 lordVehicleTable();
 
                 if(result) {

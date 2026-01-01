@@ -1,6 +1,7 @@
 lk/ijse/carrentn/controller/CurrentRentalCalculateController.class
 lk/ijse/carrentn/controller/MainDashboardController.class
 lk/ijse/carrentn/controller/ManageDetailsController.class
+lk/ijse/carrentn/dto/TM/VehicleCountTM.class
 lk/ijse/carrentn/controller/LoginController.class
 lk/ijse/carrentn/model/DiscountModel.class
 lk/ijse/carrentn/controller/CarOwnerManageController.class

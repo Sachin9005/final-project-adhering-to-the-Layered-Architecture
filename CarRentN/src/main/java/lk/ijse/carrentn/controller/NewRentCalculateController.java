@@ -2,7 +2,6 @@ package lk.ijse.carrentn.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -22,24 +21,24 @@ import java.util.ResourceBundle;
 
 public class NewRentCalculateController implements Initializable {
     @FXML
-    private TableColumn<?, ?> colDriverId;
+    private TableColumn<DriverTM, Integer> colDriverId;
     @FXML
-    private TableColumn<?, ?> colDriverName;
+    private TableColumn<DriverTM, String>  colDriverName;
     @FXML
-    private TableColumn<?, ?> colDriverRate;
+    private TableColumn<DriverTM, Double> colDriverRate;
     @FXML
-    private TableColumn<?, ?> colDriverPhoneNo;
+    private TableColumn<DriverTM, String>  colDriverPhoneNo;
 
     @FXML
-    private TableColumn<?, ?> colVehicleId;
+    private TableColumn<VehicleTM, Integer> colVehicleId;
     @FXML
-    private TableColumn<?, ?> colVehicleNo;
+    private TableColumn<VehicleTM, String> colVehicleNo;
     @FXML
-    private TableColumn<?, ?> colVehicleModel;
+    private TableColumn<VehicleTM, String>  colVehicleModel;
     @FXML
-    private TableColumn<?, ?> colVehicleType;
+    private TableColumn<VehicleTM, String>  colVehicleType;
     @FXML
-    private TableColumn<?, ?> colVehicleRate;
+    private TableColumn<VehicleTM, Double>  colVehicleRate;
 
     @FXML
     private TextField daysField;
@@ -74,7 +73,6 @@ public class NewRentCalculateController implements Initializable {
 
     private final String DAY_REGEX = "^[0-9]+$";
 
-
 VehicleModel vehicleModel = new VehicleModel();
 DriverModel driverModel = new DriverModel();
 DiscountModel discountModel = new DiscountModel();
@@ -91,8 +89,6 @@ DiscountModel discountModel = new DiscountModel();
         colDriverName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colDriverPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phoneNO"));
         colDriverRate.setCellValueFactory(new PropertyValueFactory<>("dailyRate"));
-
-
         lordDriverNames();
         lordVehicleNames();
         lordDiscountDes();
@@ -101,20 +97,19 @@ DiscountModel discountModel = new DiscountModel();
     }
 
     @FXML
-    void handleRent(ActionEvent event)throws IOException {
+    void handleRent()throws IOException {
        App.setRoot("ManageDetails");
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {cleanFileds();}
+    private void handleReset() {cleanFileds();}
 
     @FXML
-    private void handleSelectDiscount(ActionEvent event) {
+    private void handleSelectDiscount() {
         String discountDesc = discountCbox.getSelectionModel().getSelectedItem();
         String discoutID = discountModel.searchId(discountDesc);
         discountIdField.setText(discoutID);
         discountLable.setText("");
-
         if (discoutID != null){
             double discountPrec = discountModel.searchDesForGetPrec(discountDesc);
             double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
@@ -123,16 +118,15 @@ DiscountModel discountModel = new DiscountModel();
     }
 
     @FXML
-    private void handleSelectDriver(ActionEvent event) {
+    private void handleSelectDriver() {
         String driverName = driverCbox.getSelectionModel().getSelectedItem();
         String driverIr = driverModel.searchId(driverName);
         driverIdField.setText(driverIr);
         driverLable.setText("");
-
     }
 
     @FXML
-    private void handleSelectVehicle(ActionEvent event) {
+    private void handleSelectVehicle() {
         String vehiclemodel = vehicleCbox.getSelectionModel().getSelectedItem();
         String vehicleId = vehicleModel.searchId(vehiclemodel);
         vehicleIdField.setText(vehicleId);
@@ -141,7 +135,7 @@ DiscountModel discountModel = new DiscountModel();
 
     private void lordVehicleNames(){
         try {
-            List<String> vehicleList = vehicleModel.getAllVehicleNo();
+            List<String> vehicleList = vehicleModel.getAvailableVehiclesNo(LocalDate.now());
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(vehicleList);
             vehicleCbox.setItems(obList);
@@ -153,7 +147,7 @@ DiscountModel discountModel = new DiscountModel();
 
     private void lordDriverNames(){
         try {
-            List<String> driverList = driverModel.getAllDriverNames();
+            List<String> driverList = driverModel.getAvailableDriverNames(LocalDate.now());
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(driverList);
             driverCbox.setItems(obList);
@@ -175,7 +169,7 @@ DiscountModel discountModel = new DiscountModel();
         }
     }
 
-    private double calculatetotal(String driverId,String vehicleId,int days){
+    private void calculatetotal(String driverId, String vehicleId, int days){
         //total pay calcuulation
         double total = 0.00;
         try {
@@ -184,7 +178,6 @@ DiscountModel discountModel = new DiscountModel();
             }else{
                 //with vehicle pay,discount,driver payment
                 total = (vehicleModel.searchPrioce(driverId) * days)+(driverModel.searchRate(driverId)*days);
-
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -193,7 +186,6 @@ DiscountModel discountModel = new DiscountModel();
         total = Math.round(total * 100.0) / 100.0;
         totalPriceLable.setText(String.valueOf(total));
         totalPrice = totalPriceLable.getText();
-        return total;
     }
 
     @FXML
@@ -203,12 +195,12 @@ DiscountModel discountModel = new DiscountModel();
             String driverID = driverIdField.getText();
             String days = daysField.getText().trim();
 
-            if (vehicleId == null || vehicleId.isBlank()) {
+            if (vehicleId.isEmpty()) {
                 new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
                 return;
             }
 
-            if (days == null || !days.matches(DAY_REGEX)) {
+            if (!days.matches(DAY_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
                 return;
             }
@@ -219,11 +211,9 @@ DiscountModel discountModel = new DiscountModel();
 
             calculatetotal(driverIdr, vehicleId.trim(), Integer.parseInt(days.trim()));
         }
-
     }
 
     private void cleanFileds () {
-
         vehicleIdField.setText("");
         driverIdField.setText("");
         daysField.setText("");
@@ -234,18 +224,14 @@ DiscountModel discountModel = new DiscountModel();
         discountCbox.getSelectionModel().clearSelection();
         discountLable.setText("Select Discount");
         totalPriceLable.setText("-");
-
     }
 
     private void lordAvailableVehicleTable(){
         try {
             List<VehicleTM> vehicleTMS = vehicleModel.getAvailableVehicles(LocalDate.now());
             ObservableList<VehicleTM> obList =FXCollections.observableArrayList();
-            for (VehicleTM vehicleTM : vehicleTMS) {
-                obList.add(vehicleTM);
-            }
+            obList.addAll(vehicleTMS);
             tblAvaVehicles.setItems(obList);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -254,16 +240,12 @@ DiscountModel discountModel = new DiscountModel();
     public void loadAvailableDrivers() {
         try {
             List<DriverTM> driverTMs = DriverModel.getAvailableDrivers(LocalDate.now());
-
             ObservableList<DriverTM> obList =FXCollections.observableArrayList();
 
-            for (DriverTM driverTM : driverTMs){
-                obList.add(driverTM);
-            }
+            obList.addAll(driverTMs);
             tblAvaDrivers.setItems(obList);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

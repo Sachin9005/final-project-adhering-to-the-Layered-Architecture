@@ -146,13 +146,13 @@
          <children>
             <TableView fx:id="tblRent" layoutX="17.0" layoutY="5.0" prefHeight="200.0" prefWidth="1051.0">
               <columns>
-                <TableColumn fx:id="colRentalId" prefWidth="123.0" text="Rental Id" />
-                <TableColumn fx:id="colCusId" prefWidth="110.0" text="Customer ID" />
+                <TableColumn fx:id="colRentalId" prefWidth="135.0" text="Rental Id" />
+                <TableColumn fx:id="colCusId" prefWidth="109.0" text="Customer ID" />
                   <TableColumn fx:id="colVehicleId" prefWidth="120.0" text="Vehicle Id" />
-                  <TableColumn fx:id="colDriverId" prefWidth="110.0" text="Driver ID" />
-                  <TableColumn fx:id="colSDate" prefWidth="232.0" text="Start Date" />
-                  <TableColumn fx:id="colDays" prefWidth="126.0" text="Days" />
-                  <TableColumn fx:id="colEDate" prefWidth="228.0" text="End Date" />
+                  <TableColumn fx:id="colDriverId" prefWidth="125.0" text="Driver ID" />
+                  <TableColumn fx:id="colSDate" prefWidth="220.0" text="Start Date" />
+                  <TableColumn fx:id="colDays" prefWidth="123.0" text="Days" />
+                  <TableColumn fx:id="colEDate" prefWidth="217.0" text="End Date" />
               </columns>
             </TableView>
          </children></Pane>

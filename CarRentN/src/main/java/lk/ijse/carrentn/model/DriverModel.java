@@ -72,17 +72,6 @@ public class DriverModel {
         return driverDTOList;
     }
 
-    public List<String> getAllDriverNames() throws SQLException {
-        ResultSet rs = CrudUtil.execute("SELECT name FROM Driver ORDER BY driver_id DESC");
-
-        ArrayList<String> driverNameList = new ArrayList<>();
-
-        while(rs.next()) {
-            driverNameList.add(rs.getString("name"));
-        }
-        return driverNameList;
-    }
-
     public String searchId(String name) {
         String id = null;
         try {
@@ -142,6 +131,23 @@ public class DriverModel {
             );
         }
         return list;
+    }
+    public int getDriverCount() throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT d.driver_id) FROM Driver d";
+        ResultSet rs = CrudUtil.execute(sql);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
+
+    public int getAvailableDriverCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
+        ResultSet rs = CrudUtil.execute(sql,LocalDate.now());
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
 

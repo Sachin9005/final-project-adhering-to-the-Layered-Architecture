@@ -4,15 +4,19 @@
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@cssFiles/Dashbord.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.MainDashboardController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"  prefHeight="720.0" prefWidth="1280.0" stylesheets="@cssFiles/Dashbord.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.MainDashboardController">
    <left>
       <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="785.0" prefWidth="175.0" spacing="10.0" styleClass="sidebar" BorderPane.alignment="CENTER">
 
@@ -33,10 +37,10 @@
          </children></VBox>
    </left>
    <top>
-      <HBox alignment="CENTER_LEFT" prefHeight="110.0" prefWidth="1024.0" spacing="5.0" styleClass="top-bar" BorderPane.alignment="TOP_RIGHT">
+      <HBox alignment="CENTER_LEFT" prefHeight="127.0" prefWidth="1280.0" spacing="5.0" styleClass="top-bar" BorderPane.alignment="TOP_RIGHT">
 
       <children>
-            <ImageView fitHeight="90.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+            <ImageView fitHeight="103.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                <image>
                   <Image url="@images/name.png" />
                </image>
@@ -67,37 +71,23 @@
    <center>
       <Pane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" styleClass="root-pane" BorderPane.alignment="CENTER">
          <children>
-            <HBox layoutX="814.0" layoutY="30.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: none; -fx-border-color: black;">
+            <HBox layoutX="829.0" layoutY="29.0" prefWidth="250.0" styleClass="time-box">
                <children>
-                  <Label text="Time :">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="timeLable" text="Label">
+                  <Label text="🕒 Time :" />
+                  <Label fx:id="timeLable" styleClass="count-label">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font size="20.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
                   </Label>
                </children>
             </HBox>
-            <HBox layoutX="40.0" layoutY="30.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: none; -fx-border-color: black;">
+            <HBox layoutX="40.0" layoutY="29.0" prefWidth="250.0" styleClass="date-box">
                <children>
-                  <Label text="Date : ">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Label fx:id="dateLable" text="Label">
+                  <Label text="📅 Date :" />
+                  <Label fx:id="dateLable" styleClass="count-label">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font size="20.0" />
                      </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
                   </Label>
                </children>
             </HBox>
@@ -137,6 +127,89 @@
                   </VBox>
                </graphic>
             </Button>
+            <VBox layoutX="40.0" layoutY="120.0" prefHeight="140.0" prefWidth="300.0" styleClass="card">
+               <children>
+                  <Label text="Drivers :-" />
+                  <HBox>
+                     <Label text="Drivers Count :" />
+                     <Label fx:id="driCou" prefHeight="29.0" prefWidth="14.0" style="-fx-font-size: 20;" styleClass="count-label" />
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+
+                  <HBox>
+                     <Label text="Available :" />
+                     <Label fx:id="driAva" prefHeight="29.0" prefWidth="9.0" style="-fx-font-size: 20;" styleClass="available-label" />
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox layoutX="779.0" layoutY="120.0" prefHeight="140.0" prefWidth="300.0" styleClass="card">
+               <children>
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="71.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="91.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="146.0" minWidth="10.0" prefWidth="90.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label styleClass="grid-header" text="Vehicle" />
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="68.0" styleClass="grid-header" text="Count" GridPane.columnIndex="1" />
+                        <Label styleClass="grid-header" text="Available" GridPane.columnIndex="2" />
+
+                        <Label prefHeight="18.0" prefWidth="94.0" styleClass="grid-header" text="CAR" GridPane.rowIndex="1" />
+                        <Label prefHeight="18.0" prefWidth="69.0" styleClass="grid-header" text="SUV" GridPane.rowIndex="2" />
+                        <Label prefHeight="18.0" prefWidth="78.0" styleClass="grid-header" text="VAN " GridPane.rowIndex="3" />
+                        <TextField fx:id="carCou" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="SUVCou" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="carAva" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="SUVAva" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="vanCou" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="vanAva" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+            <VBox layoutX="403.0" layoutY="120.0" prefHeight="140.0" prefWidth="300.0" styleClass="card">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label text="Montly Rent Count :" />
+                        <Label fx:id="lblMonthlyTotal" prefHeight="29.0" prefWidth="14.0" style="-fx-font-size: 20;" styleClass="count-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label text="Ongoing  :" />
+                        <Label fx:id="lblMonthlyOngoing" prefHeight="29.0" prefWidth="9.0" style="-fx-font-size: 20;" styleClass="available-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label text="Finished  :" />
+                        <Label fx:id="lblMonthlyFinished" prefHeight="29.0" prefWidth="9.0" style="-fx-font-size: 20;" styleClass="available-label" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </Pane>
    </center>

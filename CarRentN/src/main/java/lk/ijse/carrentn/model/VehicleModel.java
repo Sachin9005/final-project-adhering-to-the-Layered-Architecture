@@ -72,17 +72,6 @@ public class VehicleModel {
         return vehicleList;
     }
 
-    public List<String> getAllVehicleNo() throws SQLException {
-        ResultSet rs = CrudUtil.execute("SELECT vehicle_No FROM Vehicle ORDER BY vehicle_id DESC");
-
-        ArrayList<String> vehicleModelList = new ArrayList<>();
-
-        while(rs.next()) {
-            vehicleModelList.add(rs.getString("vehicle_No"));
-        }
-        return vehicleModelList;
-    }
-
     public String searchId(String vehicleNo) {
         String id = null;
         try {
@@ -132,10 +121,7 @@ public class VehicleModel {
 
         String sql = "SELECT DISTINCT v.vehicle_id,v.model,v.type,v.rate_per_day,v.vehicle_No FROM Vehicle v LEFT JOIN Rental r ON v.vehicle_id = r.vehicle_id AND r.return_date >= ? WHERE r.vehicle_id IS NULL";
 
-        ResultSet rs = CrudUtil.execute(
-                sql,
-                Date.valueOf(startDate)
-        );
+        ResultSet rs = CrudUtil.execute(sql,Date.valueOf(startDate));
 
         List<VehicleTM> list = new ArrayList<>();
 
@@ -164,6 +150,26 @@ public class VehicleModel {
             );
         }
         return list;
+    }
+
+     public int getSUVehiclesCount(String type) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM Vehicle WHERE type = ?";
+        ResultSet resultSet = CrudUtil.execute(sql,type);
+        if (resultSet.next()) {
+            return resultSet.getInt(1);
+        }
+        return 0;
+    }
+    public int getAvailableVehiclesCount(String type) throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT v.vehicle_id) FROM Vehicle v LEFT JOIN Rental r ON v.vehicle_id = r.vehicle_id AND r.return_date >= ? WHERE r.vehicle_id IS NULL AND type = ?";
+
+         ResultSet rs = CrudUtil.execute(sql,LocalDate.now(),type);
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+
+
     }
 
 }

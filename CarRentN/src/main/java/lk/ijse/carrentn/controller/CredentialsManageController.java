@@ -1,6 +1,5 @@
 package lk.ijse.carrentn.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -58,7 +57,7 @@ public class CredentialsManageController implements Initializable {
     }
 
     @FXML
-    private void handleChanges(ActionEvent event) {
+    private void handleChanges() {
        try {
            String name = nameField.getText().trim();
            String email = emailField.getText().trim();
@@ -66,7 +65,7 @@ public class CredentialsManageController implements Initializable {
            String address = addressField.getText().trim();
            String password = userModel.getUserDetails().getPassword().trim();
 
-           boolean isUpdate = false;
+           boolean isUpdate;
 
            if (name.isEmpty()){
                name = null;
@@ -152,7 +151,7 @@ public class CredentialsManageController implements Initializable {
     }
 
     @FXML
-    private void handleReset(ActionEvent event) {
+    private void handleReset() {
         cleanFields();
     }
 
@@ -175,6 +174,7 @@ public class CredentialsManageController implements Initializable {
         addressField.setText("");
         passwordField.setText("");
         passwordShowField.setText("");
+        checkBox.setSelected(false);
     }
 
     @FXML

@@ -45,8 +45,4 @@ public class UserModel {
         return CrudUtil.execute("UPDATE user SET address = ? WHERE user_id = 1 ",address );
     }
 
-    public boolean updateUserName(String useName) throws SQLException {
-        return CrudUtil.execute("UPDATE user SET user_name = ? WHERE user_id = 1 ",useName );
-    }
-    
 }

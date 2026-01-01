@@ -1,6 +1,5 @@
 package lk.ijse.carrentn.controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
@@ -31,7 +30,7 @@ public class ChangePasswordController {
 
     private final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-    private UserModel userModel = new UserModel();
+    private final UserModel userModel = new UserModel();
 
     @FXML
     private void changeVisibility() {
@@ -111,7 +110,7 @@ public class ChangePasswordController {
 
     private void changePassword(String confirmPass , String newPass)throws SQLException {
         if (confirmPass.equals(newPass)){
-            boolean isChanged= userModel.updatePassword(newPass);;
+            boolean isChanged= userModel.updatePassword(newPass);
             if (isChanged){
                 new Alert(Alert.AlertType.INFORMATION, "Password Change successfully!").show();
                 cleanFields();

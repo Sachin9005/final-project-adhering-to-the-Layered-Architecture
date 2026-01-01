@@ -95,8 +95,8 @@
                <Label text="Percentage (%) :" GridPane.rowIndex="2" />
                <TextField fx:id="percentageField" prefHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                <columnConstraints>
-                  <ColumnConstraints maxWidth="113.0" minWidth="108.0" prefWidth="113.0" />
-                  <ColumnConstraints maxWidth="319.0" minWidth="314.0" prefWidth="314.0" />
+                  <ColumnConstraints maxWidth="127.0" minWidth="108.0" prefWidth="127.0" />
+                  <ColumnConstraints maxWidth="319.0" minWidth="300.0" prefWidth="300.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints />

@@ -33,7 +33,7 @@ public class ProfileController implements Initializable{
     @FXML
     private Label useNameLable;
 
-    private UserModel userModel = new UserModel();
+    private final UserModel userModel = new UserModel();
 
     public void initialize(URL url, ResourceBundle rb){
         setDetails();

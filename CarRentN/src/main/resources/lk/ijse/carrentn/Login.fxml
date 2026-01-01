@@ -12,14 +12,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@cssFiles/Loging.css"  xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.carrentn.controller.LoginController">
    <children>
-      <ImageView fitHeight="720.0" fitWidth="658.0" layoutY="-1.0" pickOnBounds="true" smooth="false">
+      <ImageView fitHeight="720.0"
+                 fitWidth="658.0"
+                 layoutY="-1.0"
+                 pickOnBounds="true"
+                 smooth="false"
+                 opacity="0.95">
          <image>
             <Image url="@images/logo.png" />
          </image>
       </ImageView>
+
       <Pane cache="true" layoutX="659.0" prefHeight="720.0" prefWidth="621.0" style="-fx-background-color: #363131;">
+         <Pane layoutX="10.0" layoutY="50.0" prefWidth="600.0" prefHeight="600.0" styleClass="glass-card"/>
          <children>
             <VBox layoutX="85.0" layoutY="224.0" prefHeight="50.0" prefWidth="401.0">
                <children>

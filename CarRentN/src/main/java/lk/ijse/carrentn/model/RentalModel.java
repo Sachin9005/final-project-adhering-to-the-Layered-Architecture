@@ -139,17 +139,6 @@ public class RentalModel {
         return rentalList;
     }
 
-    public List<String> getAllRentalIds() throws SQLException {
-        ResultSet rs = CrudUtil.execute("SELECT rental_id FROM Rental ORDER BY rental_id DESC");
-
-        ArrayList<String> rebtalIdList = new ArrayList<>();
-
-        while(rs.next()) {
-            rebtalIdList.add(String.valueOf(rs.getInt("rental_id")));
-        }
-        return rebtalIdList;
-    }
-
     public RentalDTO searchRent(String id) throws SQLException {
         RentalDTO rentalDTO = null;
 
@@ -202,5 +191,26 @@ public class RentalModel {
         JasperViewer.viewReport(jp, false);
 
     }
+
+    public static Map<String, Integer> getMonthlyRentStats(int year , int month) throws SQLException {
+
+        ResultSet rs = CrudUtil.execute(
+                "SELECT COUNT(*) AS total, " +
+                        "SUM(CASE WHEN return_date IS NOT NULL THEN 1 ELSE 0 END) AS ongoing, " +
+                        "SUM(CASE WHEN return_date IS NULL THEN 1 ELSE 0 END) AS finished " +
+                        "FROM Rental WHERE YEAR(start_date)=? AND MONTH(start_date)=?",
+                year, month
+        );
+
+        Map<String, Integer> map = new HashMap<>();
+
+        if (rs.next()) {
+            map.put("TOTAL", rs.getInt("total"));
+            map.put("ONGOING", rs.getInt("ongoing"));
+            map.put("FINISHED", rs.getInt("finished"));
+        }
+        return map;
+    }
+
 
 }

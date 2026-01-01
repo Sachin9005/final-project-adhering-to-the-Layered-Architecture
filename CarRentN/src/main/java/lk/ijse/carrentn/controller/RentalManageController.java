@@ -2,7 +2,6 @@ package lk.ijse.carrentn.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -14,7 +13,6 @@ import lk.ijse.carrentn.model.*;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -111,7 +109,7 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void handleSaveRental(ActionEvent event) {
+    private void handleSaveRental() {
 
         String customerId = customerIdField.getText().trim();
         String vehicleId = vehicleIDField.getText().trim();
@@ -195,7 +193,7 @@ public class RentalManageController implements Initializable {
                             driverIdField.setText(String.valueOf(rentalDTO.getDriver_id()));
                         } else {
                             driverIdField.setText("");
-                        };
+                        }
                         sDateField.setText(String.valueOf(rentalDTO.getStart_date()));
                         daysField.setText(String.valueOf(rentalDTO.getDates_of_rent()));
                         eDateField.setText(String.valueOf(rentalDTO.getReturn_date()));
@@ -214,7 +212,7 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void handlePrint(ActionEvent event) {
+    private void handlePrint() {
         try {
             rentalModel.printBasePayInvoice(firstPaymentModel.getFirstPayment(Integer.parseInt(rentalModel.getSaveLastRentalId())).getFirst_payment_id());
         } catch (Exception e) {
@@ -269,7 +267,7 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void handleSelectDriver(ActionEvent event) {
+    private void handleSelectDriver() {
         String driverName = driveerCbox.getSelectionModel().getSelectedItem();
         String driverID = driverModel.searchId(driverName);
         driverIdField.setText(driverID);
@@ -277,7 +275,7 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void handleSelectVehicle(ActionEvent event) {
+    private void handleSelectVehicle() {
         String vehiclemodel = vehicleCbox.getSelectionModel().getSelectedItem();
         String vehicleId = vehicleModel.searchId(vehiclemodel);
         vehicleIDField.setText(vehicleId);
@@ -285,7 +283,7 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void handleSelectDiscountId(ActionEvent event) {
+    private void handleSelectDiscountId() {
         String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
         String discoutID = discountModel.searchId(discountDesc);
         discountLable.setText("");
@@ -305,7 +303,7 @@ public class RentalManageController implements Initializable {
             String driverId = driverIdField.getText();
             String days = daysField.getText().trim();
 
-            if (vehicleId == null || vehicleId.isBlank()) {
+            if (vehicleId == null || vehicleId.isEmpty()) {
                 new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
                 return;
             }
@@ -373,12 +371,8 @@ public class RentalManageController implements Initializable {
     private void lordRentalTable(){
         try {
             List<RentalDTO> rentalDTOS = rentalModel.getAllRentals();
-
             ObservableList<RentalDTO> obList = FXCollections.observableArrayList();
-
-            for (RentalDTO rentalDTO : rentalDTOS) {
-                obList.add(rentalDTO);
-            }
+            obList.addAll(rentalDTOS);
             tblRent.setItems(obList);
 
         } catch (Exception e) {
@@ -386,7 +380,7 @@ public class RentalManageController implements Initializable {
         }
     }
 
-    private double calculatetotal(String driverId,String vehicleId,int days){
+    private void calculatetotal(String driverId, String vehicleId, int days){
         //total pay calcuulation
         double total = 0.0;
         String strdate = sDateField.getText();
@@ -410,7 +404,6 @@ public class RentalManageController implements Initializable {
         LocalDate endDate = startDate.plusDays(days);
         eDateField.setText(String.valueOf(endDate));
 
-        return total;
     }
 
     private void cleanFileds () {
@@ -431,7 +424,7 @@ public class RentalManageController implements Initializable {
         discountLable.setText("Select Discount");
         basePayField.setText("");
         totalPriceLable.setText("-");
-        sDateField.setText(String.valueOf(LocalDate.now()).toString());
+        sDateField.setText(String.valueOf(LocalDate.now()));
 
     }
 

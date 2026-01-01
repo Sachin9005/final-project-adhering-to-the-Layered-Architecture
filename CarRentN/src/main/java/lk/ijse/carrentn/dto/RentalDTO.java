@@ -1,7 +1,7 @@
 package lk.ijse.carrentn.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 
 public class RentalDTO {
     private int rental_id;
