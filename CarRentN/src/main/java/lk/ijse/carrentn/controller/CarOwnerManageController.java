@@ -23,7 +23,7 @@ public class CarOwnerManageController implements Initializable {
     @FXML
     private TextField phoneNoField;
     @FXML
-    private TextField bankNoFielde;
+    private TextField bankNoField;
 
     @FXML
     private TableView<CarOwnerDTO>tblOwners;
@@ -59,7 +59,7 @@ public class CarOwnerManageController implements Initializable {
     private void handleSaveOwner(){
         String name = ownerNameFiled.getText().trim();
         String pNO = phoneNoField.getText().trim();
-        String bankNO = bankNoFielde.getText().trim();
+        String bankNO = bankNoField.getText().trim();
 
 
         if (!name.matches(CAR_OWNER_NAME_REGEX)) {
@@ -72,7 +72,7 @@ public class CarOwnerManageController implements Initializable {
             try {
                 CarOwnerDTO carOwnerDTO = new CarOwnerDTO(name,pNO, bankNO);
                 boolean result = carOwnerModel.save(carOwnerDTO);
-                cleanFileds();
+                cleanFiles();
                 lordCarOwnerTable();
 
                 if(result) {
@@ -92,7 +92,7 @@ public class CarOwnerManageController implements Initializable {
             String id = ownerIdFiled.getText().trim();
             String name = ownerNameFiled.getText().trim();
             String pNO = phoneNoField.getText().trim();
-            String bankAcc = bankNoFielde.getText().trim();
+            String bankAcc = bankNoField.getText().trim();
 
             if (!id.matches(CAR_OWNER_ID_REGEX)) {
                 new Alert(Alert.AlertType.ERROR, "Invalid id").show();
@@ -105,7 +105,7 @@ public class CarOwnerManageController implements Initializable {
             }else{
                 CarOwnerDTO carOwnerDTO = new CarOwnerDTO(Integer.parseInt(id),name,pNO, bankAcc);
                 boolean result = carOwnerModel.update(carOwnerDTO);
-                cleanFileds();
+                cleanFiles();
                 lordCarOwnerTable();
 
                 if(result) {
@@ -143,7 +143,7 @@ public class CarOwnerManageController implements Initializable {
         }
     }
 
-    public void handleSerchOwnerFields(KeyEvent event) {
+    public void handleSearchOwnerFields(KeyEvent event) {
         try {
             if (event.getCode() == KeyCode.ENTER) {
                 System.out.println(event.getCode());
@@ -154,7 +154,7 @@ public class CarOwnerManageController implements Initializable {
                     if (carOwnerDTO != null) {
                         ownerNameFiled.setText(carOwnerDTO.getName());
                         phoneNoField.setText(carOwnerDTO.getPhone());
-                        bankNoFielde.setText(carOwnerDTO.getBank_account());
+                        bankNoField.setText(carOwnerDTO.getBank_account());
                         } else {
                         new Alert(Alert.AlertType.ERROR, "Car Owner not found").show();
                     }
@@ -168,15 +168,15 @@ public class CarOwnerManageController implements Initializable {
         }
     }
 
-    public void handleResetlFields() {
-        cleanFileds();
+    public void handleResetFields() {
+        cleanFiles();
     }
 
-    private void cleanFileds () {
+    private void cleanFiles() {
         ownerIdFiled.setText("");
         ownerNameFiled.setText("");
         phoneNoField.setText("");
-        bankNoFielde.setText("");
+        bankNoField.setText("");
 
     }
     private void lordCarOwnerTable(){

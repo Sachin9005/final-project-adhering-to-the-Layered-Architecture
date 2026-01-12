@@ -139,7 +139,6 @@ public class RentalManageController implements Initializable {
             if (!driverId.isEmpty()) {
                 driverIdValue = Integer.parseInt(driverId);
             }
-
             Integer discountId = null;
 
             if (discountDesc != null) {
@@ -149,7 +148,6 @@ public class RentalManageController implements Initializable {
                 }
             }
             try {
-
                 RentalDTO rentalDTO = new RentalDTO(
                         Integer.parseInt(customerId),
                         Integer.parseInt(vehicleId),
@@ -160,7 +158,6 @@ public class RentalManageController implements Initializable {
 
                 boolean result = rentalModel.save(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
                 sDateField.setText(String.valueOf(LocalDate.now()));
-
 
                 if(result) {
                     System.out.println("Rental saved successfully!");
@@ -205,7 +202,6 @@ public class RentalManageController implements Initializable {
                 else{
                     new Alert(Alert.AlertType.ERROR, "Invalid Id").show();
                 }
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -260,8 +256,7 @@ public class RentalManageController implements Initializable {
             customerLable.setText("");
             return;
         }
-        String cusId = customerModel.searchId(cusName);
-        customerIdField.setText(cusId);
+        customerIdField.setText(cusName);
         customerLable.setText("");
 
     }
@@ -269,26 +264,24 @@ public class RentalManageController implements Initializable {
     @FXML
     private void handleSelectDriver() {
         String driverName = driveerCbox.getSelectionModel().getSelectedItem();
-        String driverID = driverModel.searchId(driverName);
-        driverIdField.setText(driverID);
+        driverIdField.setText(driverName);
         driverLable.setText("");
     }
 
     @FXML
     private void handleSelectVehicle() {
-        String vehiclemodel = vehicleCbox.getSelectionModel().getSelectedItem();
-        String vehicleId = vehicleModel.searchId(vehiclemodel);
-        vehicleIDField.setText(vehicleId);
+        String vehicleModel = vehicleCbox.getSelectionModel().getSelectedItem();
+        vehicleIDField.setText(vehicleModel);
         vehicleLable.setText("");
     }
 
     @FXML
     private void handleSelectDiscountId() {
         String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
-        String discoutID = discountModel.searchId(discountDesc);
+        String discountID = discountModel.searchId(discountDesc);
         discountLable.setText("");
 
-        if (discoutID != null){
+        if (discountID != null){
             double discountPrec = discountModel.searchDesForGetPrec(discountDesc);
             double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
             totalPriceLable.setText(String.valueOf(discountedTotal));
@@ -299,8 +292,8 @@ public class RentalManageController implements Initializable {
     @FXML
     private void calculateTotal(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
-            String vehicleId = vehicleIDField.getText().trim();
-            String driverId = driverIdField.getText();
+            String vehicleId = vehicleModel.searchId(vehicleIDField.getText());
+            String driverId = driverModel.searchId(driverIdField.getText());
             String days = daysField.getText().trim();
 
             if (vehicleId == null || vehicleId.isEmpty()) {
@@ -425,7 +418,6 @@ public class RentalManageController implements Initializable {
         basePayField.setText("");
         totalPriceLable.setText("-");
         sDateField.setText(String.valueOf(LocalDate.now()));
-
     }
 
 }

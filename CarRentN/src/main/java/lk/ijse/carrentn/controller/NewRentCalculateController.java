@@ -108,7 +108,7 @@ DiscountModel discountModel = new DiscountModel();
     private void handleSelectDiscount() {
         String discountDesc = discountCbox.getSelectionModel().getSelectedItem();
         String discoutID = discountModel.searchId(discountDesc);
-        discountIdField.setText(discoutID);
+        discountIdField.setText(discountDesc);
         discountLable.setText("");
         if (discoutID != null){
             double discountPrec = discountModel.searchDesForGetPrec(discountDesc);
@@ -120,16 +120,14 @@ DiscountModel discountModel = new DiscountModel();
     @FXML
     private void handleSelectDriver() {
         String driverName = driverCbox.getSelectionModel().getSelectedItem();
-        String driverIr = driverModel.searchId(driverName);
-        driverIdField.setText(driverIr);
+        driverIdField.setText(driverName);
         driverLable.setText("");
     }
 
     @FXML
     private void handleSelectVehicle() {
         String vehiclemodel = vehicleCbox.getSelectionModel().getSelectedItem();
-        String vehicleId = vehicleModel.searchId(vehiclemodel);
-        vehicleIdField.setText(vehicleId);
+        vehicleIdField.setText(vehiclemodel);
         vehicleLable.setText("");
     }
 
@@ -191,8 +189,8 @@ DiscountModel discountModel = new DiscountModel();
     @FXML
     private void calculateTotal(KeyEvent event) {
         if(event.getCode() == KeyCode.ENTER){
-            String vehicleId = vehicleIdField.getText().trim();
-            String driverID = driverIdField.getText();
+            String vehicleId = vehicleModel.searchId(vehicleIdField.getText());
+            String driverID = driverModel.searchId(driverIdField.getText());
             String days = daysField.getText().trim();
 
             if (vehicleId.isEmpty()) {
