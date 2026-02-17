@@ -14,5 +14,6 @@ module lk.ijse.carrentn {
     exports lk.ijse.carrentn.controller;
     exports lk.ijse.carrentn.dto;
     exports lk.ijse.carrentn.dto.TM;
+    exports lk.ijse.carrentn.dao;
 
 }

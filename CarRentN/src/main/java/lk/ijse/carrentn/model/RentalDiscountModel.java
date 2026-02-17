@@ -1,7 +1,7 @@
 package lk.ijse.carrentn.model;
 
 import lk.ijse.carrentn.dto.RentalDiscountDTO;
-import lk.ijse.carrentn.CrudUtil;
+import lk.ijse.carrentn.dao.CrudUtil;
 import java.sql.ResultSet;
 
 public class RentalDiscountModel {
