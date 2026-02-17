@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dao.custom.*;
+import lk.ijse.carrentn.dao.impl.*;
 import lk.ijse.carrentn.dto.*;
 import lk.ijse.carrentn.model.*;
 
@@ -88,13 +90,13 @@ public class CurrentRentalCalculateController implements Initializable {
 
     public final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-    private final CustomerModel customerModel = new CustomerModel();
+    CustomerDAO customerDAO =  new CustomerDAOImpl();
     private final RentalModel rentalModel = new RentalModel();
-    private final VehicleModel vehicleModel = new VehicleModel();
-    private final DriverModel driverModel = new DriverModel();
-    private final FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
-    private final RentalDiscountModel rentalDiscountModel = new RentalDiscountModel();
-    private final LastPaymentModel lastPaymentModel = new LastPaymentModel();
+    VehicleDAO  vehicleDAO = new VehicleDAOImpl();
+    DriverDAO driverDAO = new DriverDAOImpl();
+    FirstPaymentDAO firstPaymentDAO = new FirstPaymentDAOImpl();
+    RentalDiscountDAO rentalDiscountDAO = new RentalDiscountDAOImpl();
+    LastPaymentDAO lastPaymentDAO = new LastPaymentDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {lordCustomerNames();}
@@ -109,7 +111,7 @@ public class CurrentRentalCalculateController implements Initializable {
         double finePay = totalPay - (vehicleTotal + driverTotal);
         LastPaymentDTO lastPaymentDTO = new LastPaymentDTO(firstPayId, rentalId, lateDays, vdTotal, finePay, (totalPay - discount), LocalDate.now());
         try {
-            boolean isSaved = lastPaymentModel.saveFullPayment(lastPaymentDTO);
+            boolean isSaved = lastPaymentDAO.saveFullPayment(lastPaymentDTO);
             cleanFields();
             lordCustomerNames();
 
@@ -133,7 +135,7 @@ public class CurrentRentalCalculateController implements Initializable {
         String cusName = customerCbox.getSelectionModel().getSelectedItem();
         customerNameField.setText(cusName);
         selectCustomerLable.setText("");
-        cusId = customerModel.searchId(cusName);
+        cusId = customerDAO.searchId(cusName);
 
     }
 
@@ -150,17 +152,17 @@ public class CurrentRentalCalculateController implements Initializable {
     @FXML
     private void handleSearchRentByCustomerName() {
         try {
-            customeNICField.setText(customerModel.search(cusId).getNic_or_passport_number());
+            customeNICField.setText(customerDAO.search(cusId).getNic_or_passport_number());
 
             RentalDTO rentalDTO = rentalModel.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();
 
-            String vehicleNo = vehicleModel.searchVehicle(String.valueOf(rentalDTO.getVehicle_id()));
+            String vehicleNo = vehicleDAO.searchVehicle(String.valueOf(rentalDTO.getVehicle_id()));
             System.out.println(rentalDTO.getVehicle_id());
             System.out.println(vehicleNo);
-            VehicleDTO vehicleDTO = vehicleModel.search(vehicleNo);
+            VehicleDTO vehicleDTO = vehicleDAO.search(vehicleNo);
 
-            RentalDiscountDTO rentalDiscountDTO = rentalDiscountModel.searchRentalById(String.valueOf(rentalDTO.getRental_id()));
+            RentalDiscountDTO rentalDiscountDTO = rentalDiscountDAO.searchRentalById(String.valueOf(rentalDTO.getRental_id()));
 
             NoLable.setText(vehicleNo);
             modelLable.setText(vehicleDTO.getModel());
@@ -174,13 +176,13 @@ public class CurrentRentalCalculateController implements Initializable {
             }
 
             if (rentalDiscountDTO != null) {
-                discount = (rentalDiscountModel.searchRentalById(String.valueOf(rentalDTO.getRental_id())).getDiscount_amount_applied()) + 0.00;
+                discount = (rentalDiscountDAO.searchRentalById(String.valueOf(rentalDTO.getRental_id())).getDiscount_amount_applied()) + 0.00;
             } else {
                 discount = 0.00;
             }
 
             if (driverId != null) {
-                DriverDTO driverDTO = driverModel.search(driverId);
+                DriverDTO driverDTO = driverDAO.search(driverId);
                 driverTotal = calculateDriverTotal(driverDTO, rentalDTO);
                 driverNameField.setText(driverDTO.getName());
                 driverRateField.setText(String.valueOf(driverDTO.getDriver_rate_per_day()));
@@ -194,9 +196,9 @@ public class CurrentRentalCalculateController implements Initializable {
             total = vehicleTotal + driverTotal + lateFee;
 
             //first payment
-            basePay = (firstPaymentModel.getFirstPayment(rentalDTO.getRental_id()).getBase_payment());
+            basePay = (firstPaymentDAO.getFirstPayment(rentalDTO.getRental_id()).getBase_payment());
 
-            firstPayId = firstPaymentModel.getFirstPayment(rentalDTO.getRental_id()).getFirst_payment_id();
+            firstPayId = firstPaymentDAO.getFirstPayment(rentalDTO.getRental_id()).getFirst_payment_id();
 
 
             lateDatesLable.setText(String.valueOf(ChronoUnit.DAYS.between(rentalDTO.getReturn_date(), LocalDate.now())));
@@ -221,7 +223,7 @@ public class CurrentRentalCalculateController implements Initializable {
 
      private void lordCustomerNames() {
         try {
-            List<String> customerList = customerModel.getCustomersNotPaidLast();
+            List<String> customerList = customerDAO.getCustomersNotPaidLast();
             ObservableList<String> obList = FXCollections.observableArrayList();
             obList.addAll(customerList);
             customerCbox.setItems(obList);
@@ -334,7 +336,7 @@ public class CurrentRentalCalculateController implements Initializable {
     @FXML
     void handlePrint() {
         try {
-            lastPaymentModel.printLastPayInvoice(Integer.parseInt(lastPaymentModel.getSaveLastPaymentId()),vehicleDamagefee,customerPay);
+            lastPaymentDAO.printLastPayInvoice(Integer.parseInt(lastPaymentDAO.getSaveLastPaymentId()),vehicleDamagefee,customerPay);
         }catch (Exception e){
             e.printStackTrace();
         }

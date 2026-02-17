@@ -13,10 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dao.custom.CustomerDAO;
+import lk.ijse.carrentn.dao.impl.CustomerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.CustomerDTO;
-import lk.ijse.carrentn.model.CustomerModel;
-
 
 
 public class CustomerManageController implements Initializable {
@@ -54,7 +54,7 @@ public class CustomerManageController implements Initializable {
     private final String CUSTOMER_NIC_OR_PASSPORT_NUMBER_REGEX = "^(([0-9]{9}[VvXx]|[0-9]{12})|[A-Za-z0-9]{5,15})$";
     private final String CUSTOMER_ADDRESS_REGEX = "^[A-Za-z0-9\\s,./\\-#]{5,150}$";
 
-    CustomerModel cusModel =  new CustomerModel();
+    CustomerDAO customerDAO = new CustomerDAOImpl();
 
 
     @Override
@@ -92,7 +92,7 @@ public class CustomerManageController implements Initializable {
         }else{
             try {
                 CustomerDTO cusDTO = new CustomerDTO(name,email,pNO,nicOpass,address);
-                boolean result = cusModel.save(cusDTO);
+                boolean result = customerDAO.save(cusDTO);
                 cleanFileds();
                 lordCustomerTable();
 
@@ -132,7 +132,8 @@ public class CustomerManageController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Invalid Customer Adress").show();
             }else{
                 CustomerDTO cusDTO = new CustomerDTO(Integer.parseInt(id),name,email,pNO,nicOpass,address);
-                boolean result = cusModel.update(cusDTO);
+
+                boolean result = customerDAO.update(cusDTO);
                 cleanFileds();
                 lordCustomerTable();
 
@@ -154,7 +155,7 @@ public class CustomerManageController implements Initializable {
             String id = idField.getText();
             if (id.matches(CUSTOMER_ID_REGEX)) {
 
-                boolean result = cusModel.delete(id);
+                boolean result = customerDAO.delete(id);
                 lordCustomerTable();
 
                 if(result) {
@@ -177,7 +178,8 @@ public class CustomerManageController implements Initializable {
                 System.out.println(event.getCode());
                 String id = idField.getText();
                 if (id.matches(CUSTOMER_ID_REGEX)) {
-                    CustomerDTO cusDTO = cusModel.search(id);
+
+                    CustomerDTO cusDTO = customerDAO.search(id);
 
                     if (cusDTO != null) {
                         nameField.setText(cusDTO.getName());
@@ -212,7 +214,8 @@ public class CustomerManageController implements Initializable {
 
     private void lordCustomerTable(){
         try {
-            List<CustomerDTO> cusDTO= cusModel.getAllCustomer();
+
+            List<CustomerDTO> cusDTO= customerDAO.getAllCustomer();
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
             obList.addAll(cusDTO);
             tblCustomer.setItems(obList);

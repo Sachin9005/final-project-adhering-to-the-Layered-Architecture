@@ -1,4 +1,9 @@
 package lk.ijse.carrentn.model;
+import lk.ijse.carrentn.dao.custom.DiscountDAO;
+import lk.ijse.carrentn.dao.custom.FirstPaymentDAO;
+import lk.ijse.carrentn.dao.impl.DiscountDAOImpl;
+import lk.ijse.carrentn.dao.impl.FirstPaymentDAOImpl;
+import lk.ijse.carrentn.dao.impl.RentalDiscountDAOImpl;
 import lk.ijse.carrentn.db.DBConnection;
 import  lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.dao.CrudUtil;
@@ -20,8 +25,9 @@ import java.util.List;
 import java.util.Map;
 
 public class RentalModel {
-    FirstPaymentModel firstPaymentModel = new FirstPaymentModel();
-    RentalDiscountModel rentalDiscountModel = new RentalDiscountModel();
+    FirstPaymentDAO firstPaymentDAO = new FirstPaymentDAOImpl();
+    DiscountDAO discountDAO = new DiscountDAOImpl();
+    RentalDiscountDAOImpl rentalDiscountDAO = new RentalDiscountDAOImpl();
 
     public boolean save(RentalDTO rentalDTO,double basPay,double totalPay,Integer discountId) throws Exception {
         Connection conn = DBConnection.getInstance().getConnection();
@@ -45,13 +51,11 @@ public class RentalModel {
                 if (rentalId == 0) {
                     throw new Exception("Failed to generate rental id");
                 }
-                boolean isBasePaySaved =
-                        firstPaymentModel.saveBasePayment(rentalId, basPay, totalPay);
+                boolean isBasePaySaved =firstPaymentDAO.saveBasePayment(rentalId, basPay, totalPay);
 
                 boolean isDiscountSaved = true;
                 if (discountId != null) {
-                    isDiscountSaved =
-                            rentalDiscountModel.saveRentalDiscount(rentalId, discountId, totalPay);
+                    isDiscountSaved = rentalDiscountDAO.saveRentalDiscount(rentalId, discountId, totalPay,discountDAO.searchIdtoGetPrec(String.valueOf(discountId)));
                 }
 
                 if (!isBasePaySaved && !isDiscountSaved) {
@@ -70,24 +74,6 @@ public class RentalModel {
 
     }
 
-    public boolean update(RentalDTO rentalDTO) throws SQLException {
-
-        return CrudUtil.execute("UPDATE Rental SET " +
-                        "customer_id = ?, " +
-                        "vehicle_id = ? , " +
-                        "driver_id = ?, " +
-                        "start_DATE = ? , " +
-                        "dates_of_rent = ? , " +
-                        "return_date = ? " +
-                        "WHERE rental_id  = ?",
-                rentalDTO.getCustomer_id(),
-                rentalDTO.getVehicle_id(),
-                rentalDTO.getDriver_id(),
-                rentalDTO.getStart_date(),
-                rentalDTO.getDates_of_rent(),
-                rentalDTO.getReturn_date()
-                );
-    }
 
     public boolean delete(String id) throws SQLException {
         CrudUtil.execute("DELETE FROM Rental_Discount WHERE rental_id = ?", id);

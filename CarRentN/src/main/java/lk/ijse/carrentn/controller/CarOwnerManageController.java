@@ -12,8 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
+import lk.ijse.carrentn.dao.impl.CarOwnerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
-import lk.ijse.carrentn.model.CarOwnerModel;
 
 public class CarOwnerManageController implements Initializable {
     @FXML
@@ -41,7 +42,7 @@ public class CarOwnerManageController implements Initializable {
     private final String CAR_OWNER_PHONE_NUMBER_REGEX = "^(?:\\+94|0)?7[0-9]{8}$";
     private final String CAR_OWNER_BANK_NAME_AND_NUMBER_REGEX = "^[A-Z]{3,}-[0-9]{4,12}$";
 
-    CarOwnerModel carOwnerModel =  new CarOwnerModel();
+    CarOwnerDAO carOwnerDAO = new CarOwnerDAOImpl();
 
 
     @Override
@@ -71,7 +72,7 @@ public class CarOwnerManageController implements Initializable {
         }else{
             try {
                 CarOwnerDTO carOwnerDTO = new CarOwnerDTO(name,pNO, bankNO);
-                boolean result = carOwnerModel.save(carOwnerDTO);
+                boolean result = carOwnerDAO.save(carOwnerDTO);
                 cleanFiles();
                 lordCarOwnerTable();
 
@@ -104,7 +105,7 @@ public class CarOwnerManageController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Invalid Bank Details").show();
             }else{
                 CarOwnerDTO carOwnerDTO = new CarOwnerDTO(Integer.parseInt(id),name,pNO, bankAcc);
-                boolean result = carOwnerModel.update(carOwnerDTO);
+                boolean result = carOwnerDAO.update(carOwnerDTO);
                 cleanFiles();
                 lordCarOwnerTable();
 
@@ -126,7 +127,7 @@ public class CarOwnerManageController implements Initializable {
             String id = ownerIdFiled.getText();
             if (id.matches(CAR_OWNER_ID_REGEX)) {
 
-                boolean result = carOwnerModel.delete(id);
+                boolean result = carOwnerDAO.delete(id);
                 lordCarOwnerTable();
 
                 if(result) {
@@ -149,7 +150,7 @@ public class CarOwnerManageController implements Initializable {
                 System.out.println(event.getCode());
                 String id = ownerIdFiled.getText();
                 if (id.matches(CAR_OWNER_ID_REGEX)) {
-                    CarOwnerDTO carOwnerDTO = carOwnerModel.search(id);
+                    CarOwnerDTO carOwnerDTO = carOwnerDAO.search(id);
 
                     if (carOwnerDTO != null) {
                         ownerNameFiled.setText(carOwnerDTO.getName());
@@ -181,7 +182,7 @@ public class CarOwnerManageController implements Initializable {
     }
     private void lordCarOwnerTable(){
         try {
-            List<CarOwnerDTO> carOwnerDTOS = carOwnerModel.getAllOwners();
+            List<CarOwnerDTO> carOwnerDTOS = carOwnerDAO.getAllOwners();
             ObservableList<CarOwnerDTO> obList = FXCollections.observableArrayList();
             obList.addAll(carOwnerDTOS);
             tblOwners.setItems(obList);

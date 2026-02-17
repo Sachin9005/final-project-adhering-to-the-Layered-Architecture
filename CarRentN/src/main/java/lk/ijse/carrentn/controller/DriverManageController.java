@@ -12,9 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.dao.custom.DriverDAO;
+import lk.ijse.carrentn.dao.impl.DriverDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.DriverDTO;
-import lk.ijse.carrentn.model.DriverModel;
 
 
 public class DriverManageController implements Initializable {
@@ -48,7 +49,7 @@ public class DriverManageController implements Initializable {
     private final String DRIVER_LICENSE_NUMBER_REGEX = "^[A-Z]{1,4}[0-9]{6,10}$";
     private final String DRIVER_RATE_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-    DriverModel driverModel =  new DriverModel();
+    DriverDAO driverDAO = new DriverDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -79,7 +80,7 @@ public class DriverManageController implements Initializable {
         }else{
             try {
                 DriverDTO driverDTO = new DriverDTO(name,pNO,licenNo,Double.parseDouble(rate));
-                boolean result = driverModel.save(driverDTO);
+                boolean result = driverDAO.save(driverDTO);
                 cleanFileds();
                 lordDriverTable();
 
@@ -115,7 +116,7 @@ public class DriverManageController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Invalid Driver Rate Per Day ").show();
             }else{
                 DriverDTO carOwnerDTO = new DriverDTO(Integer.parseInt(id),name,pNO,liceNo,Double.parseDouble(rate));
-                boolean result = driverModel.update(carOwnerDTO);
+                boolean result = driverDAO.update(carOwnerDTO);
                 cleanFileds();
                 lordDriverTable();
 
@@ -137,7 +138,7 @@ public class DriverManageController implements Initializable {
             String id = driverIdField.getText();
             if (id.matches(DRIVER_ID_REGEX)) {
 
-                boolean result = driverModel.delete(id);
+                boolean result = driverDAO.delete(id);
                 lordDriverTable();
 
                 if(result) {
@@ -160,7 +161,7 @@ public class DriverManageController implements Initializable {
                 System.out.println(event.getCode());
                 String id = driverIdField.getText();
                 if (id.matches(DRIVER_ID_REGEX)) {
-                    DriverDTO carOwnerDTO = driverModel.search(id);
+                    DriverDTO carOwnerDTO = driverDAO.search(id);
                     if (carOwnerDTO != null) {
                         nameFiled.setText(carOwnerDTO.getName());
                         phoneField.setText(carOwnerDTO.getPhone_number());
@@ -192,7 +193,7 @@ public class DriverManageController implements Initializable {
     }
     private void lordDriverTable(){
         try {
-            List<DriverDTO> driverDTOS = driverModel.getAllDrivers();
+            List<DriverDTO> driverDTOS = driverDAO.getAllDrivers();
             ObservableList<DriverDTO> obList = FXCollections.observableArrayList();
             obList.addAll(driverDTOS);
             tblDrivers.setItems(obList);

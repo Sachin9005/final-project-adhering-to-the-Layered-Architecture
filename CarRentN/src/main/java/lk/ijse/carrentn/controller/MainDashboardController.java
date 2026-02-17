@@ -16,9 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import lk.ijse.carrentn.App;
-import lk.ijse.carrentn.model.DriverModel;
+import lk.ijse.carrentn.dao.custom.DriverDAO;
+import lk.ijse.carrentn.dao.custom.VehicleDAO;
+import lk.ijse.carrentn.dao.impl.DriverDAOImpl;
+import lk.ijse.carrentn.dao.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.model.RentalModel;
-import lk.ijse.carrentn.model.VehicleModel;
 
 public class MainDashboardController implements Initializable {
 
@@ -59,8 +61,8 @@ public class MainDashboardController implements Initializable {
     private TextField vanCou;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
-    private final VehicleModel vehicleModel = new VehicleModel();
-    private final DriverModel driverModel = new DriverModel();
+    VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    DriverDAO driverDAO = new DriverDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -97,8 +99,8 @@ public class MainDashboardController implements Initializable {
     }
     private void lordDriverCount(){
         try {
-            int driverCount = driverModel.getDriverCount();
-            int avaDriverCount = driverModel.getAvailableDriverCount();
+            int driverCount = driverDAO.getDriverCount();
+            int avaDriverCount = driverDAO.getAvailableDriverCount();
             driCou.setText(Integer.toString(driverCount));
             driAva.setText(Integer.toString(avaDriverCount));
         }catch (Exception e){
@@ -109,16 +111,16 @@ public class MainDashboardController implements Initializable {
     private void lordVehicleCount(){
         try {
             // CAR
-            carCou.setText(String.valueOf(vehicleModel.getSUVehiclesCount("CAR")));
-            carAva.setText(String.valueOf(vehicleModel.getAvailableVehiclesCount("CAR")));
+            carCou.setText(String.valueOf(vehicleDAO.getSUVehiclesCount("CAR")));
+            carAva.setText(String.valueOf(vehicleDAO.getAvailableVehiclesCount("CAR")));
 
             // SUV
-            SUVCou.setText(String.valueOf(vehicleModel.getSUVehiclesCount("SUV")));
-            SUVAva.setText(String.valueOf(vehicleModel.getAvailableVehiclesCount("SUV")));
+            SUVCou.setText(String.valueOf(vehicleDAO.getSUVehiclesCount("SUV")));
+            SUVAva.setText(String.valueOf(vehicleDAO.getAvailableVehiclesCount("SUV")));
 
             // VAN
-            vanCou.setText(String.valueOf(vehicleModel.getSUVehiclesCount("VAN")));
-            vanAva.setText(String.valueOf(vehicleModel.getAvailableVehiclesCount("VAN")));
+            vanCou.setText(String.valueOf(vehicleDAO.getSUVehiclesCount("VAN")));
+            vanAva.setText(String.valueOf(vehicleDAO.getAvailableVehiclesCount("VAN")));
         }catch (Exception e){
             e.printStackTrace();
         }

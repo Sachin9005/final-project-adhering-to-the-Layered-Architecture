@@ -5,8 +5,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lk.ijse.carrentn.dao.custom.UserDAO;
+import lk.ijse.carrentn.dao.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
-import lk.ijse.carrentn.model.UserModel;
 
 import java.sql.SQLException;
 
@@ -30,7 +31,7 @@ public class ChangePasswordController {
 
     private final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-    private final UserModel userModel = new UserModel();
+    UserDAO userDAO = new UserDAOImpl();
 
     @FXML
     private void changeVisibility() {
@@ -64,7 +65,7 @@ public class ChangePasswordController {
     @FXML
     private void handleConfirm() {
         try {
-            UserDTO userDTO = userModel.getUserDetails();
+            UserDTO userDTO = userDAO.getUserDetails();
 
             String username = usernameField.getText().trim();
             String password = passwordField.getText();
@@ -110,7 +111,7 @@ public class ChangePasswordController {
 
     private void changePassword(String confirmPass , String newPass)throws SQLException {
         if (confirmPass.equals(newPass)){
-            boolean isChanged= userModel.updatePassword(newPass);
+            boolean isChanged= userDAO.updatePassword(newPass);
             if (isChanged){
                 new Alert(Alert.AlertType.INFORMATION, "Password Change successfully!").show();
                 cleanFields();
