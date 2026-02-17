@@ -2,7 +2,7 @@ package lk.ijse.carrentn.model;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
 import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.db.DBConnection;
-import lk.ijse.carrentn.util.CrudUtil;
+import lk.ijse.carrentn.dao.CrudUtil;
 
 import java.sql.*;
 import java.time.LocalDate;

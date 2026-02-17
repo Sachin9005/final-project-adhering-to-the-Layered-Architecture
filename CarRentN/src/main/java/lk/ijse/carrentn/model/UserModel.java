@@ -2,7 +2,7 @@ package lk.ijse.carrentn.model;
 
 
 import lk.ijse.carrentn.dto.UserDTO;
-import lk.ijse.carrentn.util.CrudUtil;
+import lk.ijse.carrentn.dao.CrudUtil;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

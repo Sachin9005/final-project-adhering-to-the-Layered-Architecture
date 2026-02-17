@@ -2,7 +2,7 @@ package lk.ijse.carrentn.model;
 
 import lk.ijse.carrentn.dto.DriverDTO;
 import lk.ijse.carrentn.dto.TM.DriverTM;
-import lk.ijse.carrentn.util.CrudUtil;
+import lk.ijse.carrentn.dao.CrudUtil;
 
 import java.sql.Date;
 import java.sql.ResultSet;

@@ -2,7 +2,7 @@ package lk.ijse.carrentn.model;
 
 import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.LastPaymentDTO;
-import lk.ijse.carrentn.util.CrudUtil;
+import lk.ijse.carrentn.dao.CrudUtil;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 

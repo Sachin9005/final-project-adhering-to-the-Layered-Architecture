@@ -1,4 +1,4 @@
-package lk.ijse.carrentn.util;
+package lk.ijse.carrentn.dao;
 
 import java.sql.*;
 
