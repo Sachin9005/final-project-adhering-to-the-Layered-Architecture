@@ -2,7 +2,7 @@ package lk.ijse.carrentn.model;
 
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.db.DBConnection;
-import lk.ijse.carrentn.dao.CrudUtil;
+import lk.ijse.carrentn.CrudUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
