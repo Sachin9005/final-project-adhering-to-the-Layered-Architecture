@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.dao.custom.*;
-import lk.ijse.carrentn.dao.impl.*;
+import lk.ijse.carrentn.dao.custom.impl.*;
 import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.RentalDTO;
 

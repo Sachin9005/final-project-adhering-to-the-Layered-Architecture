@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
-import lk.ijse.carrentn.dao.impl.DiscountDAOImpl;
+import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.DiscountDTO;
 

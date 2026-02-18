@@ -19,9 +19,9 @@ import lk.ijse.carrentn.App;
 import lk.ijse.carrentn.dao.custom.DriverDAO;
 import lk.ijse.carrentn.dao.custom.RentalDAO;
 import lk.ijse.carrentn.dao.custom.VehicleDAO;
-import lk.ijse.carrentn.dao.impl.DriverDAOImpl;
-import lk.ijse.carrentn.dao.impl.RentalDAOImpl;
-import lk.ijse.carrentn.dao.impl.VehicleDAOImpl;
+import lk.ijse.carrentn.dao.custom.impl.DriverDAOImpl;
+import lk.ijse.carrentn.dao.custom.impl.RentalDAOImpl;
+import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 
 public class MainDashboardController implements Initializable {
 

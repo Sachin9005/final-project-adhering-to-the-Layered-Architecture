@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lk.ijse.carrentn.dao.custom.UserDAO;
-import lk.ijse.carrentn.dao.impl.UserDAOImpl;
+import lk.ijse.carrentn.dao.custom.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
 
 import java.net.URL;

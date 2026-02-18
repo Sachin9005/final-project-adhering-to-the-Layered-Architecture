@@ -1,4 +1,4 @@
-package lk.ijse.carrentn.dao.impl;
+package lk.ijse.carrentn.dao.custom.impl;
 
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.VehicleDAO;

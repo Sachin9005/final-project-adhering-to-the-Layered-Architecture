@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
-import lk.ijse.carrentn.dao.impl.CarOwnerDAOImpl;
+import lk.ijse.carrentn.dao.custom.impl.CarOwnerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 
 public class CarOwnerManageController implements Initializable {
