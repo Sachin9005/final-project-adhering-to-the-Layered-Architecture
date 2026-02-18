@@ -13,7 +13,6 @@ import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.dao.custom.*;
 import lk.ijse.carrentn.dao.impl.*;
 import lk.ijse.carrentn.dto.*;
-import lk.ijse.carrentn.model.*;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -91,7 +90,7 @@ public class CurrentRentalCalculateController implements Initializable {
     public final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
     CustomerDAO customerDAO =  new CustomerDAOImpl();
-    private final RentalModel rentalModel = new RentalModel();
+    RentalDAO  rentalDAO =  new RentalDAOImpl();
     VehicleDAO  vehicleDAO = new VehicleDAOImpl();
     DriverDAO driverDAO = new DriverDAOImpl();
     FirstPaymentDAO firstPaymentDAO = new FirstPaymentDAOImpl();
@@ -154,7 +153,7 @@ public class CurrentRentalCalculateController implements Initializable {
         try {
             customeNICField.setText(customerDAO.search(cusId).getNic_or_passport_number());
 
-            RentalDTO rentalDTO = rentalModel.searchRent(cusId);
+            RentalDTO rentalDTO = rentalDAO.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();
 
             String vehicleNo = vehicleDAO.searchVehicle(String.valueOf(rentalDTO.getVehicle_id()));
