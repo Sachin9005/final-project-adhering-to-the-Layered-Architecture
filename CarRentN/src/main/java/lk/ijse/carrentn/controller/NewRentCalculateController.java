@@ -17,7 +17,6 @@ import lk.ijse.carrentn.dao.custom.impl.DriverDAOImpl;
 import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
-import lk.ijse.carrentn.model.*;
 
 import java.io.IOException;
 import java.net.URL;
