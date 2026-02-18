@@ -155,7 +155,7 @@ public class CurrentRentalCalculateController implements Initializable {
             RentalDTO rentalDTO = rentalDAO.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();
 
-            String vehicleNo = vehicleDAO.searchVehicle(String.valueOf(rentalDTO.getVehicle_id()));
+            String vehicleNo = vehicleDAO.search(String.valueOf(rentalDTO.getVehicle_id())).getVehicleNo();
             System.out.println(rentalDTO.getVehicle_id());
             System.out.println(vehicleNo);
             VehicleDTO vehicleDTO = vehicleDAO.search(vehicleNo);
@@ -194,9 +194,9 @@ public class CurrentRentalCalculateController implements Initializable {
             total = vehicleTotal + driverTotal + lateFee;
 
             //first payment
-            basePay = (firstPaymentDAO.getFirstPayment(rentalDTO.getRental_id()).getBase_payment());
+            basePay = (firstPaymentDAO.search(String.valueOf(rentalDTO.getRental_id())).getBase_payment());
 
-            firstPayId = firstPaymentDAO.getFirstPayment(rentalDTO.getRental_id()).getFirst_payment_id();
+            firstPayId = firstPaymentDAO.search(String.valueOf(rentalDTO.getRental_id())).getFirst_payment_id();
 
 
             lateDatesLable.setText(String.valueOf(ChronoUnit.DAYS.between(rentalDTO.getReturn_date(), LocalDate.now())));

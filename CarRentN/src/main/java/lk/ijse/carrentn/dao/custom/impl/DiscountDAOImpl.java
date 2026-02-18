@@ -37,7 +37,7 @@ public class DiscountDAOImpl implements DiscountDAO {
         return discountDTO;
     }
 
-    public List<DiscountDTO> getAllDiscounts() throws SQLException {
+    public List<DiscountDTO> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute( "SELECT * FROM Discount ORDER BY discount_id DESC");
 
         ArrayList<DiscountDTO> discountList = new ArrayList<>();
@@ -47,60 +47,23 @@ public class DiscountDAOImpl implements DiscountDAO {
                     rs.getInt("discount_id"),
                     rs.getString("description"),
                     rs.getDouble("percentage"));
-
             discountList.add(discountDTO);
         }
         return discountList;
     }
 
-    public List<String> getAllDiscountDes() throws SQLException {
-        ResultSet rs = CrudUtil.execute("SELECT description FROM Discount ORDER BY discount_id DESC");
-
-        ArrayList<String> carOwnerNameList = new ArrayList<>();
-
-        while(rs.next()) {
-            carOwnerNameList.add(rs.getString("description"));
-        }
-        return carOwnerNameList;
-    }
-
-    public String searchId(String description)  {
-        String id = null;
+    public DiscountDTO searchId(String description)  {
+        DiscountDTO discountDTO = null;
         try {
-            ResultSet result = CrudUtil.execute("SELECT discount_id FROM Discount WHERE description = ?", description);
+            ResultSet result = CrudUtil.execute("SELECT * FROM Discount WHERE description = ?", description);
             if (result.next()) {
-                int carOwnerID = result.getInt("discount_id");
-                id = String.valueOf(carOwnerID);
-            }
+                int discountId = result.getInt("discount_id");
+                String discountDisc = result.getString("description");
+                double discountPerc = result.getDouble("percentage");
+                discountDTO = new DiscountDTO(discountId, discountDisc, discountPerc);            }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return id ;
-    }
-
-    public Double searchDesForGetPrec (String description) {
-        Double prec = null;
-        try {
-            ResultSet result = CrudUtil.execute("SELECT percentage FROM Discount WHERE description = ?", description);
-            if (result.next()) {
-                prec = result.getDouble("percentage");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return prec ;
-    }
-
-    public Double searchIdtoGetPrec(String id) {
-        Double prec = null;
-        try {
-            ResultSet result = CrudUtil.execute("SELECT percentage FROM Discount WHERE discount_id = ?", id);
-            if (result.next()) {
-                prec = result.getDouble("percentage");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return prec ;
+        return discountDTO ;
     }
 }

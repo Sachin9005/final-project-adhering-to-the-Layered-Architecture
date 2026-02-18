@@ -2,12 +2,15 @@ package lk.ijse.carrentn.dao.custom.impl;
 
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.RentalDiscountDAO;
+import lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.dto.RentalDiscountDTO;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 public class RentalDiscountDAOImpl implements RentalDiscountDAO {
-    public RentalDiscountDTO searchRentalById(String rentId) throws Exception{
+    public RentalDiscountDTO search(String rentId) throws Exception{
         RentalDiscountDTO rentalDiscountDTO = null;
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Rental_Discount WHERE rental_id = ?", rentId);
 
@@ -21,13 +24,12 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
         return rentalDiscountDTO;
     }
 
-    public boolean saveRentalDiscount(int rentId , Integer discountId ,double totalPay,double prec)throws Exception{
-        double disAmount = (totalPay * prec)/100;
+    public boolean save(RentalDiscountDTO rentalDiscountDTO)throws Exception{
         boolean isSaved = CrudUtil.execute(
                 "INSERT INTO Rental_Discount (rental_id, discount_id, discount_amount_applied ) VALUES (?,?,?)",
-                rentId,
-                discountId,
-                disAmount);
+                rentalDiscountDTO.getRental_id(),
+                rentalDiscountDTO.getDiscount_id(),
+                rentalDiscountDTO.getDiscount_amount_applied());
 
         if (isSaved) {
             System.out.println("Base Payment Saved Successfully");
@@ -37,7 +39,17 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
         return true;
     }
 
-    public boolean deleteRentalDiscount(int rentId) throws Exception{
+    @Override
+    public boolean update(RentalDiscountDTO cusDTO) throws SQLException, Exception {
+        return false;
+    }
+
+    public boolean delete(String rentId) throws Exception{
         return CrudUtil.execute("DELETE FROM Rental_Discount WHERE rental_id = ?", rentId);
+    }
+
+    @Override
+    public List<RentalDiscountDTO> getAll() throws SQLException, Exception {
+        return List.of();
     }
 }

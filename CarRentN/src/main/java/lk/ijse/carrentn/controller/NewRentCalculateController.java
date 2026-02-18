@@ -15,12 +15,14 @@ import lk.ijse.carrentn.dao.custom.VehicleDAO;
 import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
 import lk.ijse.carrentn.dao.custom.impl.DriverDAOImpl;
 import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
+import lk.ijse.carrentn.dto.DiscountDTO;
 import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -112,11 +114,11 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
     @FXML
     private void handleSelectDiscount() {
         String discountDesc = discountCbox.getSelectionModel().getSelectedItem();
-        String discoutID = discountDAO.searchId(discountDesc);
+        DiscountDTO discountDTO = discountDAO.searchId(discountDesc);
         discountIdField.setText(discountDesc);
         discountLable.setText("");
-        if (discoutID != null){
-            double discountPrec = discountDAO.searchDesForGetPrec(discountDesc);
+        if (discountDTO != null){
+            double discountPrec = discountDTO.getPercentage();
             double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
             totalPriceLable.setText(String.valueOf(discountedTotal));
         }
@@ -138,10 +140,12 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordVehicleNames(){
         try {
-            List<String> vehicleList = vehicleDAO.getAvailableVehiclesNo(LocalDate.now());
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(vehicleList);
-            vehicleCbox.setItems(obList);
+            List<VehicleTM> vehicleList = vehicleDAO.getAvailableVehicles(LocalDate.now());
+            List<String> vehicleNames = new ArrayList<>();
+            for (VehicleTM vehicleTM : vehicleList) {
+                vehicleNames.add(vehicleTM.getVehicleNo());
+            }
+            vehicleCbox.getItems().addAll(vehicleNames);
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
@@ -150,10 +154,12 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordDriverNames(){
         try {
-            List<String> driverList = driverDAO.getAvailableDriverNames(LocalDate.now());
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(driverList);
-            driverCbox.setItems(obList);
+            List<DriverTM> driverList = driverDAO.getAvailableDrivers(LocalDate.now());
+            List<String> driverNames = new ArrayList<>();
+            for (DriverTM driver : driverList) {
+                driverNames.add(driver.getName());
+            }
+            driverCbox.getItems().addAll(driverNames);
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
@@ -162,10 +168,12 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordDiscountDes(){
         try {
-            List<String> discountList = discountDAO.getAllDiscountDes();
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(discountList);
-            discountCbox.setItems(obList);
+            List<DiscountDTO> discountList = discountDAO.getAll();
+            List<String> disDescription = new ArrayList<>();
+            for (DiscountDTO dto : discountList) {
+                disDescription.add(dto.getDescription());
+            }
+            discountCbox.getItems().addAll(disDescription);
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
@@ -180,7 +188,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
                 total = vehicleDAO.searchPrioce(vehicleId) * days;
             }else{
                 //with vehicle pay,discount,driver payment
-                total = (vehicleDAO.searchPrioce(driverId) * days)+(driverDAO.searchRate(driverId)*days);
+                total = (vehicleDAO.searchPrioce(driverId) * days)+(driverDAO.search(driverId).getDriver_rate_per_day()*days);
             }
         }catch (Exception e){
             e.printStackTrace();

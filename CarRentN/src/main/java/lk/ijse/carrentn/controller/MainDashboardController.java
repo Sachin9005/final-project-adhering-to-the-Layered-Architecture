@@ -93,16 +93,18 @@ public class MainDashboardController implements Initializable {
     private void profile() throws Exception {
         App.setRoot("ProfileManage");
     }
+
     private void lordDateAndTime() {
         dateLable.setText(LocalDate.now().format(dateFormatter));
         Timeline timeline = new Timeline(new KeyFrame(Duration.ZERO, e -> timeLable.setText(LocalTime.now().format(timeFormatter))), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
+
     private void lordDriverCount(){
         try {
-            int driverCount = driverDAO.getDriverCount();
-            int avaDriverCount = driverDAO.getAvailableDriverCount();
+            int driverCount = driverDAO.getAll().size();
+            int avaDriverCount = driverDAO.getAvailableDrivers(LocalDate.now()).size();
             driCou.setText(Integer.toString(driverCount));
             driAva.setText(Integer.toString(avaDriverCount));
         }catch (Exception e){
@@ -110,24 +112,24 @@ public class MainDashboardController implements Initializable {
         }
 
     }
+
     private void lordVehicleCount(){
         try {
             // CAR
-            carCou.setText(String.valueOf(vehicleDAO.getSUVehiclesCount("CAR")));
+            carCou.setText(String.valueOf(vehicleDAO.getVehiclesCount("CAR")));
             carAva.setText(String.valueOf(vehicleDAO.getAvailableVehiclesCount("CAR")));
 
             // SUV
-            SUVCou.setText(String.valueOf(vehicleDAO.getSUVehiclesCount("SUV")));
+            SUVCou.setText(String.valueOf(vehicleDAO.getVehiclesCount("SUV")));
             SUVAva.setText(String.valueOf(vehicleDAO.getAvailableVehiclesCount("SUV")));
 
             // VAN
-            vanCou.setText(String.valueOf(vehicleDAO.getSUVehiclesCount("VAN")));
+            vanCou.setText(String.valueOf(vehicleDAO.getVehiclesCount("VAN")));
             vanAva.setText(String.valueOf(vehicleDAO.getAvailableVehiclesCount("VAN")));
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-
 
     private void loadMonthlyRentCounts() {
         try {

@@ -48,7 +48,7 @@ public class VehicleDAOImpl implements VehicleDAO {
         return vehicleDTO;
     }
 
-    public List<VehicleDTO> getAllVehicles() throws SQLException {
+    public List<VehicleDTO> getAll() throws SQLException {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM Vehicle ORDER BY vehicle_id DESC";
         PreparedStatement pstm = conn.prepareStatement(sql);
@@ -73,49 +73,25 @@ public class VehicleDAOImpl implements VehicleDAO {
         return vehicleList;
     }
 
-    public String searchId(String vehicleNo) {
-        String id = null;
+    public VehicleDTO searchVehicle(String id) {
+        VehicleDTO vehicleDTO = null;
         try {
-            ResultSet result = CrudUtil.execute("SELECT vehicle_id FROM Vehicle WHERE vehicle_No = ?", vehicleNo);
-
-
+            ResultSet result = CrudUtil.execute("SELECT * FROM Vehicle WHERE vehicle_id = ?", id);
             if (result.next()) {
-                int vehicleId = result.getInt("vehicle_id");
-                id = String.valueOf(vehicleId);
+                int vehiclId = result.getInt("vehicle_id");
+                int vehicleOwnerId = result.getInt("owner_id");
+                String vehicleModel = result.getString("model");
+                String  vehicleManufac= result.getString("manufacturer");
+                String vehicleType = result.getString("type");
+                double vehicleRate = result.getDouble("rate_per_day");
+                double vehicleOwnerPrec = result.getDouble("ownership_percentage");
+                String vehicleNom = result.getString("vehicle_No");
+            vehicleDTO = new VehicleDTO(vehiclId,vehicleNom,vehicleOwnerId,vehicleModel,vehicleManufac,vehicleType,vehicleRate,vehicleOwnerPrec);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return id ;
-    }
-
-    public String searchVehicle(String id) {
-        String vehicleNO = null;
-        try {
-            ResultSet result = CrudUtil.execute("SELECT vehicle_No FROM Vehicle WHERE vehicle_id = ?", id);
-            if (result.next()) {
-                String vehicleNo = result.getString("vehicle_No");
-                vehicleNO = String.valueOf(vehicleNo);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return vehicleNO;
-    }
-
-    public double searchPrioce(String id){
-        double ratePerDay =0.0;
-        try {
-            ResultSet result = CrudUtil.execute("SELECT rate_per_day FROM Vehicle WHERE vehicle_id = ?", id);
-
-
-            if (result.next()) {
-                ratePerDay = result.getDouble("rate_per_day");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return ratePerDay ;
+        return vehicleDTO;
     }
 
     public List<VehicleTM> getAvailableVehicles(LocalDate startDate) throws SQLException {
@@ -138,23 +114,8 @@ public class VehicleDAOImpl implements VehicleDAO {
         return list;
     }
 
-    public List<String> getAvailableVehiclesNo(LocalDate startDate) throws SQLException {
 
-        String sql = "SELECT DISTINCT v.vehicle_No FROM Vehicle v LEFT JOIN Rental r ON v.vehicle_id = r.vehicle_id AND r.return_date >= ? WHERE r.vehicle_id IS NULL";
-
-        ResultSet rs = CrudUtil.execute(sql, Date.valueOf(startDate) );
-
-        List<String> list = new ArrayList<>();
-
-        while (rs.next()) {
-            list.add(
-                    rs.getString("vehicle_No")
-            );
-        }
-        return list;
-    }
-
-    public int getSUVehiclesCount(String type) throws SQLException {
+    public int getVehiclesCount(String type) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Vehicle WHERE type = ?";
         ResultSet resultSet = CrudUtil.execute(sql,type);
         if (resultSet.next()) {

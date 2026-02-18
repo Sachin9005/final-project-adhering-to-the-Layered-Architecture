@@ -54,7 +54,7 @@ public class DriverDAOImpl implements DriverDAO {
         return driverDTO;
     }
 
-    public List<DriverDTO> getAllDrivers() throws SQLException {
+    public List<DriverDTO> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT * FROM Driver ORDER BY driver_id DESC");
 
         ArrayList<DriverDTO> driverDTOList = new ArrayList<>();
@@ -86,19 +86,6 @@ public class DriverDAOImpl implements DriverDAO {
         return id ;
     }
 
-    public double searchRate(String id)  {
-        double  driverRatePerDay = 0.0;
-        try {
-            ResultSet result = CrudUtil.execute("SELECT driver_rate_per_day FROM Driver WHERE driver_id = ?", id);
-            if (result.next()) {
-                driverRatePerDay = result.getInt("driver_rate_per_day");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return driverRatePerDay ;
-    }
-
     public List<DriverTM> getAvailableDrivers(LocalDate startDate) throws SQLException {
 
         String sql = "SELECT DISTINCT d.driver_id, d.name, d.phone_number, d.driver_rate_per_day FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
@@ -115,39 +102,5 @@ public class DriverDAOImpl implements DriverDAO {
                     rs.getDouble("driver_rate_per_day")));
         }
         return list;
-    }
-
-    public List<String> getAvailableDriverNames(LocalDate startDate) throws SQLException {
-
-        String sql = "SELECT DISTINCT d.name FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
-
-        ResultSet rs = CrudUtil.execute(sql,Date.valueOf(startDate));
-
-        List<String> list = new ArrayList<>();
-
-        while (rs.next()) {
-            list.add(
-                    rs.getString("name")
-            );
-        }
-        return list;
-    }
-
-    public int getDriverCount() throws SQLException {
-        String sql = "SELECT COUNT(DISTINCT d.driver_id) FROM Driver d";
-        ResultSet rs = CrudUtil.execute(sql);
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
-        return 0;
-    }
-
-    public int getAvailableDriverCount() throws SQLException {
-        String sql = "SELECT COUNT(*) FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
-        ResultSet rs = CrudUtil.execute(sql,LocalDate.now());
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
-        return 0;
     }
 }

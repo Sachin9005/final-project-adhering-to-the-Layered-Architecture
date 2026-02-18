@@ -19,29 +19,21 @@ import java.util.Map;
 
 public class RentalDAOImpl implements RentalDAO {
 
+    @Override
+    public boolean save(RentalDTO cusDTO) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(RentalDTO cusDTO) throws SQLException {
+        return false;
+    }
+
     public boolean delete(String id) throws SQLException {
         return CrudUtil.execute("DELETE FROM Rental WHERE rental_id = ?",id);
     }
 
-    public RentalDTO search(String id,double totalPay) throws SQLException {
-        RentalDTO rentalDTO = null;
-        ResultSet result = CrudUtil.execute("SELECT * FROM Rental WHERE rental_id = ?",id);
-
-        if (result.next()) {
-            int rentalId = result.getInt("rental_id");
-            int cusID = result.getInt("customer_id");
-            int vehicleId = result.getInt("vehicle_id");
-            int DriverId = result.getInt("driver_id");
-            Date sdate = result.getDate("start_DATE");
-            int days = result.getInt("dates_of_rent");
-            Date eDate = result.getDate("return_date");
-
-            rentalDTO = new RentalDTO(rentalId,cusID,vehicleId,DriverId,sdate.toLocalDate(),days,eDate.toLocalDate(),totalPay);
-        }
-        return rentalDTO;
-    }
-
-    public List<RentalDTO> getAllRentals() throws SQLException {
+    public List<RentalDTO> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute( "SELECT * FROM Rental ORDER BY rental_id DESC");
 
         ArrayList<RentalDTO> rentalList = new ArrayList<>();
@@ -60,7 +52,7 @@ public class RentalDAOImpl implements RentalDAO {
         return rentalList;
     }
 
-    public RentalDTO searchRent(String id) throws SQLException {
+    public RentalDTO search(String id) throws SQLException {
         RentalDTO rentalDTO = null;
 
         ResultSet result = CrudUtil.execute("SELECT * FROM Rental r JOIN Customer c ON r.customer_id = c.customer_id LEFT JOIN last_Payment lp ON r.rental_id = lp.rental_id WHERE lp.last_payment_id IS NULL AND r.customer_id = ?",id);

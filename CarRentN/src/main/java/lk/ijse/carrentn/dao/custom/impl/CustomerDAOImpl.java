@@ -24,7 +24,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         return CrudUtil.execute("DELETE FROM Customer WHERE customer_id = ?", id);
     }
 
-    public List<CustomerDTO> getAllCustomer() throws SQLException {
+    public List<CustomerDTO> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT * FROM Customer ORDER BY customer_id DESC");
 
         ArrayList<CustomerDTO> customerList = new ArrayList<>();
@@ -59,17 +59,6 @@ public class CustomerDAOImpl implements CustomerDAO {
             cusDTO = new CustomerDTO(cusID, cusName, cusEmail, cusPhoneNumber, cusNicOrPassportNumber, cusAddress);
         }
         return cusDTO;
-    }
-
-    public List<String> getAllOCustomerNames() throws SQLException {
-        ResultSet rs = CrudUtil.execute("SELECT name FROM Customer ORDER BY customer_id DESC");
-
-        ArrayList<String> cuatomerNameList = new ArrayList<>();
-
-        while (rs.next()) {
-            cuatomerNameList.add(rs.getString("name"));
-        }
-        return cuatomerNameList;
     }
 
     public String searchId(String name) {

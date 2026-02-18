@@ -12,11 +12,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LastPaymentDAOImpl implements LastPaymentDAO {
 
-    public boolean saveFullPayment(LastPaymentDTO lastPaymentDTO)throws SQLException {
+    public boolean save(LastPaymentDTO lastPaymentDTO)throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO last_Payment (first_payment_id, rental_id, late_days, balance_payment, fine_payment,last_payment , last_payment_date) VALUES (?,?,?,?,?,?,?)",
                 lastPaymentDTO.getFirst_payment_id(),
@@ -28,6 +29,26 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
                 lastPaymentDTO.getLast_payment_date());
     }
 
+    @Override
+    public boolean update(LastPaymentDTO cusDTO) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public List<LastPaymentDTO> getAll() throws SQLException {
+        return List.of();
+    }
+
+    @Override
+    public LastPaymentDTO search(String id) throws SQLException {
+        return null;
+    }
+
     public String getSaveLastPaymentId()throws SQLException{
         String id = null;
         ResultSet result = CrudUtil.execute("SELECT last_payment_id FROM last_Payment ORDER BY last_payment_id DESC LIMIT 1");
@@ -37,7 +58,7 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
         return id;
     }
 
-    public boolean deleteLastPayment(int rentalId) throws SQLException{
+    public boolean delete(int rentalId) throws SQLException{
         return CrudUtil.execute("DELETE FROM last_Payment WHERE rental_id = ?", rentalId);
 
     }

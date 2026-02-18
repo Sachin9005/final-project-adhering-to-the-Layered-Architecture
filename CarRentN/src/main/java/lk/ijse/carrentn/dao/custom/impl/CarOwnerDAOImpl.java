@@ -41,7 +41,7 @@ public class CarOwnerDAOImpl implements CarOwnerDAO {
         return carOwnerDTO;
     }
 
-    public List<CarOwnerDTO> getAllOwners() throws SQLException {
+    public List<CarOwnerDTO> getAll() throws SQLException {
         Connection conn = DBConnection.getInstance().getConnection();
         String sql = "SELECT * FROM CarOwner ORDER BY owner_id DESC";
 
