@@ -90,6 +90,7 @@ public class RentalManageController implements Initializable {
     DriverDAO driverDAO = new DriverDAOImpl();
     FirstPaymentDAO firstPaymentDAO = new FirstPaymentDAOImpl();
     RentalDiscountDAO rentalDiscountDAO = new RentalDiscountDAOImpl();
+    LastPaymentDAO lastPaymentDAO = new LastPaymentDAOImpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -184,7 +185,7 @@ public class RentalManageController implements Initializable {
         try {
             String id = retalIDField.getText();
                 if (id.matches(RENTAL_ID_REGEX)) {
-                    RentalDTO rentalDTO = rentalDAO.search(id);
+                    RentalDTO rentalDTO = rentalDAO.search(id,firstPaymentDAO.searchTotalPay(id));
 
                     if (rentalDTO != null) {
                         customerIdField.setText(String.valueOf(rentalDTO.getCustomer_id()));
@@ -225,9 +226,12 @@ public class RentalManageController implements Initializable {
         try {
             String id = retalIDField.getText();
             if (id.matches(RENTAL_ID_REGEX)) {
-                boolean result = rentalDAO.delete(id);
+                boolean result2 = rentalDiscountDAO.deleteRentalDiscount(Integer.parseInt(id));
+                boolean result3 = firstPaymentDAO.deleteFirstPayment(Integer.parseInt(id));
+                boolean result4 = lastPaymentDAO.deleteLastPayment(Integer.parseInt(id));
+                boolean result1 = rentalDAO.delete(id);
                 lordRentalTable();
-                if(result) {
+                if(result2 && result3 && result4 &&result1) {
                     System.out.println("Rental Delete successfully!");
                     cleanFileds();
                     lordRentalTable();

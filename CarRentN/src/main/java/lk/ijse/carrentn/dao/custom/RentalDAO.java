@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface RentalDAO {
     public boolean delete(String id) throws SQLException;
-    public RentalDTO search(String id) throws SQLException;
+    public RentalDTO search(String id,double totalPay) throws SQLException;
     public List<RentalDTO> getAllRentals() throws SQLException;
     public RentalDTO searchRent(String id) throws SQLException;
     public String getSaveLastRentalId()throws SQLException;

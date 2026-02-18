@@ -36,4 +36,8 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
         }
         return true;
     }
+
+    public boolean deleteRentalDiscount(int rentId) throws Exception{
+        return CrudUtil.execute("DELETE FROM Rental_Discount WHERE rental_id = ?", rentId);
+    }
 }

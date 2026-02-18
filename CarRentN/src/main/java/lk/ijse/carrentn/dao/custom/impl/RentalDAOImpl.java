@@ -20,21 +20,12 @@ import java.util.Map;
 public class RentalDAOImpl implements RentalDAO {
 
     public boolean delete(String id) throws SQLException {
-        CrudUtil.execute("DELETE FROM Rental_Discount WHERE rental_id = ?", id);//create method
-        CrudUtil.execute("DELETE FROM last_Payment WHERE rental_id = ?", id);//create method
-        CrudUtil.execute("DELETE FROM First_Payment WHERE rental_id = ?", id);//create method
         return CrudUtil.execute("DELETE FROM Rental WHERE rental_id = ?",id);
     }
 
-    public RentalDTO search(String id) throws SQLException {
+    public RentalDTO search(String id,double totalPay) throws SQLException {
         RentalDTO rentalDTO = null;
-        double totalPay = 0.0;
-        ResultSet resu = CrudUtil.execute("SELECT base_payment FROM First_Payment WHERE rental_id = ?",id);//create method
         ResultSet result = CrudUtil.execute("SELECT * FROM Rental WHERE rental_id = ?",id);
-
-        if (resu.next()) {
-            totalPay = resu.getDouble("base_payment");
-        }
 
         if (result.next()) {
             int rentalId = result.getInt("rental_id");

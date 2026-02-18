@@ -39,4 +39,17 @@ public class FirstPaymentDAOImpl implements FirstPaymentDAO {
         }
         return firstPaymentDTO ;
     }
+
+    public boolean deleteFirstPayment(int rentId)throws Exception{
+        return CrudUtil.execute("DELETE FROM First_Payment WHERE rental_id = ?", rentId);
+    }
+
+    public double searchTotalPay(String rentalId)throws Exception{
+        double totalPay = 0.0;
+        ResultSet resu = CrudUtil.execute("SELECT base_payment FROM First_Payment WHERE rental_id = ?",rentalId);
+        if (resu.next()) {
+            totalPay = resu.getDouble("base_payment");
+        }
+        return totalPay;
+    }
 }

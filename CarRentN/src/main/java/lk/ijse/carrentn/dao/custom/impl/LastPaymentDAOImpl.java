@@ -37,6 +37,11 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
         return id;
     }
 
+    public boolean deleteLastPayment(int rentalId) throws SQLException{
+        return CrudUtil.execute("DELETE FROM last_Payment WHERE rental_id = ?", rentalId);
+
+    }
+
     public void printLastPayInvoice(int finalPaymentId,double vehicleDamage,double customerPay) throws JRException, SQLException {
 
         Connection conn = DBConnection.getInstance().getConnection();

@@ -152,7 +152,6 @@ public class CurrentRentalCalculateController implements Initializable {
     private void handleSearchRentByCustomerName() {
         try {
             customeNICField.setText(customerDAO.search(cusId).getNic_or_passport_number());
-
             RentalDTO rentalDTO = rentalDAO.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();
 

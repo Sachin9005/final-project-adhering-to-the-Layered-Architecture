@@ -9,4 +9,5 @@ public interface LastPaymentDAO {
     public boolean saveFullPayment(LastPaymentDTO lastPaymentDTO)throws SQLException;
     public String getSaveLastPaymentId()throws SQLException;
     public void printLastPayInvoice(int finalPaymentId,double vehicleDamage,double customerPay) throws JRException, SQLException;
+    public boolean deleteLastPayment(int rentalId) throws SQLException;
 }
