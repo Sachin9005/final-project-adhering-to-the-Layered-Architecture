@@ -1,10 +1,11 @@
 package lk.ijse.carrentn.dao.custom;
 
+import lk.ijse.carrentn.dao.SuperDAO;
 import lk.ijse.carrentn.dto.UserDTO;
 
 import java.sql.SQLException;
 
-public interface UserDAO {
+public interface UserDAO extends SuperDAO {
     UserDTO getUserDetails()throws SQLException;
     boolean updatePassword(String password) throws SQLException;
     boolean updateEmail(String email) throws SQLException;
