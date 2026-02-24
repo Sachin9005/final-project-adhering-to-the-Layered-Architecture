@@ -36,7 +36,7 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
 
     @Override
     public boolean delete(String id) throws SQLException {
-        return false;
+        return CrudUtil.execute("DELETE FROM last_Payment WHERE rental_id = ?", id);
     }
 
     @Override
@@ -56,11 +56,6 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
             id = String.valueOf(result.getInt("last_payment_id"));
         }
         return id;
-    }
-
-    public boolean delete(int rentalId) throws SQLException{
-        return CrudUtil.execute("DELETE FROM last_Payment WHERE rental_id = ?", rentalId);
-
     }
 
     public void printLastPayInvoice(int finalPaymentId,double vehicleDamage,double customerPay) throws JRException, SQLException {

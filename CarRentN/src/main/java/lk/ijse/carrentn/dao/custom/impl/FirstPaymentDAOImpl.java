@@ -10,18 +10,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class FirstPaymentDAOImpl implements FirstPaymentDAO {
-    public boolean save(int rentId , double basePay , double totalPay)throws Exception{
+    public boolean save(FirstPaymentDTO firstPaymentDTO)throws SQLException{
         boolean isSaved = CrudUtil.execute(
                 "INSERT INTO First_Payment (rental_id, base_payment, final_payment, base_payment_date) VALUES (?,?,?,?)",
-                rentId,
-                basePay,
-                totalPay,
+                firstPaymentDTO.getRental_id(),
+                firstPaymentDTO.getBase_payment(),
+                firstPaymentDTO.getFinal_payment(),
                 LocalDate.now().toString());
         if (isSaved) {
             System.out.println("Base Payment Saved Successfully");
-        } else {
-            throw new Exception("Something went Wrong");
-
         }
         return true;
     }
@@ -41,22 +38,13 @@ public class FirstPaymentDAOImpl implements FirstPaymentDAO {
         return firstPaymentDTO ;
     }
 
-    public boolean delete(int rentId)throws Exception{
-        return CrudUtil.execute("DELETE FROM First_Payment WHERE rental_id = ?", rentId);
-    }
-
     @Override
-    public boolean save(FirstPaymentDTO cusDTO) throws SQLException {
-        return false;
+    public boolean delete(String id) throws SQLException {
+        return CrudUtil.execute("DELETE FROM First_Payment WHERE rental_id = ?", id);
     }
 
     @Override
     public boolean update(FirstPaymentDTO cusDTO) throws SQLException {
-        return false;
-    }
-
-    @Override
-    public boolean delete(String id) throws SQLException {
         return false;
     }
 

@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.custom.DiscountBO;
+import lk.ijse.carrentn.bo.custom.impl.DiscountBOimpl;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
 import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
@@ -38,7 +40,7 @@ public class DiscountManageController implements Initializable {
     private final String DISCOUNT_DESCRIPTION_REGEX = "^[A-Za-z0-9 ]{2,50}$";
     private final String DISCOUNT_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
 
-    DiscountDAO discountDAO = new DiscountDAOImpl();
+    DiscountBO discountBO = new DiscountBOimpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -62,7 +64,7 @@ public class DiscountManageController implements Initializable {
         }else{
             try {
                 DiscountDTO discountDTO = new DiscountDTO(dis, Double.parseDouble(prec));
-                boolean result = discountDAO.save(discountDTO);
+                boolean result = discountBO.saveDiscount(discountDTO);
                 cleanFileds();
                 lordDiscountTable();
 
@@ -92,7 +94,7 @@ public class DiscountManageController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Invalid Percentage").show();
             }else{
                 DiscountDTO discountDTO = new DiscountDTO(Integer.parseInt(id),name, Double.parseDouble(prec));
-                boolean result = discountDAO.update(discountDTO);
+                boolean result = discountBO.updateDiscount(discountDTO);
                 cleanFileds();
                 lordDiscountTable();
 
@@ -114,7 +116,7 @@ public class DiscountManageController implements Initializable {
             String id = discountIdFiled.getText();
             if (id.matches(DISCOUNT_ID_REGEX)) {
 
-                boolean result = discountDAO.delete(id);
+                boolean result = discountBO.deleteDiscount(id);
                 lordDiscountTable();
 
                 if(result) {
@@ -137,7 +139,7 @@ public class DiscountManageController implements Initializable {
                 System.out.println(event.getCode());
                 String id = discountIdFiled.getText();
                 if (id.matches(DISCOUNT_ID_REGEX)) {
-                    DiscountDTO discountDTO = discountDAO.search(id);
+                    DiscountDTO discountDTO = discountBO.searchDiscount(id);
 
                     if (discountDTO != null) {
                         descriptionField.setText(discountDTO.getDescription());
@@ -166,7 +168,7 @@ public class DiscountManageController implements Initializable {
 
     private void lordDiscountTable(){
         try {
-            List<DiscountDTO> discountDTOS = discountDAO.getAllDiscounts();
+            List<DiscountDTO> discountDTOS = discountBO.getAllDiscounts();
             ObservableList<DiscountDTO> obList = FXCollections.observableArrayList();
             obList.addAll(discountDTOS);
             tblDiscounts.setItems(obList);

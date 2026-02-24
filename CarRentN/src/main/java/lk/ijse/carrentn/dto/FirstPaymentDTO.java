@@ -13,6 +13,8 @@ public class FirstPaymentDTO {
     public FirstPaymentDTO() {
     }
 
+
+
     public FirstPaymentDTO(int rental_id, double base_payment, double final_payment, LocalDate base_payment_date) {
         this.rental_id = rental_id;
         this.base_payment = base_payment;
@@ -26,6 +28,12 @@ public class FirstPaymentDTO {
         this.base_payment = base_payment;
         this.final_payment = final_payment;
         this.base_payment_date = base_payment_date;
+    }
+
+    public FirstPaymentDTO(int rentalId, double basPay, double totalPay) {
+        this.rental_id = rentalId;
+        this.base_payment = basPay;
+        this.final_payment = totalPay;
     }
 
     public int getFirst_payment_id() {

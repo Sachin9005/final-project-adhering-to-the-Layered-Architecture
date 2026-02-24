@@ -8,14 +8,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.custom.*;
+import lk.ijse.carrentn.bo.custom.impl.*;
 import lk.ijse.carrentn.dao.custom.*;
 import lk.ijse.carrentn.dao.custom.impl.*;
 import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.*;
 import lk.ijse.carrentn.dto.TM.DriverTM;
+import lk.ijse.carrentn.dto.TM.VehicleTM;
 
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,14 +89,13 @@ public class RentalManageController implements Initializable {
     private final String DAY_REGEX = "^[0-9]+$";
     private final String BASE_PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-    DiscountDAO discountDAO = new DiscountDAOImpl();
-    RentalDAO rentalDAO = new RentalDAOImpl();
-    CustomerDAO customerDAO = new CustomerDAOImpl();
-    VehicleDAO vehicleDAO = new VehicleDAOImpl();
-    DriverDAO driverDAO = new DriverDAOImpl();
-    FirstPaymentDAO firstPaymentDAO = new FirstPaymentDAOImpl();
-    RentalDiscountDAO rentalDiscountDAO = new RentalDiscountDAOImpl();
-    LastPaymentDAO lastPaymentDAO = new LastPaymentDAOImpl();
+    DiscountBO discountBO =  new DiscountBOimpl();
+    //RentalDAO rentalDAO = new RentalDAOImpl();
+    CustomerBO customerBO = new CustomerBOimpl();
+    VehicleBO vehicleBO = new VehicleBOimpl();
+    DriverBO driverBO = new DriverBOimpl();
+    PaymentBO paymentBO = new PaymentBOimpl();
+    RentalDiscountBO rentalDiscountBO = new RentalDiscountBOimpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -149,7 +152,7 @@ public class RentalManageController implements Initializable {
             Integer discountId = null;
 
             if (discountDesc != null) {
-                DiscountDTO discountDTO = discountDAO.searchId(discountDesc);
+                DiscountDTO discountDTO = discountBO.searchDiscountId(discountDesc);
                 if (discountDTO != null) {
                     discountId = discountDTO.getDiscount_id();
                 }
@@ -201,7 +204,7 @@ public class RentalManageController implements Initializable {
                         sDateField.setText(String.valueOf(rentalDTO.getStart_date()));
                         daysField.setText(String.valueOf(rentalDTO.getDates_of_rent()));
                         eDateField.setText(String.valueOf(rentalDTO.getReturn_date()));
-                        basePayField.setText(String.valueOf(firstPaymentDAO.search(id).getBase_payment()));
+                        basePayField.setText(String.valueOf(paymentBO.searchFirstPayment(id).getBase_payment()));
                     } else {
                         new Alert(Alert.AlertType.ERROR, "Rental not found").show();
                     }
@@ -217,7 +220,7 @@ public class RentalManageController implements Initializable {
     @FXML
     private void handlePrint() {
         try {
-            rentalDAO.printBasePayInvoice(firstPaymentDAO.search(rentalDAO.getSaveLastRentalId()).getFirst_payment_id());
+            rentalDAO.printBasePayInvoice(paymentBO.searchFirstPayment(rentalDAO.getSaveLastRentalId()).getFirst_payment_id());
             //firstPaymentDAO.getFirstPayment(Integer.parseInt(rentalDAO.getSaveLastRentalId())).getFirst_payment_id()
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,9 +232,9 @@ public class RentalManageController implements Initializable {
         try {
             String id = retalIDField.getText();
             if (id.matches(RENTAL_ID_REGEX)) {
-                boolean result2 = rentalDiscountDAO.deleteRentalDiscount(Integer.parseInt(id));
-                boolean result3 = firstPaymentDAO.deleteFirstPayment(Integer.parseInt(id));
-                boolean result4 = lastPaymentDAO.deleteLastPayment(Integer.parseInt(id));
+                boolean result2 = rentalDiscountBO.deleteRentalDiscount(id);
+                boolean result3 = paymentBO.deleteFirstPayment(id);
+                boolean result4 = paymentBO.deleteLastPayment(id);
                 boolean result1 = rentalDAO.delete(id);
                 lordRentalTable();
                 if(result2 && result3 && result4 &&result1) {
@@ -261,7 +264,7 @@ public class RentalManageController implements Initializable {
         customerIdField.clear();
         String cusName = customeCbox.getSelectionModel().getSelectedItem();
 
-        List<String> customerHaveUnpaid = customerDAO.getCustomersNotPaidLast();
+        List<String> customerHaveUnpaid = customerBO.getCustomersNotPaidLast();
         if (customerHaveUnpaid.contains(cusName)) {
             new Alert(Alert.AlertType.INFORMATION, "Customer Has Unpaid Rent!").show();
             customerLable.setText("");
@@ -289,7 +292,7 @@ public class RentalManageController implements Initializable {
     @FXML
     private void handleSelectDiscountId() {
         String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
-        DiscountDTO discount = discountDAO.searchId(discountDesc);
+        DiscountDTO discount = discountBO.searchDiscountId(discountDesc);
         discountLable.setText("");
 
         if (discount != null){
@@ -301,32 +304,37 @@ public class RentalManageController implements Initializable {
     }
 
     @FXML
-    private void calculateTotal(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
-            String vehicleId = vehicleDAO.searchId(vehicleIDField.getText());
-            String driverId = driverDAO.searchId(driverIdField.getText());
-            String days = daysField.getText().trim();
+    private void calculateTotal(KeyEvent event){
+        try {
+            if(event.getCode() == KeyCode.ENTER){
+                String vehicleId = String.valueOf(vehicleBO.searchVehicleNo(vehicleIDField.getText()).getVehicle_id());
+                String driverId = driverBO.searchDriverId(driverIdField.getText());
+                String days = daysField.getText().trim();
 
-            if (vehicleId == null || vehicleId.isEmpty()) {
-                new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
-                return;
+                if (vehicleId == null || vehicleId.isEmpty()) {
+                    new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
+                    return;
+                }
+
+                if (days == null || !days.matches(DAY_REGEX)) {
+                    new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
+                    return;
+                }
+
+                // driver is OPTIONAL
+                driverId = (driverId == null) ? "" : driverId.trim();
+
+                calculatetotal(driverId, vehicleId.trim(), Integer.parseInt(days.trim()));
             }
 
-            if (days == null || !days.matches(DAY_REGEX)) {
-                new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
-                return;
-            }
-
-            // driver is OPTIONAL
-            driverId = (driverId == null) ? "" : driverId.trim();
-
-            calculatetotal(driverId, vehicleId.trim(), Integer.parseInt(days.trim()));
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
     private void lordCustomerNames(){
         try {
-            List<CustomerDTO> customerList = customerDAO.getAllCustomer();
+            List<CustomerDTO> customerList = customerBO.getAllCustomers();
             List<String> customerNames = new ArrayList<>();
             for (CustomerDTO cust : customerList) {
                 customerNames.add(cust.getName());
@@ -342,10 +350,12 @@ public class RentalManageController implements Initializable {
 
     private void lordVehicleNames(){
         try {
-            List<String> vehicleList = vehicleDAO.getAvailableVehiclesNo(LocalDate.now());
-            ObservableList<String> obList = FXCollections.observableArrayList();
-            obList.addAll(vehicleList);
-            vehicleCbox.setItems(obList);
+            List<VehicleTM> vehicleList = vehicleBO.getAvailableVehicles(LocalDate.now());
+            List<String> vehicleNames = new ArrayList<>();
+            for (VehicleTM vehicle : vehicleList) {
+                vehicleNames.add(vehicle.getVehicleNo());
+            }
+            vehicleCbox.getItems().addAll(vehicleNames);
         } catch (Exception e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Something went wrong!").show();
@@ -354,7 +364,7 @@ public class RentalManageController implements Initializable {
 
     private void lordDriverNames(){
         try {
-            List<DriverTM> driverList = driverDAO.getAvailableDrivers(LocalDate.now());
+            List<DriverTM> driverList = driverBO.getAvailableDrivers(LocalDate.now());
             List<String> driverNames = new ArrayList<>();
             for (DriverTM driver : driverList) {
                 driverNames.add(driver.getName());
@@ -368,7 +378,7 @@ public class RentalManageController implements Initializable {
 
     private void lordDiscountDes(){
         try {
-            List<DiscountDTO> discountList = discountDAO.getAll();
+            List<DiscountDTO> discountList = discountBO.getAllDiscounts();
             List<String> discountDes = new ArrayList<>();
             for (DiscountDTO discount : discountList) {
                 discountDes.add(discount.getDescription());
@@ -399,10 +409,10 @@ public class RentalManageController implements Initializable {
 
         try {
             if (driverId.isEmpty()){
-                total = vehicleDAO.searchPrioce(vehicleId) * days;
+                total = vehicleBO.searchVehicle(vehicleId).getRate_per_day() * days;
             }else{
                 //with vehicle pay,discount,driver payment
-                total = (vehicleDAO.searchPrioce(driverId) * days)+(driverDAO.search(driverId).getDriver_rate_per_day()*days);
+                total = (vehicleBO.searchVehicle(driverId).getRate_per_day() * days)+(driverBO.searchDriver(driverId).getDriver_rate_per_day()*days);
 
             }
         }catch (Exception e){
@@ -448,12 +458,12 @@ public class RentalManageController implements Initializable {
             if (rentalId == 0) {
                 throw new Exception("Failed to generate rental id");
             }
-            boolean isBasePaySaved = firstPaymentDAO.saveBasePayment(rentalId, basPay, totalPay);
+            boolean isBasePaySaved = paymentBO.saveFirstPayment(new FirstPaymentDTO(rentalId, basPay, totalPay));
 
             boolean isDiscountSaved = true;
             if (discountId != null) {
-                double disAmount = (totalPay * discountDAO.search(String.valueOf(discountId)).getPercentage())/100;
-                isDiscountSaved = rentalDiscountDAO.saveRentalDiscount(new RentalDiscountDTO(rentalId, discountId, disAmount));
+                double disAmount = (totalPay * discountBO.searchDiscount(String.valueOf(discountId)).getPercentage())/100;
+                isDiscountSaved = rentalDiscountBO.saveRentalDiscount(new RentalDiscountDTO(rentalId, discountId, disAmount));
             }
 
             if (!isBasePaySaved && !isDiscountSaved) {

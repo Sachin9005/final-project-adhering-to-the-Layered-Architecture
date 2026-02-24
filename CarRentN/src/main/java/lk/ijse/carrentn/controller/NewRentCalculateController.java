@@ -9,11 +9,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.App;
-import lk.ijse.carrentn.dao.custom.DiscountDAO;
-import lk.ijse.carrentn.dao.custom.DriverDAO;
+import lk.ijse.carrentn.bo.custom.DiscountBO;
+import lk.ijse.carrentn.bo.custom.DriverBO;
+import lk.ijse.carrentn.bo.custom.VehicleBO;
+import lk.ijse.carrentn.bo.custom.impl.DiscountBOimpl;
+import lk.ijse.carrentn.bo.custom.impl.DriverBOimpl;
+import lk.ijse.carrentn.bo.custom.impl.VehicleBOimpl;
 import lk.ijse.carrentn.dao.custom.VehicleDAO;
-import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
-import lk.ijse.carrentn.dao.custom.impl.DriverDAOImpl;
 import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.DiscountDTO;
 import lk.ijse.carrentn.dto.TM.DriverTM;
@@ -80,9 +82,9 @@ public class NewRentCalculateController implements Initializable {
 
     private final String DAY_REGEX = "^[0-9]+$";
 
-VehicleDAO vehicleDAO = new VehicleDAOImpl();
-DriverDAO driverDAO = new DriverDAOImpl();
-DiscountDAO discountDAO = new DiscountDAOImpl();
+VehicleBO vehicleBO = new VehicleBOimpl();
+DriverBO driverBO = new DriverBOimpl();
+DiscountBO discountBO= new DiscountBOimpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -114,7 +116,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
     @FXML
     private void handleSelectDiscount() {
         String discountDesc = discountCbox.getSelectionModel().getSelectedItem();
-        DiscountDTO discountDTO = discountDAO.searchId(discountDesc);
+        DiscountDTO discountDTO = discountBO.searchDiscountId(discountDesc);
         discountIdField.setText(discountDesc);
         discountLable.setText("");
         if (discountDTO != null){
@@ -140,7 +142,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordVehicleNames(){
         try {
-            List<VehicleTM> vehicleList = vehicleDAO.getAvailableVehicles(LocalDate.now());
+            List<VehicleTM> vehicleList = vehicleBO.getAvailableVehicles(LocalDate.now());
             List<String> vehicleNames = new ArrayList<>();
             for (VehicleTM vehicleTM : vehicleList) {
                 vehicleNames.add(vehicleTM.getVehicleNo());
@@ -154,7 +156,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordDriverNames(){
         try {
-            List<DriverTM> driverList = driverDAO.getAvailableDrivers(LocalDate.now());
+            List<DriverTM> driverList = driverBO.getAvailableDrivers(LocalDate.now());
             List<String> driverNames = new ArrayList<>();
             for (DriverTM driver : driverList) {
                 driverNames.add(driver.getName());
@@ -168,7 +170,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordDiscountDes(){
         try {
-            List<DiscountDTO> discountList = discountDAO.getAll();
+            List<DiscountDTO> discountList = discountBO.getAllDiscounts();
             List<String> disDescription = new ArrayList<>();
             for (DiscountDTO dto : discountList) {
                 disDescription.add(dto.getDescription());
@@ -185,10 +187,10 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
         double total = 0.00;
         try {
             if (driverId.isEmpty()){
-                total = vehicleDAO.searchPrioce(vehicleId) * days;
+                total = vehicleBO.searchVehicle(vehicleId).getRate_per_day() * days;
             }else{
                 //with vehicle pay,discount,driver payment
-                total = (vehicleDAO.searchPrioce(driverId) * days)+(driverDAO.search(driverId).getDriver_rate_per_day()*days);
+                total = (vehicleBO.searchVehicle(driverId).getRate_per_day() * days)+(driverBO.searchDriver(driverId).getDriver_rate_per_day()*days);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -201,26 +203,31 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     @FXML
     private void calculateTotal(KeyEvent event) {
-        if(event.getCode() == KeyCode.ENTER){
-            String vehicleId = vehicleDAO.searchId(vehicleIdField.getText());
-            String driverID = driverDAO.searchId(driverIdField.getText());
-            String days = daysField.getText().trim();
+        try {
+            if(event.getCode() == KeyCode.ENTER){
+                String vehicleId = String.valueOf(vehicleBO.searchVehicleNo(vehicleIdField.getText()).getVehicle_id());
+                String driverID = driverBO.searchDriverId(driverIdField.getText());
+                String days = daysField.getText().trim();
 
-            if (vehicleId.isEmpty()) {
-                new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
-                return;
+                if (vehicleId.isEmpty()) {
+                    new Alert(Alert.AlertType.ERROR, "Select a vehicle first").show();
+                    return;
+                }
+
+                if (!days.matches(DAY_REGEX)) {
+                    new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
+                    return;
+                }
+                String driverIdr;
+
+                // driver is OPTIONAL
+                driverIdr = (driverID == null) ? "" : driverID.trim();
+
+                calculatetotal(driverIdr, vehicleId.trim(), Integer.parseInt(days.trim()));
             }
 
-            if (!days.matches(DAY_REGEX)) {
-                new Alert(Alert.AlertType.ERROR, "Enter valid rent days").show();
-                return;
-            }
-            String driverIdr;
-
-            // driver is OPTIONAL
-            driverIdr = (driverID == null) ? "" : driverID.trim();
-
-            calculatetotal(driverIdr, vehicleId.trim(), Integer.parseInt(days.trim()));
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -239,7 +246,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     private void lordAvailableVehicleTable(){
         try {
-            List<VehicleTM> vehicleTMS = vehicleDAO.getAvailableVehicles(LocalDate.now());
+            List<VehicleTM> vehicleTMS = vehicleBO.getAvailableVehicles(LocalDate.now());
             ObservableList<VehicleTM> obList =FXCollections.observableArrayList();
             obList.addAll(vehicleTMS);
             tblAvaVehicles.setItems(obList);
@@ -250,7 +257,7 @@ DiscountDAO discountDAO = new DiscountDAOImpl();
 
     public void loadAvailableDrivers() {
         try {
-            List<DriverTM> driverTMs = driverDAO.getAvailableDrivers(LocalDate.now());
+            List<DriverTM> driverTMs = driverBO.getAvailableDrivers(LocalDate.now());
             ObservableList<DriverTM> obList =FXCollections.observableArrayList();
 
             obList.addAll(driverTMs);

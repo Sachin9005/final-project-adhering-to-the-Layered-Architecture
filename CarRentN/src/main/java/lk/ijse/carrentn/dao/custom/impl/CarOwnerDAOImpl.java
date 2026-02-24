@@ -61,15 +61,6 @@ public class CarOwnerDAOImpl implements CarOwnerDAO {
         return carOwnerList;
     }
 
-    public List<String> getAllOwnersIds() throws SQLException {
-        ResultSet rs = CrudUtil.execute("SELECT name FROM CarOwner ORDER BY owner_id DESC");
-        ArrayList<String> carOwnerNameList = new ArrayList<>();
-        while(rs.next()) {
-            carOwnerNameList.add(rs.getString("name"));
-        }
-        return carOwnerNameList;
-    }
-
     public String searchId(String name) throws SQLException {
         ResultSet result = CrudUtil.execute("SELECT owner_id FROM CarOwner WHERE name = ?",name);
         String id = null;

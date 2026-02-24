@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RentalDiscountDAOImpl implements RentalDiscountDAO {
-    public RentalDiscountDTO search(String rentId) throws Exception{
+    public RentalDiscountDTO search(String rentId) throws SQLException{
         RentalDiscountDTO rentalDiscountDTO = null;
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Rental_Discount WHERE rental_id = ?", rentId);
 
@@ -24,7 +24,7 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
         return rentalDiscountDTO;
     }
 
-    public boolean save(RentalDiscountDTO rentalDiscountDTO)throws Exception{
+    public boolean save(RentalDiscountDTO rentalDiscountDTO)throws SQLException{
         boolean isSaved = CrudUtil.execute(
                 "INSERT INTO Rental_Discount (rental_id, discount_id, discount_amount_applied ) VALUES (?,?,?)",
                 rentalDiscountDTO.getRental_id(),
@@ -33,23 +33,21 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
 
         if (isSaved) {
             System.out.println("Base Payment Saved Successfully");
-        } else {
-            throw new Exception("Something went Wrong");
         }
         return true;
     }
 
     @Override
-    public boolean update(RentalDiscountDTO cusDTO) throws SQLException, Exception {
+    public boolean update(RentalDiscountDTO cusDTO) throws SQLException {
         return false;
     }
 
-    public boolean delete(String rentId) throws Exception{
+    public boolean delete(String rentId) throws SQLException{
         return CrudUtil.execute("DELETE FROM Rental_Discount WHERE rental_id = ?", rentId);
     }
 
     @Override
-    public List<RentalDiscountDTO> getAll() throws SQLException, Exception {
+    public List<RentalDiscountDTO> getAll() throws SQLException{
         return List.of();
     }
 }

@@ -11,6 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import lk.ijse.carrentn.bo.custom.CarOwnerBO;
+import lk.ijse.carrentn.bo.custom.VehicleBO;
+import lk.ijse.carrentn.bo.custom.impl.CarOwnerBOimpl;
+import lk.ijse.carrentn.bo.custom.impl.VehicleBOimpl;
 import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
 import lk.ijse.carrentn.dao.custom.impl.CarOwnerDAOImpl;
 import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
@@ -72,8 +76,8 @@ public class VehicleManageController implements Initializable {
     private final String VEHICLE_DAY_RATE_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
     private final String VEHICLE_OWNER_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
 
-    CarOwnerDAO carOwnerDAO = new CarOwnerDAOImpl();
-    VehicleDAOImpl  vehicleDAO = new VehicleDAOImpl();
+    CarOwnerBO carOwnerBO = new CarOwnerBOimpl();
+    VehicleBO vehicleBO =  new VehicleBOimpl();
 
     String[] typeList = {"CAR","VAN","SUV"};
 
@@ -103,7 +107,7 @@ public class VehicleManageController implements Initializable {
         String carOwnerid = carOwnersBox.getValue();
         ownerLabel.setText("");
         try {
-            ownerIdField.setText(carOwnerDAO.searchId(carOwnerid));
+            ownerIdField.setText(carOwnerBO.searchOwnerId(carOwnerid));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -117,7 +121,7 @@ public class VehicleManageController implements Initializable {
 // lord Owner choiceBox
     public void setCarOwnersCheckBox() {
         try {
-            List<CarOwnerDTO> carOwners = carOwnerDAO.getAll();
+            List<CarOwnerDTO> carOwners = carOwnerBO.getAllOwners();
             List<String> carOwnerNames = new ArrayList<>();
             for (CarOwnerDTO carOwnerDTO : carOwners) {
                 carOwnerNames.add(carOwnerDTO.getName());
@@ -159,7 +163,7 @@ public class VehicleManageController implements Initializable {
         }else{
             try {
                 VehicleDTO vehicleDTO = new VehicleDTO(vehicleNO,Integer.parseInt(ownerId),model,manufac,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
-                boolean result = vehicleDAO.save(vehicleDTO);
+                boolean result = vehicleBO.saveVehicle(vehicleDTO);
                 cleanFileds();
                 lordVehicleTable();
 
@@ -201,7 +205,7 @@ public class VehicleManageController implements Initializable {
                 new Alert(Alert.AlertType.ERROR, "Invalid Ownership Percentage ").show();
             }else{
                 VehicleDTO vehicleDTO = new VehicleDTO(vehicleNo,Integer.parseInt(ownerId),model, manufacture,type,Double.parseDouble(dayRate),Double.parseDouble(ownerPrec));
-                boolean result = vehicleDAO.update(vehicleDTO);
+                boolean result = vehicleBO.updateVehicle(vehicleDTO);
                 cleanFileds();
                 lordVehicleTable();
 
@@ -222,7 +226,7 @@ public class VehicleManageController implements Initializable {
         try {
             String vehicleNo = vehicleNoField.getText();
             if (vehicleNo.matches(VEHICLE_NO_REGEX)) {
-                boolean result = vehicleDAO.delete(vehicleDAO.searchId(vehicleNo));
+                boolean result = vehicleBO.deleteVehicle(String.valueOf(vehicleBO.searchVehicleNo(vehicleNo).getVehicle_id()));
                 lordVehicleTable();
 
                 if(result) {
@@ -245,7 +249,7 @@ public class VehicleManageController implements Initializable {
                 System.out.println(event.getCode());
                 String vehicleNo = vehicleNoField.getText();
                 if (vehicleNo.matches(VEHICLE_NO_REGEX)) {
-                    VehicleDTO vehicleDTO = vehicleDAO.search(vehicleNo);
+                    VehicleDTO vehicleDTO = vehicleBO.searchVehicleNo(vehicleNo);
 
                     if (vehicleDTO != null) {
                         ownerIdField.setText(String.valueOf(vehicleDTO.getOwner_id()));
@@ -288,7 +292,7 @@ public class VehicleManageController implements Initializable {
     }
     private void lordVehicleTable(){
         try {
-            List<VehicleDTO> vehicleDTOS = vehicleDAO.getAllVehicles();
+            List<VehicleDTO> vehicleDTOS = vehicleBO.getAllVehicle();
             ObservableList<VehicleDTO> obList = FXCollections.observableArrayList();
             obList.addAll(vehicleDTOS);
             tblVehicle.setItems(obList);

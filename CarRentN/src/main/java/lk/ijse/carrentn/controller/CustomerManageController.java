@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.custom.CustomerBO;
+import lk.ijse.carrentn.bo.custom.impl.CustomerBOimpl;
 import lk.ijse.carrentn.dao.custom.CustomerDAO;
 import lk.ijse.carrentn.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
@@ -54,7 +56,7 @@ public class CustomerManageController implements Initializable {
     private final String CUSTOMER_NIC_OR_PASSPORT_NUMBER_REGEX = "^(([0-9]{9}[VvXx]|[0-9]{12})|[A-Za-z0-9]{5,15})$";
     private final String CUSTOMER_ADDRESS_REGEX = "^[A-Za-z0-9\\s,./\\-#]{5,150}$";
 
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    CustomerBO customerBO = new CustomerBOimpl();
 
 
     @Override
@@ -92,7 +94,7 @@ public class CustomerManageController implements Initializable {
         }else{
             try {
                 CustomerDTO cusDTO = new CustomerDTO(name,email,pNO,nicOpass,address);
-                boolean result = customerDAO.save(cusDTO);
+                boolean result = customerBO.saveCustomer(cusDTO);
                 cleanFileds();
                 lordCustomerTable();
 
@@ -133,7 +135,7 @@ public class CustomerManageController implements Initializable {
             }else{
                 CustomerDTO cusDTO = new CustomerDTO(Integer.parseInt(id),name,email,pNO,nicOpass,address);
 
-                boolean result = customerDAO.update(cusDTO);
+                boolean result = customerBO.updateCustomer(cusDTO);
                 cleanFileds();
                 lordCustomerTable();
 
@@ -155,7 +157,7 @@ public class CustomerManageController implements Initializable {
             String id = idField.getText();
             if (id.matches(CUSTOMER_ID_REGEX)) {
 
-                boolean result = customerDAO.delete(id);
+                boolean result = customerBO.deleteCustomer(id);
                 lordCustomerTable();
 
                 if(result) {
@@ -179,7 +181,7 @@ public class CustomerManageController implements Initializable {
                 String id = idField.getText();
                 if (id.matches(CUSTOMER_ID_REGEX)) {
 
-                    CustomerDTO cusDTO = customerDAO.search(id);
+                    CustomerDTO cusDTO = customerBO.searchCustomer(id);
 
                     if (cusDTO != null) {
                         nameField.setText(cusDTO.getName());
@@ -215,7 +217,7 @@ public class CustomerManageController implements Initializable {
     private void lordCustomerTable(){
         try {
 
-            List<CustomerDTO> cusDTO= customerDAO.getAllCustomer();
+            List<CustomerDTO> cusDTO= customerBO.getAllCustomers();
             ObservableList<CustomerDTO> obList = FXCollections.observableArrayList();
             obList.addAll(cusDTO);
             tblCustomer.setItems(obList);

@@ -13,7 +13,6 @@ import java.util.List;
 
 public class VehicleDAOImpl implements VehicleDAO {
     public boolean save(VehicleDTO vehicleDTO) throws SQLException {
-
         return CrudUtil.execute("INSERT INTO Vehicle (owner_id, model, manufacturer, type, rate_per_day, ownership_percentage, vehicle_No) VALUES (?,?,?,?,?,?,?)",
                 vehicleDTO.getOwner_id(),vehicleDTO.getModel(),vehicleDTO.getManufacturer(),vehicleDTO.getType(),vehicleDTO.getRate_per_day(),vehicleDTO.getOwnership_percentage(),vehicleDTO.getVehicleNo());
     }
