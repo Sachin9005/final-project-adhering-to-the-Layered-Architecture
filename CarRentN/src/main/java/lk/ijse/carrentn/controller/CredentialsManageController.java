@@ -3,6 +3,8 @@ package lk.ijse.carrentn.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import lk.ijse.carrentn.bo.custom.UserBO;
+import lk.ijse.carrentn.bo.custom.impl.UserBOimpl;
 import lk.ijse.carrentn.dao.custom.UserDAO;
 import lk.ijse.carrentn.dao.custom.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
@@ -50,7 +52,7 @@ public class CredentialsManageController implements Initializable {
     private final String PHONE_NUMBER_REGEX = "^(?:\\+94|0)?7[0-9]{8}$";
     private final String ADDRESS_REGEX = "^[A-Za-z0-9\\s,./\\-#]{5,150}$";
 
-    UserDAO userDAO = new UserDAOImpl();
+    UserBO  userBO = new UserBOimpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -64,7 +66,7 @@ public class CredentialsManageController implements Initializable {
            String email = emailField.getText().trim();
            String pNo = phoneNoField.getText().trim();
            String address = addressField.getText().trim();
-           String password = userDAO.getUserDetails().getPassword().trim();
+           String password = userBO.getUserDetails().getPassword().trim();
 
            boolean isUpdate;
 
@@ -85,7 +87,7 @@ public class CredentialsManageController implements Initializable {
                if (name != null){
                    System.out.println(name);
                    if (name.matches(NAME_REGEX)){
-                       isUpdate = userDAO.updateName(name.trim());
+                       isUpdate = userBO.updateName(name.trim());
                        if (isUpdate){
                            new Alert(Alert.AlertType.INFORMATION, "Update successfully!").show();
                            setLabels();
@@ -99,7 +101,7 @@ public class CredentialsManageController implements Initializable {
                }
                if (email != null){
                    if (email.matches(EMAIL_REGEX)){
-                       isUpdate = userDAO.updateEmail(email.trim());
+                       isUpdate = userBO.updateEmail(email.trim());
                        if (isUpdate){
                            new Alert(Alert.AlertType.INFORMATION, "Update successfully!").show();
                            setLabels();
@@ -113,7 +115,7 @@ public class CredentialsManageController implements Initializable {
                }
                if (pNo != null){
                    if (pNo.matches(PHONE_NUMBER_REGEX)){
-                       isUpdate = userDAO.updatePhoneNo(pNo.trim());
+                       isUpdate = userBO.updatePhoneNo(pNo.trim());
                        if (isUpdate){
                            new Alert(Alert.AlertType.INFORMATION, "Update successfully!").show();
                            setLabels();
@@ -127,7 +129,7 @@ public class CredentialsManageController implements Initializable {
                }
                if (address != null){
                    if (address.matches(ADDRESS_REGEX)){
-                       isUpdate = userDAO.updateaddress(address.trim());
+                       isUpdate = userBO.updateaddress(address.trim());
                        if (isUpdate){
                            new Alert(Alert.AlertType.INFORMATION, "Update successfully!").show();
                            setLabels();
@@ -158,7 +160,7 @@ public class CredentialsManageController implements Initializable {
 
     private void setLabels(){
         try {
-            UserDTO userDTO = userDAO.getUserDetails();
+            UserDTO userDTO = userBO.getUserDetails();
             nameLabel.setText(userDTO.getName());
             emailLabel.setText(userDTO.getEmail());
             phoneNoLabel.setText("+94"+String.valueOf(userDTO.getPhone_number()));

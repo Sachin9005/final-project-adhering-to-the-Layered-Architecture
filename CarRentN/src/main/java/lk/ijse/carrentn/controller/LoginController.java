@@ -6,6 +6,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import lk.ijse.carrentn.App;
+import lk.ijse.carrentn.bo.custom.UserBO;
+import lk.ijse.carrentn.bo.custom.impl.UserBOimpl;
 import lk.ijse.carrentn.dao.custom.UserDAO;
 import lk.ijse.carrentn.dao.custom.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
@@ -20,13 +22,13 @@ public class LoginController {
     @FXML
     private CheckBox checkBox;
 
-    UserDAO userDAO = new UserDAOImpl();
+    UserBO userBO = new UserBOimpl();
     
     
     @FXML
         private void login() throws Exception {
 
-        UserDTO userDTO = userDAO.getUserDetails();
+        UserDTO userDTO = userBO.getUserDetails();
 
         String uName = userNameField.getText().trim();
         String pWord = passwordField.getText().trim();

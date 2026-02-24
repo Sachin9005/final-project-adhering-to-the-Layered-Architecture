@@ -6,6 +6,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lk.ijse.carrentn.bo.custom.UserBO;
+import lk.ijse.carrentn.bo.custom.impl.UserBOimpl;
 import lk.ijse.carrentn.dao.custom.UserDAO;
 import lk.ijse.carrentn.dao.custom.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
@@ -34,7 +36,7 @@ public class ProfileController implements Initializable{
     @FXML
     private Label useNameLable;
 
-    UserDAO userDAO = new UserDAOImpl();
+    UserBO userBO = new UserBOimpl();
 
     public void initialize(URL url, ResourceBundle rb){
         setDetails();
@@ -55,7 +57,7 @@ public class ProfileController implements Initializable{
 
     private void setDetails(){
         try {
-            UserDTO userDTO =  userDAO.getUserDetails();
+            UserDTO userDTO =  userBO.getUserDetails();
             nameLable.setText(userDTO.getName());
             roleLable.setText(userDTO.getRole());
             useNameLable.setText(userDTO.getUsername());

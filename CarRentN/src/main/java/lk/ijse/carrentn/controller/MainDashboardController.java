@@ -17,8 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import lk.ijse.carrentn.App;
 import lk.ijse.carrentn.bo.custom.DriverBO;
+import lk.ijse.carrentn.bo.custom.RentalBO;
 import lk.ijse.carrentn.bo.custom.VehicleBO;
 import lk.ijse.carrentn.bo.custom.impl.DriverBOimpl;
+import lk.ijse.carrentn.bo.custom.impl.RentalBOimpl;
 import lk.ijse.carrentn.bo.custom.impl.VehicleBOimpl;
 import lk.ijse.carrentn.dao.custom.DriverDAO;
 import lk.ijse.carrentn.dao.custom.RentalDAO;
@@ -68,7 +70,7 @@ public class MainDashboardController implements Initializable {
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
     VehicleBO vehicleBO = new VehicleBOimpl();
     DriverBO driverBO = new DriverBOimpl();
-    //RentalDAO rentalDAO = new RentalDAOImpl();
+    RentalBO rentalBO = new RentalBOimpl();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -140,7 +142,7 @@ public class MainDashboardController implements Initializable {
             LocalDate now = LocalDate.now();
 
             Map<String, Integer> stats =
-                    rentalDAO.getMonthlyRentStats(
+                    rentalBO.getMonthlyRentStats(
                             now.getYear(), now.getMonthValue()
                     );
 

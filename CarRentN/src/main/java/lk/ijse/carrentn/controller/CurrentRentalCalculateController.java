@@ -10,12 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import lk.ijse.carrentn.bo.custom.CustomerBO;
-import lk.ijse.carrentn.bo.custom.PaymentBO;
-import lk.ijse.carrentn.bo.custom.RentalDiscountBO;
-import lk.ijse.carrentn.bo.custom.impl.CustomerBOimpl;
-import lk.ijse.carrentn.bo.custom.impl.PaymentBOimpl;
-import lk.ijse.carrentn.bo.custom.impl.RentalDiscountBOimpl;
+import lk.ijse.carrentn.bo.custom.*;
+import lk.ijse.carrentn.bo.custom.impl.*;
 import lk.ijse.carrentn.dao.custom.*;
 import lk.ijse.carrentn.dao.custom.impl.*;
 import lk.ijse.carrentn.dto.*;
@@ -96,8 +92,8 @@ public class CurrentRentalCalculateController implements Initializable {
     public final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
     CustomerBO customerBO = new CustomerBOimpl();
-    RentalDAO  rentalDAO =  new RentalDAOImpl();
-    VehicleDAO  vehicleDAO = new VehicleDAOImpl();
+    RentalBO rentalBO = new RentalBOimpl();
+    VehicleBO vehicleBO = new VehicleBOimpl();
     DriverDAO driverDAO = new DriverDAOImpl();
     RentalDiscountBO rentalDiscountBO = new RentalDiscountBOimpl();
     PaymentBO paymentBO = new PaymentBOimpl();
@@ -157,13 +153,13 @@ public class CurrentRentalCalculateController implements Initializable {
     private void handleSearchRentByCustomerName() {
         try {
             customeNICField.setText(customerBO.searchCustomer(cusId).getNic_or_passport_number());
-            RentalDTO rentalDTO = rentalDAO.searchRent(cusId);
+            RentalDTO rentalDTO = rentalBO.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();
 
-            String vehicleNo = vehicleDAO.search(String.valueOf(rentalDTO.getVehicle_id())).getVehicleNo();
+            String vehicleNo = vehicleBO.searchVehicle(String.valueOf(rentalDTO.getVehicle_id())).getVehicleNo();
             System.out.println(rentalDTO.getVehicle_id());
             System.out.println(vehicleNo);
-            VehicleDTO vehicleDTO = vehicleDAO.search(vehicleNo);
+            VehicleDTO vehicleDTO = vehicleBO.searchVehicleNo(vehicleNo);
 
             RentalDiscountDTO rentalDiscountDTO = rentalDiscountBO.searchRentalDiscount(String.valueOf(rentalDTO.getRental_id()));
 

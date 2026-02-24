@@ -12,7 +12,6 @@ import lk.ijse.carrentn.bo.custom.*;
 import lk.ijse.carrentn.bo.custom.impl.*;
 import lk.ijse.carrentn.dao.custom.*;
 import lk.ijse.carrentn.dao.custom.impl.*;
-import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.*;
 import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
@@ -90,7 +89,7 @@ public class RentalManageController implements Initializable {
     private final String BASE_PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
     DiscountBO discountBO =  new DiscountBOimpl();
-    //RentalDAO rentalDAO = new RentalDAOImpl();
+    RentalBO rentalBO = new RentalBOimpl();
     CustomerBO customerBO = new CustomerBOimpl();
     VehicleBO vehicleBO = new VehicleBOimpl();
     DriverBO driverBO = new DriverBOimpl();
@@ -166,7 +165,7 @@ public class RentalManageController implements Initializable {
                         Integer.parseInt(days),
                         LocalDate.parse(edate));
 
-                boolean result = save(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
+                boolean result = rentalBO.saveRent(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
                 sDateField.setText(String.valueOf(LocalDate.now()));
 
                 if(result) {
@@ -190,7 +189,7 @@ public class RentalManageController implements Initializable {
         try {
             String id = retalIDField.getText();
                 if (id.matches(RENTAL_ID_REGEX)) {
-                    RentalDTO rentalDTO = rentalDAO.search(id);
+                    RentalDTO rentalDTO = rentalBO.searchRent(id);
                     //firstPaymentDAO.search(id).getFinal_payment()
                     if (rentalDTO != null) {
                         customerIdField.setText(String.valueOf(rentalDTO.getCustomer_id()));
@@ -220,7 +219,7 @@ public class RentalManageController implements Initializable {
     @FXML
     private void handlePrint() {
         try {
-            rentalDAO.printBasePayInvoice(paymentBO.searchFirstPayment(rentalDAO.getSaveLastRentalId()).getFirst_payment_id());
+            rentalBO.printBasePayInvoice(paymentBO.searchFirstPayment(rentalBO.getSaveLastRentalId()).getFirst_payment_id());
             //firstPaymentDAO.getFirstPayment(Integer.parseInt(rentalDAO.getSaveLastRentalId())).getFirst_payment_id()
         } catch (Exception e) {
             e.printStackTrace();
@@ -235,7 +234,7 @@ public class RentalManageController implements Initializable {
                 boolean result2 = rentalDiscountBO.deleteRentalDiscount(id);
                 boolean result3 = paymentBO.deleteFirstPayment(id);
                 boolean result4 = paymentBO.deleteLastPayment(id);
-                boolean result1 = rentalDAO.delete(id);
+                boolean result1 = rentalBO.deleteRent(id);
                 lordRentalTable();
                 if(result2 && result3 && result4 &&result1) {
                     System.out.println("Rental Delete successfully!");
@@ -392,7 +391,7 @@ public class RentalManageController implements Initializable {
 
     private void lordRentalTable(){
         try {
-            List<RentalDTO> rentalDTOS = rentalDAO.getAllRentals();
+            List<RentalDTO> rentalDTOS = rentalBO.getAllRents();
             ObservableList<RentalDTO> obList = FXCollections.observableArrayList();
             obList.addAll(rentalDTOS);
             tblRent.setItems(obList);
@@ -449,36 +448,5 @@ public class RentalManageController implements Initializable {
         sDateField.setText(String.valueOf(LocalDate.now()));
     }
 
-    public boolean save(RentalDTO rentalDTO,double basPay,double totalPay,Integer discountId) throws Exception {
-        Connection conn = DBConnection.getInstance().getConnection();
-        try {
-            conn.setAutoCommit(false);
-            int rentalId = rentalDAO.getSaveId(rentalDTO);
-
-            if (rentalId == 0) {
-                throw new Exception("Failed to generate rental id");
-            }
-            boolean isBasePaySaved = paymentBO.saveFirstPayment(new FirstPaymentDTO(rentalId, basPay, totalPay));
-
-            boolean isDiscountSaved = true;
-            if (discountId != null) {
-                double disAmount = (totalPay * discountBO.searchDiscount(String.valueOf(discountId)).getPercentage())/100;
-                isDiscountSaved = rentalDiscountBO.saveRentalDiscount(new RentalDiscountDTO(rentalId, discountId, disAmount));
-            }
-
-            if (!isBasePaySaved && !isDiscountSaved) {
-                throw new Exception("Something went Wrong");
-            }
-            conn.commit();
-            return true;
-
-        } catch (Exception e) {
-            conn.rollback();
-            throw e;
-        } finally {
-            conn.setAutoCommit(true);
-        }
-
-    }
 
 }
