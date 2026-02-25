@@ -1,11 +1,12 @@
 package lk.ijse.carrentn.bo.custom;
 
+import lk.ijse.carrentn.bo.SuperBO;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CarOwnerBO {
+public interface CarOwnerBO extends SuperBO {
     boolean saveOwner(CarOwnerDTO carOwnerDTO) throws SQLException;
     boolean updateOwner(CarOwnerDTO carOwnerDTO) throws SQLException;
     boolean deleteOwner(String id) throws SQLException;

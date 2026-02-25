@@ -1,5 +1,6 @@
 package lk.ijse.carrentn.bo.custom;
 
+import lk.ijse.carrentn.bo.SuperBO;
 import lk.ijse.carrentn.dto.FirstPaymentDTO;
 import lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.dto.RentalDiscountDTO;
@@ -9,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public interface RentalBO {
+public interface RentalBO extends SuperBO {
     public int getGenerateRentalId(RentalDTO rentalDTO) throws SQLException;
     public RentalDTO searchRent(String id) throws SQLException;
     public List<RentalDTO> getAllRents() throws SQLException;

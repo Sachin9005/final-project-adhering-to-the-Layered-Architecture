@@ -1,6 +1,5 @@
 package lk.ijse.carrentn.dao;
 
-import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
 import lk.ijse.carrentn.dao.custom.impl.*;
 
 public class DAOFactory {

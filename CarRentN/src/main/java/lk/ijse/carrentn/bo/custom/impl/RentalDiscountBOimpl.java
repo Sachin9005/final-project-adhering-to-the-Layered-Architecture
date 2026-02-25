@@ -16,11 +16,6 @@ public class RentalDiscountBOimpl implements RentalDiscountBO {
     }
 
     @Override
-    public boolean saveRentalDiscount(RentalDiscountDTO rentalDiscountDTO) throws SQLException {
-        return rentalDiscountDAO.save(rentalDiscountDTO);
-    }
-
-    @Override
     public boolean deleteRentalDiscount(String rentId) throws SQLException {
         return rentalDiscountDAO.delete(rentId);
     }

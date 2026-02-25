@@ -1,10 +1,11 @@
 package lk.ijse.carrentn.bo.custom;
 
+import lk.ijse.carrentn.bo.SuperBO;
 import lk.ijse.carrentn.dto.UserDTO;
 
 import java.sql.SQLException;
 
-public interface UserBO {
+public interface UserBO extends SuperBO {
     public UserDTO getUserDetails()throws SQLException;
     public boolean updatePassword(String password) throws SQLException;
     public boolean updateEmail(String email) throws SQLException;
