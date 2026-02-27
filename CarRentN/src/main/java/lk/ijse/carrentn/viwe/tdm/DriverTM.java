@@ -1,4 +1,4 @@
-package lk.ijse.carrentn.dto.TM;
+package lk.ijse.carrentn.viwe.tdm;
 
 public class DriverTM {
     private int id;

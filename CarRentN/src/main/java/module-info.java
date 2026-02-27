@@ -15,5 +15,7 @@ module lk.ijse.carrentn {
     exports lk.ijse.carrentn.dto;
     exports lk.ijse.carrentn.dto.TM;
     exports lk.ijse.carrentn.dao;
+    exports lk.ijse.carrentn.viwe.tdm;
+    opens lk.ijse.carrentn.viwe.tdm to java.base;
 
 }

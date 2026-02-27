@@ -1,7 +1,7 @@
 package lk.ijse.carrentn.bo.custom;
 
 import lk.ijse.carrentn.bo.SuperBO;
-import lk.ijse.carrentn.dto.TM.VehicleTM;
+import lk.ijse.carrentn.viwe.tdm.VehicleTM;
 import lk.ijse.carrentn.dto.VehicleDTO;
 
 import java.sql.SQLException;

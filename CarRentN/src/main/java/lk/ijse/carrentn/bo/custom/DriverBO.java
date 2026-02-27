@@ -2,7 +2,7 @@ package lk.ijse.carrentn.bo.custom;
 
 import lk.ijse.carrentn.bo.SuperBO;
 import lk.ijse.carrentn.dto.DriverDTO;
-import lk.ijse.carrentn.dto.TM.DriverTM;
+import lk.ijse.carrentn.viwe.tdm.DriverTM;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
