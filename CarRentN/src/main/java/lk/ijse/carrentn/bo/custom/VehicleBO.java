@@ -9,14 +9,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface VehicleBO extends SuperBO {
-    public boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException;
-    public boolean updateVehicle(VehicleDTO vehicleDTO) throws SQLException;
-    public boolean deleteVehicle(String id) throws SQLException;
-    public VehicleDTO searchVehicleNo(String vehicleNo) throws SQLException;
-    public List<VehicleDTO> getAllVehicle() throws SQLException;
-    public VehicleDTO searchVehicle(String id);
-    public List<VehicleTM> getAvailableVehicles(LocalDate startDate) throws SQLException;
-    public int getVehiclesCount(String type) throws SQLException;
-    public int getAvailableVehiclesCount(String type) throws SQLException;
+    boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException;
+    boolean updateVehicle(VehicleDTO vehicleDTO) throws SQLException;
+    boolean deleteVehicle(String id) throws SQLException;
+    VehicleDTO searchVehicleNo(String vehicleNo) throws SQLException;
+    List<VehicleDTO> getAllVehicle() throws SQLException;
+    VehicleDTO searchVehicle(String id);
+    List<VehicleTM> getAvailableVehicles(LocalDate startDate) throws SQLException;
+    int getVehiclesCount(String type) throws SQLException;
+    int getAvailableVehiclesCount(String type) throws SQLException;
 
 }

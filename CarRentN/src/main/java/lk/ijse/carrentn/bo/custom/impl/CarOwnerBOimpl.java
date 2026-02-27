@@ -3,7 +3,6 @@ package lk.ijse.carrentn.bo.custom.impl;
 import lk.ijse.carrentn.bo.custom.CarOwnerBO;
 import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
-import lk.ijse.carrentn.dao.custom.impl.CarOwnerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.entity.CarOwner;
 

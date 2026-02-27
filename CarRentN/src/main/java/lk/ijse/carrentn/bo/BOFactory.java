@@ -13,7 +13,7 @@ import lk.ijse.carrentn.bo.custom.impl.*;
         }
 
         public enum BOType {
-            CAR_OWNER, CUSTOMER, VEHICLE, DISCOUNT, RENTAL, USER, PAYMENT, DRIVER, RENTAL_DISCOUNT;
+            CAR_OWNER, CUSTOMER, VEHICLE, DISCOUNT, RENTAL, USER, PAYMENT, DRIVER, RENTAL_DISCOUNT
         }
 
         public SuperBO getBO(BOType BOType) {

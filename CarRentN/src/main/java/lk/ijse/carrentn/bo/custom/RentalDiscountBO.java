@@ -7,6 +7,6 @@ import java.sql.SQLException;
 
 public interface RentalDiscountBO extends SuperBO {
 
-    public RentalDiscountDTO searchRentalDiscount(String rentId) throws SQLException;
-    public boolean deleteRentalDiscount(String rentId) throws SQLException;
+    RentalDiscountDTO searchRentalDiscount(String rentId) throws SQLException;
+    boolean deleteRentalDiscount(String rentId) throws SQLException;
 }

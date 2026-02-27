@@ -2,7 +2,6 @@ package lk.ijse.carrentn.dao.custom.impl;
 
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
-import lk.ijse.carrentn.dto.DiscountDTO;
 import lk.ijse.carrentn.entity.Discount;
 
 import java.math.BigDecimal;

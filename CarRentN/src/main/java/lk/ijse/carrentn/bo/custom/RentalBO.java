@@ -11,14 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface RentalBO extends SuperBO {
-    public int getGenerateRentalId(RentalDTO rentalDTO) throws SQLException;
-    public RentalDTO searchRent(String id) throws SQLException;
-    public List<RentalDTO> getAllRents() throws SQLException;
-    public String getSaveLastRentalId()throws SQLException;
-    public void printBasePayInvoice(int basePaymentId) throws JRException, SQLException;
-    public boolean deleteRent(String id) throws SQLException;
-    public boolean saveFirstPayment(FirstPaymentDTO firstPaymentDTO)throws SQLException;
-    public boolean saveRent(RentalDTO rentalDTO,double basPay,double totalPay,Integer discountId) throws Exception;
-    public boolean saveRentalDiscount(RentalDiscountDTO rentalDiscountDTO)throws SQLException;
-    public Map<String, Integer> getMonthlyRentStats(int year , int month) throws SQLException;
+    int getGenerateRentalId(RentalDTO rentalDTO) throws SQLException;
+    RentalDTO searchRent(String id) throws SQLException;
+    List<RentalDTO> getAllRents() throws SQLException;
+    String getSaveLastRentalId()throws SQLException;
+    void printBasePayInvoice(int basePaymentId) throws JRException, SQLException;
+    boolean deleteRent(String id) throws SQLException;
+    boolean saveFirstPayment(FirstPaymentDTO firstPaymentDTO)throws SQLException;
+    boolean saveRent(RentalDTO rentalDTO,double basPay,double totalPay,Integer discountId) throws Exception;
+    boolean saveRentalDiscount(RentalDiscountDTO rentalDiscountDTO)throws SQLException;
+    Map<String, Integer> getMonthlyRentStats(int year , int month) throws SQLException;
 }
