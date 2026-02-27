@@ -4,8 +4,10 @@ import lk.ijse.carrentn.bo.custom.CarOwnerBO;
 import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
 import lk.ijse.carrentn.dao.custom.impl.CarOwnerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
+import lk.ijse.carrentn.entity.CarOwner;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CarOwnerBOimpl implements CarOwnerBO {
@@ -13,12 +15,14 @@ public class CarOwnerBOimpl implements CarOwnerBO {
 
     @Override
     public boolean saveOwner(CarOwnerDTO carOwnerDTO) throws SQLException {
-        return carOwnerDAO.save(carOwnerDTO);
+        CarOwner carOwner = new CarOwner(carOwnerDTO.getName(),carOwnerDTO.getPhone(),carOwnerDTO.getBank_account());
+        return carOwnerDAO.save(carOwner);
     }
 
     @Override
     public boolean updateOwner(CarOwnerDTO carOwnerDTO) throws SQLException {
-        return carOwnerDAO.update(carOwnerDTO);
+        CarOwner carOwner = new CarOwner(carOwnerDTO.getOwner_id(),carOwnerDTO.getName(),carOwnerDTO.getPhone(),carOwnerDTO.getBank_account());
+        return carOwnerDAO.update(carOwner);
     }
 
     @Override
@@ -28,12 +32,18 @@ public class CarOwnerBOimpl implements CarOwnerBO {
 
     @Override
     public CarOwnerDTO searchOwner(String id) throws SQLException {
-        return carOwnerDAO.search(id);
+        CarOwner carOwner =  carOwnerDAO.search(id);
+        return new CarOwnerDTO(carOwner.getOwner_id(),carOwner.getName(),carOwner.getPhone(),carOwner.getBank_account());
     }
 
     @Override
     public List<CarOwnerDTO> getAllOwners() throws SQLException {
-        return carOwnerDAO.getAll();
+        List<CarOwner> carOwners =  carOwnerDAO.getAll();
+        List<CarOwnerDTO> carOwnerDTOs = new ArrayList<>();
+        for (CarOwner carOwner : carOwners) {
+            carOwnerDTOs.add(new CarOwnerDTO(carOwner.getOwner_id(),carOwner.getName(),carOwner.getPhone(),carOwner.getBank_account()));
+        }
+        return carOwnerDTOs;
     }
 
     @Override

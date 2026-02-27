@@ -4,8 +4,10 @@ import lk.ijse.carrentn.bo.custom.CustomerBO;
 import lk.ijse.carrentn.dao.custom.CustomerDAO;
 import lk.ijse.carrentn.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.carrentn.dto.CustomerDTO;
+import lk.ijse.carrentn.entity.Customer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerBOimpl implements CustomerBO {
@@ -13,12 +15,14 @@ public class CustomerBOimpl implements CustomerBO {
 
     @Override
     public boolean saveCustomer(CustomerDTO cusDTO) throws SQLException {
-        return customerDAO.save(cusDTO);
+        Customer customer = new Customer(cusDTO.getName(),cusDTO.getEmail(),cusDTO.getPhone_number(),cusDTO.getNic_or_passport_number(),cusDTO.getAddress());
+        return customerDAO.save(customer);
     }
 
     @Override
     public boolean updateCustomer(CustomerDTO cusDTO) throws SQLException {
-        return customerDAO.update(cusDTO);
+        Customer customer = new Customer(cusDTO.getCustomer_id(),cusDTO.getName(),cusDTO.getEmail(),cusDTO.getPhone_number(),cusDTO.getNic_or_passport_number(),cusDTO.getAddress());
+        return customerDAO.update(customer);
     }
 
     @Override
@@ -28,12 +32,18 @@ public class CustomerBOimpl implements CustomerBO {
 
     @Override
     public List<CustomerDTO> getAllCustomers() throws SQLException {
-        return customerDAO.getAll();
+        List<Customer> customers =  customerDAO.getAll();
+        List<CustomerDTO> customerDTOs = new ArrayList<>();
+        for (Customer customer : customers) {
+            customerDTOs.add(new CustomerDTO(customer.getCustomer_id(), customer.getName(),customer.getEmail(),customer.getPhone_number(),customer.getNic_or_passport_number(),customer.getAddress()));
+        }
+        return customerDTOs;
     }
 
     @Override
     public CustomerDTO searchCustomer(String id) throws SQLException {
-        return customerDAO.search(id);
+        Customer customer = customerDAO.search(id);
+        return new CustomerDTO(customer.getCustomer_id(), customer.getName(),customer.getEmail(),customer.getPhone_number(),customer.getNic_or_passport_number(),customer.getAddress());
     }
 
     @Override

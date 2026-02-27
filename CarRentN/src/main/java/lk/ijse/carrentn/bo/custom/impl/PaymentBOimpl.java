@@ -7,8 +7,11 @@ import lk.ijse.carrentn.dao.custom.impl.FirstPaymentDAOImpl;
 import lk.ijse.carrentn.dao.custom.impl.LastPaymentDAOImpl;
 import lk.ijse.carrentn.dto.FirstPaymentDTO;
 import lk.ijse.carrentn.dto.LastPaymentDTO;
+import lk.ijse.carrentn.entity.FirstPayment;
+import lk.ijse.carrentn.entity.LastPayment;
 import net.sf.jasperreports.engine.JRException;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 
 public class PaymentBOimpl implements PaymentBO {
@@ -18,12 +21,14 @@ public class PaymentBOimpl implements PaymentBO {
 
     @Override
     public boolean saveFirstPayment(FirstPaymentDTO firstPaymentDTO) throws Exception {
-        return firstPaymentDAO.save(firstPaymentDTO);
+        FirstPayment firstPayment = new FirstPayment(firstPaymentDTO.getRental_id(), BigDecimal.valueOf(firstPaymentDTO.getBase_payment()),BigDecimal.valueOf(firstPaymentDTO.getFinal_payment()),firstPaymentDTO.getBase_payment_date());
+        return firstPaymentDAO.save(firstPayment);
     }
 
     @Override
     public FirstPaymentDTO searchFirstPayment(String rentId) throws SQLException {
-        return firstPaymentDAO.search(rentId);
+        FirstPayment firstPayment = firstPaymentDAO.search(rentId);
+        return new FirstPaymentDTO(firstPayment.getFirst_payment_id(),firstPayment.getRental_id(),firstPayment.getFinal_payment().doubleValue(),firstPayment.getFinal_payment().doubleValue(),firstPayment.getBase_payment_date());
     }
 
     @Override
@@ -33,7 +38,8 @@ public class PaymentBOimpl implements PaymentBO {
 
     @Override
     public boolean saveLastPayment(LastPaymentDTO lastPaymentDTO) throws SQLException {
-        return lastPaymentDAO.save(lastPaymentDTO);
+        LastPayment lastPayment = new LastPayment(lastPaymentDTO.getFirst_payment_id(),lastPaymentDTO.getRental_id(),lastPaymentDTO.getLate_days(),BigDecimal.valueOf(lastPaymentDTO.getBalance_payment()),BigDecimal.valueOf(lastPaymentDTO.getFine_payment()),BigDecimal.valueOf(lastPaymentDTO.getLast_payment()),lastPaymentDTO.getLast_payment_date());
+        return lastPaymentDAO.save(lastPayment);
     }
 
     @Override

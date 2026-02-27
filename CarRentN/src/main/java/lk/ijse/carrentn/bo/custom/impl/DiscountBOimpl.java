@@ -4,8 +4,11 @@ import lk.ijse.carrentn.bo.custom.DiscountBO;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
 import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
 import lk.ijse.carrentn.dto.DiscountDTO;
+import lk.ijse.carrentn.entity.Discount;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountBOimpl implements DiscountBO {
@@ -14,12 +17,14 @@ public class DiscountBOimpl implements DiscountBO {
 
     @Override
     public boolean saveDiscount(DiscountDTO discountDTO) throws SQLException {
-        return discountDAO.save(discountDTO);
+        Discount discount = new Discount(discountDTO.getDescription(), BigDecimal.valueOf(discountDTO.getPercentage()));
+        return discountDAO.save(discount);
     }
 
     @Override
     public boolean updateDiscount(DiscountDTO discountDTO) throws SQLException {
-        return discountDAO.update(discountDTO);
+        Discount discount = new Discount(discountDTO.getDiscount_id(),discountDTO.getDescription(), BigDecimal.valueOf(discountDTO.getPercentage()));
+        return discountDAO.update(discount);
     }
 
     @Override
@@ -29,16 +34,23 @@ public class DiscountBOimpl implements DiscountBO {
 
     @Override
     public DiscountDTO searchDiscount(String id) throws SQLException {
-        return discountDAO.search(id);
+        Discount discount = discountDAO.search(id);
+        return new DiscountDTO(discount.getDiscount_id(),discount.getDescription(),discount.getPercentage().doubleValue());
     }
 
     @Override
     public List<DiscountDTO> getAllDiscounts() throws SQLException {
-        return discountDAO.getAll();
+        List<Discount> discounts = discountDAO.getAll();
+        List<DiscountDTO> dtos = new ArrayList<>();
+        for (Discount discount : discounts) {
+            dtos.add(new DiscountDTO(discount.getDiscount_id(),discount.getDescription(),discount.getPercentage().doubleValue()));
+        }
+        return dtos;
     }
 
     @Override
     public DiscountDTO searchDiscountId(String description) {
-        return discountDAO.searchId(description);
+        Discount discount= discountDAO.searchId(description);
+        return new DiscountDTO(discount.getDiscount_id(),discount.getDescription(),discount.getPercentage().doubleValue());
     }
 }

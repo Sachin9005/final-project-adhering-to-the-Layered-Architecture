@@ -5,9 +5,12 @@ import lk.ijse.carrentn.dao.custom.DriverDAO;
 import lk.ijse.carrentn.dao.custom.impl.DriverDAOImpl;
 import lk.ijse.carrentn.dto.DriverDTO;
 import lk.ijse.carrentn.dto.TM.DriverTM;
+import lk.ijse.carrentn.entity.Driver;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DriverBOimpl implements DriverBO {
@@ -15,12 +18,14 @@ public class DriverBOimpl implements DriverBO {
     DriverDAO driverDAO = new DriverDAOImpl();
     @Override
     public boolean saveDriver(DriverDTO driverDTO) throws SQLException {
-        return driverDAO.save(driverDTO);
+        Driver driver = new Driver(driverDTO.getName(),driverDTO.getPhone_number(),driverDTO.getLicense_number(), BigDecimal.valueOf(driverDTO.getDriver_rate_per_day()));
+        return driverDAO.save(driver);
     }
 
     @Override
     public boolean updateDriver(DriverDTO driverDTO) throws SQLException {
-        return driverDAO.update(driverDTO);
+        Driver driver = new Driver(driverDTO.getDriver_id(),driverDTO.getName(),driverDTO.getPhone_number(),driverDTO.getLicense_number(), BigDecimal.valueOf(driverDTO.getDriver_rate_per_day()));
+        return driverDAO.update(driver);
     }
 
     @Override
@@ -30,12 +35,18 @@ public class DriverBOimpl implements DriverBO {
 
     @Override
     public DriverDTO searchDriver(String id) throws SQLException {
-        return driverDAO.search(id);
+        Driver driver = driverDAO.search(id);
+        return new DriverDTO(driver.getDriver_id(),driver.getName(),driver.getPhone_number(),driver.getLicense_number(),driver.getDriver_rate_per_day().doubleValue());
     }
 
     @Override
     public List<DriverDTO> getAllDrivers() throws SQLException {
-        return driverDAO.getAll();
+        List<Driver> drivers = driverDAO.getAll();
+        List<DriverDTO> driverDTOs = new ArrayList<>();
+        for (Driver driver : drivers) {
+            driverDTOs.add(new DriverDTO(driver.getDriver_id(),driver.getName(),driver.getPhone_number(),driver.getLicense_number(),driver.getDriver_rate_per_day().doubleValue()));
+        }
+        return driverDTOs;
     }
 
     @Override
@@ -45,6 +56,11 @@ public class DriverBOimpl implements DriverBO {
 
     @Override
     public List<DriverTM> getAvailableDrivers(LocalDate startDate) throws SQLException {
-        return driverDAO.getAvailableDrivers(startDate);
+        List<Driver> drivers = driverDAO.getAvailableDrivers(startDate);
+        List<DriverTM> driverTMs = new ArrayList<>();
+        for (Driver driver : drivers) {
+            driverTMs.add(new DriverTM(driver.getDriver_id(),driver.getName(),driver.getPhone_number(),driver.getDriver_rate_per_day().doubleValue()));
+        }
+        return driverTMs;
     }
 }

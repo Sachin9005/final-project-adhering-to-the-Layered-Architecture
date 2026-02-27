@@ -5,9 +5,12 @@ import lk.ijse.carrentn.dao.custom.VehicleDAO;
 import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
 import lk.ijse.carrentn.dto.VehicleDTO;
+import lk.ijse.carrentn.entity.Vehicle;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class VehicleBOimpl implements VehicleBO {
@@ -15,12 +18,14 @@ public class VehicleBOimpl implements VehicleBO {
     VehicleDAO vehicleDAO =  new VehicleDAOImpl();
     @Override
     public boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException {
-        return vehicleDAO.save(vehicleDTO);
+        Vehicle vehicle = new Vehicle(vehicleDTO.getOwner_id(),vehicleDTO.getModel(), vehicleDTO.getManufacturer(), vehicleDTO.getType(), BigDecimal.valueOf(vehicleDTO.getRate_per_day()),BigDecimal.valueOf(vehicleDTO.getOwnership_percentage()),vehicleDTO.getVehicleNo());
+        return vehicleDAO.save(vehicle);
     }
 
     @Override
     public boolean updateVehicle(VehicleDTO vehicleDTO) throws SQLException {
-        return vehicleDAO.update(vehicleDTO);
+        Vehicle vehicle = new Vehicle(vehicleDTO.getVehicle_id(),vehicleDTO.getOwner_id(),vehicleDTO.getModel(), vehicleDTO.getManufacturer(), vehicleDTO.getType(), BigDecimal.valueOf(vehicleDTO.getRate_per_day()),BigDecimal.valueOf(vehicleDTO.getOwnership_percentage()),vehicleDTO.getVehicleNo());
+        return vehicleDAO.update(vehicle);
     }
 
     @Override
@@ -30,22 +35,34 @@ public class VehicleBOimpl implements VehicleBO {
 
     @Override
     public VehicleDTO searchVehicleNo(String vehicleNo) throws SQLException {
-        return vehicleDAO.search(vehicleNo);
+        Vehicle vehicle = vehicleDAO.search(vehicleNo);
+        return new VehicleDTO(vehicle.getVehicle_id(),vehicle.getVehicle_No(),vehicle.getOwner_id(),vehicle.getModel(),vehicle.getManufacturer(),vehicle.getType(),vehicle.getRate_per_day().doubleValue(),vehicle.getOwnership_percentage().doubleValue());
     }
 
     @Override
     public List<VehicleDTO> getAllVehicle() throws SQLException {
-        return vehicleDAO.getAll();
+        List<Vehicle> vehicles =  vehicleDAO.getAll();
+        List<VehicleDTO> vehicleDTOs = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            vehicleDTOs.add(new VehicleDTO(vehicle.getVehicle_id(),vehicle.getVehicle_No(),vehicle.getOwner_id(),vehicle.getModel(),vehicle.getManufacturer(),vehicle.getType(),vehicle.getRate_per_day().doubleValue(),vehicle.getOwnership_percentage().doubleValue()));
+        }
+        return vehicleDTOs;
     }
 
     @Override
     public VehicleDTO searchVehicle(String id) {
-        return vehicleDAO.searchVehicle(id);
+        Vehicle vehicle = vehicleDAO.searchVehicle(id);
+        return new VehicleDTO(vehicle.getVehicle_id(),vehicle.getVehicle_No(),vehicle.getOwner_id(),vehicle.getModel(),vehicle.getManufacturer(),vehicle.getType(),vehicle.getRate_per_day().doubleValue(),vehicle.getOwnership_percentage().doubleValue());
     }
 
     @Override
     public List<VehicleTM> getAvailableVehicles(LocalDate startDate) throws SQLException {
-        return vehicleDAO.getAvailableVehicles(startDate);
+        List<Vehicle>  vehicles = vehicleDAO.getAvailableVehicles(startDate);
+        List<VehicleTM> vehicleTMS = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            vehicleTMS.add(new VehicleTM(vehicle.getVehicle_id(),vehicle.getVehicle_No(),vehicle.getModel(),vehicle.getType(),vehicle.getRate_per_day().doubleValue()));
+        }
+        return vehicleTMS;
     }
 
     @Override

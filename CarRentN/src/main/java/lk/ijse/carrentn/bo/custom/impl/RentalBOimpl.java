@@ -13,10 +13,15 @@ import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.FirstPaymentDTO;
 import lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.dto.RentalDiscountDTO;
+import lk.ijse.carrentn.entity.FirstPayment;
+import lk.ijse.carrentn.entity.Rental;
+import lk.ijse.carrentn.entity.RentalDiscount;
 import net.sf.jasperreports.engine.JRException;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,17 +32,24 @@ public class RentalBOimpl implements RentalBO {
     RentalDiscountDAO rentalDiscountDAO = new RentalDiscountDAOImpl();
     @Override
     public int getGenerateRentalId(RentalDTO rentalDTO) throws SQLException {
-        return rentalDAO.getSaveId(rentalDTO);
+        Rental rental = new Rental(rentalDTO.getCustomer_id(),rentalDTO.getVehicle_id(),rentalDTO.getDriver_id(),rentalDTO.getStart_date(),rentalDTO.getDates_of_rent(),rentalDTO.getReturn_date());
+        return rentalDAO.getSaveId(rental);
     }
 
     @Override
     public RentalDTO searchRent(String id) throws SQLException {
-        return rentalDAO.search(id);
+        Rental rental = rentalDAO.search(id);
+        return new RentalDTO(rental.getRental_id(),rental.getCustomer_id(),rental.getVehicle_id(),rental.getDriver_id(),rental.getStart_DATE(),rental.getDates_of_rent(),rental.getReturn_date());
     }
 
     @Override
     public List<RentalDTO> getAllRents() throws SQLException {
-        return rentalDAO.getAll();
+        List<Rental> rentals =  rentalDAO.getAll();
+        List<RentalDTO> rentalDTOs = new ArrayList<>();
+        for (Rental rental : rentals) {
+            rentalDTOs.add(new RentalDTO(rental.getRental_id(),rental.getCustomer_id(),rental.getVehicle_id(),rental.getDriver_id(),rental.getStart_DATE(),rental.getDates_of_rent(),rental.getReturn_date()));
+        }
+        return rentalDTOs;
     }
 
     @Override
@@ -57,7 +69,8 @@ public class RentalBOimpl implements RentalBO {
 
     @Override
     public boolean saveFirstPayment(FirstPaymentDTO firstPaymentDTO) throws SQLException {
-        return firstPaymentDAO.save(firstPaymentDTO);
+        FirstPayment firstPayment = new FirstPayment(firstPaymentDTO.getRental_id(), BigDecimal.valueOf(firstPaymentDTO.getBase_payment()),BigDecimal.valueOf(firstPaymentDTO.getFinal_payment()),firstPaymentDTO.getBase_payment_date());
+        return firstPaymentDAO.save(firstPayment);
     }
 
     @Override
@@ -74,7 +87,7 @@ public class RentalBOimpl implements RentalBO {
 
             boolean isDiscountSaved = true;
             if (discountId != null) {
-                double disAmount = (totalPay * discountDAO.search(String.valueOf(discountId)).getPercentage())/100;
+                double disAmount = (totalPay * discountDAO.search(String.valueOf(discountId)).getPercentage().doubleValue())/100;
                 isDiscountSaved = saveRentalDiscount(new RentalDiscountDTO(rentalId, discountId, disAmount));
             }
 
@@ -94,7 +107,8 @@ public class RentalBOimpl implements RentalBO {
 
     @Override
     public boolean saveRentalDiscount(RentalDiscountDTO rentalDiscountDTO) throws SQLException {
-        return rentalDiscountDAO.save(rentalDiscountDTO);
+        RentalDiscount rentalDiscount = new RentalDiscount(rentalDiscountDTO.getRental_id(),rentalDiscountDTO.getDiscount_id(),BigDecimal.valueOf(rentalDiscountDTO.getDiscount_amount_applied()));
+        return rentalDiscountDAO.save(rentalDiscount);
     }
 
     @Override
