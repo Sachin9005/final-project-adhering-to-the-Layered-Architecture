@@ -3,7 +3,7 @@ package lk.ijse.carrentn.bo.custom.impl;
 import lk.ijse.carrentn.bo.custom.VehicleBO;
 import lk.ijse.carrentn.dao.custom.VehicleDAO;
 import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
-import lk.ijse.carrentn.viwe.tdm.VehicleTM;
+import lk.ijse.carrentn.dto.TM.VehicleTM;
 import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.entity.Vehicle;
 

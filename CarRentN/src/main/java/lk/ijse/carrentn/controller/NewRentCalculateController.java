@@ -15,9 +15,11 @@ import lk.ijse.carrentn.bo.custom.VehicleBO;
 import lk.ijse.carrentn.bo.custom.impl.DiscountBOimpl;
 import lk.ijse.carrentn.bo.custom.impl.DriverBOimpl;
 import lk.ijse.carrentn.bo.custom.impl.VehicleBOimpl;
+import lk.ijse.carrentn.dao.custom.VehicleDAO;
+import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.DiscountDTO;
-import lk.ijse.carrentn.viwe.tdm.DriverTM;
-import lk.ijse.carrentn.viwe.tdm.VehicleTM;
+import lk.ijse.carrentn.dto.TM.DriverTM;
+import lk.ijse.carrentn.dto.TM.VehicleTM;
 
 import java.io.IOException;
 import java.net.URL;

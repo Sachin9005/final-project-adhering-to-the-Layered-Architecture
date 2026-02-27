@@ -1,4 +1,4 @@
-package lk.ijse.carrentn.viwe.tdm;
+package lk.ijse.carrentn.dto.TM;
 
 public class VehicleCountTM {
     private String vehicleType;
