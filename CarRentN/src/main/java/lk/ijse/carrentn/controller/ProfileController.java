@@ -6,10 +6,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.UserBO;
-import lk.ijse.carrentn.bo.custom.impl.UserBOimpl;
-import lk.ijse.carrentn.dao.custom.UserDAO;
-import lk.ijse.carrentn.dao.custom.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
 
 import java.net.URL;
@@ -36,7 +34,7 @@ public class ProfileController implements Initializable{
     @FXML
     private Label useNameLable;
 
-    UserBO userBO = new UserBOimpl();
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
     public void initialize(URL url, ResourceBundle rb){
         setDetails();

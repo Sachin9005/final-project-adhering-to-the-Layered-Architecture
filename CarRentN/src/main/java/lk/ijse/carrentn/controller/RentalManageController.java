@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.*;
 import lk.ijse.carrentn.bo.custom.impl.*;
 import lk.ijse.carrentn.dao.custom.*;
@@ -17,8 +18,6 @@ import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,13 +87,13 @@ public class RentalManageController implements Initializable {
     private final String DAY_REGEX = "^[0-9]+$";
     private final String BASE_PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-    DiscountBO discountBO =  new DiscountBOimpl();
-    RentalBO rentalBO = new RentalBOimpl();
-    CustomerBO customerBO = new CustomerBOimpl();
-    VehicleBO vehicleBO = new VehicleBOimpl();
-    DriverBO driverBO = new DriverBOimpl();
-    PaymentBO paymentBO = new PaymentBOimpl();
-    RentalDiscountBO rentalDiscountBO = new RentalDiscountBOimpl();
+    private final DiscountBO discountBO = (DiscountBO) BOFactory.getInstance().getBO(BOFactory.BOType.DISCOUNT);
+    private final RentalBO rentalBO = (RentalBO) BOFactory.getInstance().getBO(BOFactory.BOType.RENTAL);
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+    private final VehicleBO vehicleBO = (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOType.VEHICLE);
+    private final DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BOType.DRIVER);
+    private final PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
+    private final RentalDiscountBO rentalDiscountBO = (RentalDiscountBO) BOFactory.getInstance().getBO(BOFactory.BOType.RENTAL_DISCOUNT);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

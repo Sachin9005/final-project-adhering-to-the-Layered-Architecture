@@ -12,10 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.DiscountBO;
-import lk.ijse.carrentn.bo.custom.impl.DiscountBOimpl;
-import lk.ijse.carrentn.dao.custom.DiscountDAO;
-import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.DiscountDTO;
 
@@ -40,7 +38,7 @@ public class DiscountManageController implements Initializable {
     private final String DISCOUNT_DESCRIPTION_REGEX = "^[A-Za-z0-9 ]{2,50}$";
     private final String DISCOUNT_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
 
-    DiscountBO discountBO = new DiscountBOimpl();
+    private final DiscountBO discountBO = (DiscountBO) BOFactory.getInstance().getBO(BOFactory.BOType.DISCOUNT);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

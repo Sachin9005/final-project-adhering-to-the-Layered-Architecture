@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.CarOwnerBO;
 import lk.ijse.carrentn.bo.custom.impl.CarOwnerBOimpl;
 import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
@@ -44,7 +45,7 @@ public class CarOwnerManageController implements Initializable {
     private final String CAR_OWNER_PHONE_NUMBER_REGEX = "^(?:\\+94|0)?7[0-9]{8}$";
     private final String CAR_OWNER_BANK_NAME_AND_NUMBER_REGEX = "^[A-Z]{3,}-[0-9]{4,12}$";
 
-    CarOwnerBO carOwnerBO = new CarOwnerBOimpl();
+    private final CarOwnerBO carOwnerBO = (CarOwnerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CAR_OWNER);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

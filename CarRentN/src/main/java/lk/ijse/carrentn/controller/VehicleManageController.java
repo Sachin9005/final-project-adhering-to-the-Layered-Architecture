@@ -11,13 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.CarOwnerBO;
 import lk.ijse.carrentn.bo.custom.VehicleBO;
-import lk.ijse.carrentn.bo.custom.impl.CarOwnerBOimpl;
-import lk.ijse.carrentn.bo.custom.impl.VehicleBOimpl;
-import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
-import lk.ijse.carrentn.dao.custom.impl.CarOwnerDAOImpl;
-import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.VehicleDTO;
 import javafx.scene.control.*;
@@ -76,8 +72,8 @@ public class VehicleManageController implements Initializable {
     private final String VEHICLE_DAY_RATE_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
     private final String VEHICLE_OWNER_PERCENTAGE_REGEX = "^(100(\\.0{1,2})?|[0-9]{1,2}(\\.[0-9]{1,2})?)$";
 
-    CarOwnerBO carOwnerBO = new CarOwnerBOimpl();
-    VehicleBO vehicleBO =  new VehicleBOimpl();
+    private final CarOwnerBO carOwnerBO = (CarOwnerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CAR_OWNER);
+    private final VehicleBO vehicleBO = (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOType.VEHICLE);
 
     String[] typeList = {"CAR","VAN","SUV"};
 

@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.UserBO;
 import lk.ijse.carrentn.bo.custom.impl.UserBOimpl;
 import lk.ijse.carrentn.dao.custom.UserDAO;
@@ -33,7 +34,7 @@ public class ChangePasswordController {
 
     private final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
-    UserBO userBO = new UserBOimpl();
+    private final UserBO userBO = (UserBO) BOFactory.getInstance().getBO(BOFactory.BOType.USER);
 
     @FXML
     private void changeVisibility() {

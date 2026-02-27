@@ -9,14 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import lk.ijse.carrentn.App;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.DiscountBO;
 import lk.ijse.carrentn.bo.custom.DriverBO;
 import lk.ijse.carrentn.bo.custom.VehicleBO;
-import lk.ijse.carrentn.bo.custom.impl.DiscountBOimpl;
-import lk.ijse.carrentn.bo.custom.impl.DriverBOimpl;
-import lk.ijse.carrentn.bo.custom.impl.VehicleBOimpl;
-import lk.ijse.carrentn.dao.custom.VehicleDAO;
-import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.DiscountDTO;
 import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
@@ -82,9 +78,9 @@ public class NewRentCalculateController implements Initializable {
 
     private final String DAY_REGEX = "^[0-9]+$";
 
-VehicleBO vehicleBO = new VehicleBOimpl();
-DriverBO driverBO = new DriverBOimpl();
-DiscountBO discountBO= new DiscountBOimpl();
+private final VehicleBO vehicleBO = (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOType.VEHICLE);
+private final DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BOType.DRIVER);
+private final DiscountBO discountBO= (DiscountBO) BOFactory.getInstance().getBO(BOFactory.BOType.DISCOUNT);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

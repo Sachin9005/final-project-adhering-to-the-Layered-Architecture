@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface DriverBO extends SuperBO {
-    public boolean saveDriver(DriverDTO driverDTO) throws SQLException;
-    public boolean updateDriver(DriverDTO driverDTO) throws SQLException;
-    public boolean deleteDriver(String id) throws SQLException;
-    public DriverDTO searchDriver(String id) throws SQLException;
-    public List<DriverDTO> getAllDrivers() throws SQLException;
-    public String searchDriverId(String name);
-    public List<DriverTM> getAvailableDrivers(LocalDate startDate) throws SQLException;
+    boolean saveDriver(DriverDTO driverDTO) throws SQLException;
+    boolean updateDriver(DriverDTO driverDTO) throws SQLException;
+    boolean deleteDriver(String id) throws SQLException;
+    DriverDTO searchDriver(String id) throws SQLException;
+    List<DriverDTO> getAllDrivers() throws SQLException;
+    String searchDriverId(String name);
+    List<DriverTM> getAvailableDrivers(LocalDate startDate) throws SQLException;
 }

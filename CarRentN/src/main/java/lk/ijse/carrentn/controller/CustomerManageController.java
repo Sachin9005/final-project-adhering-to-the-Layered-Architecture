@@ -13,10 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.CustomerBO;
-import lk.ijse.carrentn.bo.custom.impl.CustomerBOimpl;
-import lk.ijse.carrentn.dao.custom.CustomerDAO;
-import lk.ijse.carrentn.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
 import lk.ijse.carrentn.dto.CustomerDTO;
 
@@ -56,7 +54,7 @@ public class CustomerManageController implements Initializable {
     private final String CUSTOMER_NIC_OR_PASSPORT_NUMBER_REGEX = "^(([0-9]{9}[VvXx]|[0-9]{12})|[A-Za-z0-9]{5,15})$";
     private final String CUSTOMER_ADDRESS_REGEX = "^[A-Za-z0-9\\s,./\\-#]{5,150}$";
 
-    CustomerBO customerBO = new CustomerBOimpl();
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
 
 
     @Override

@@ -12,6 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.DriverBO;
 import lk.ijse.carrentn.bo.custom.impl.DriverBOimpl;
 import lk.ijse.carrentn.dao.custom.DriverDAO;
@@ -51,7 +52,7 @@ public class DriverManageController implements Initializable {
     private final String DRIVER_LICENSE_NUMBER_REGEX = "^[A-Z]{1,4}[0-9]{6,10}$";
     private final String DRIVER_RATE_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-    DriverBO driverBO = new DriverBOimpl();
+    private final DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BOType.DRIVER);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.*;
 import lk.ijse.carrentn.bo.custom.impl.*;
 import lk.ijse.carrentn.dao.custom.*;
@@ -91,12 +92,12 @@ public class CurrentRentalCalculateController implements Initializable {
 
     public final String PAYMENT_REGEX = "^[1-9][0-9]*(\\.[0-9]{1,2})?$";
 
-    CustomerBO customerBO = new CustomerBOimpl();
-    RentalBO rentalBO = new RentalBOimpl();
-    VehicleBO vehicleBO = new VehicleBOimpl();
-    DriverDAO driverDAO = new DriverDAOImpl();
-    RentalDiscountBO rentalDiscountBO = new RentalDiscountBOimpl();
-    PaymentBO paymentBO = new PaymentBOimpl();
+    private final CustomerBO customerBO = (CustomerBO) BOFactory.getInstance().getBO(BOFactory.BOType.CUSTOMER);
+    private final RentalBO rentalBO = (RentalBO) BOFactory.getInstance().getBO(BOFactory.BOType.RENTAL);
+    private final VehicleBO vehicleBO = (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOType.VEHICLE);
+    private final DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BOType.DRIVER);
+    private final RentalDiscountBO rentalDiscountBO = (RentalDiscountBO) BOFactory.getInstance().getBO(BOFactory.BOType.RENTAL_DISCOUNT);
+    private final PaymentBO paymentBO = (PaymentBO) BOFactory.getInstance().getBO(BOFactory.BOType.PAYMENT);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {lordCustomerNames();}
@@ -181,7 +182,7 @@ public class CurrentRentalCalculateController implements Initializable {
             }
 
             if (driverId != null) {
-                DriverDTO driverDTO = driverDAO.search(driverId);
+                DriverDTO driverDTO = driverBO.searchDriver(driverId);
                 driverTotal = calculateDriverTotal(driverDTO, rentalDTO);
                 driverNameField.setText(driverDTO.getName());
                 driverRateField.setText(String.valueOf(driverDTO.getDriver_rate_per_day()));

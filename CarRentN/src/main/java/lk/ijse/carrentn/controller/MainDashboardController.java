@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import lk.ijse.carrentn.App;
+import lk.ijse.carrentn.bo.BOFactory;
 import lk.ijse.carrentn.bo.custom.DriverBO;
 import lk.ijse.carrentn.bo.custom.RentalBO;
 import lk.ijse.carrentn.bo.custom.VehicleBO;
@@ -68,9 +69,10 @@ public class MainDashboardController implements Initializable {
     private TextField vanCou;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
-    VehicleBO vehicleBO = new VehicleBOimpl();
-    DriverBO driverBO = new DriverBOimpl();
-    RentalBO rentalBO = new RentalBOimpl();
+
+    private final VehicleBO vehicleBO = (VehicleBO) BOFactory.getInstance().getBO(BOFactory.BOType.VEHICLE);
+    private final DriverBO driverBO = (DriverBO) BOFactory.getInstance().getBO(BOFactory.BOType.DRIVER);
+    private final RentalBO rentalBO = (RentalBO) BOFactory.getInstance().getBO(BOFactory.BOType.RENTAL);
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
