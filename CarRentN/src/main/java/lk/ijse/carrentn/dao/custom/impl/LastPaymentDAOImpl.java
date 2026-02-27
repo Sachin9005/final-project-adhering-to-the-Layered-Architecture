@@ -4,6 +4,7 @@ import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.LastPaymentDAO;
 import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.LastPaymentDTO;
+import lk.ijse.carrentn.entity.LastPayment;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -17,20 +18,20 @@ import java.util.Map;
 
 public class LastPaymentDAOImpl implements LastPaymentDAO {
 
-    public boolean save(LastPaymentDTO lastPaymentDTO)throws SQLException {
+    public boolean save(LastPayment lastPayment)throws SQLException {
         return CrudUtil.execute(
                 "INSERT INTO last_Payment (first_payment_id, rental_id, late_days, balance_payment, fine_payment,last_payment , last_payment_date) VALUES (?,?,?,?,?,?,?)",
-                lastPaymentDTO.getFirst_payment_id(),
-                lastPaymentDTO.getRental_id(),
-                lastPaymentDTO.getLate_days(),
-                lastPaymentDTO.getBalance_payment(),
-                lastPaymentDTO.getFine_payment(),
-                lastPaymentDTO.getLast_payment(),
-                lastPaymentDTO.getLast_payment_date());
+                lastPayment.getFirst_payment_id(),
+                lastPayment.getRental_id(),
+                lastPayment.getLate_days(),
+                lastPayment.getBalance_payment(),
+                lastPayment.getFine_payment(),
+                lastPayment.getLast_payment(),
+                lastPayment.getLast_payment_date());
     }
 
     @Override
-    public boolean update(LastPaymentDTO cusDTO) throws SQLException {
+    public boolean update(LastPayment cusDTO) throws SQLException {
         return false;
     }
 
@@ -40,12 +41,12 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
     }
 
     @Override
-    public List<LastPaymentDTO> getAll() throws SQLException {
+    public List<LastPayment> getAll() throws SQLException {
         return List.of();
     }
 
     @Override
-    public LastPaymentDTO search(String id) throws SQLException {
+    public LastPayment search(String id) throws SQLException {
         return null;
     }
 

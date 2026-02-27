@@ -2,7 +2,7 @@ package lk.ijse.carrentn.dao.custom.impl;
 
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.CustomerDAO;
-import lk.ijse.carrentn.dto.CustomerDTO;
+import lk.ijse.carrentn.entity.Customer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,12 +11,12 @@ import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
 
-    public boolean save(CustomerDTO cusDTO) throws SQLException {
-        return CrudUtil.execute("INSERT INTO Customer (name, email, phone_number, nic_or_passport_number, address ) VALUES (?,?,?,?,?)", cusDTO.getName(), cusDTO.getEmail(), cusDTO.getPhone_number(), cusDTO.getNic_or_passport_number(), cusDTO.getAddress());
+    public boolean save(Customer cus) throws SQLException {
+        return CrudUtil.execute("INSERT INTO Customer (name, email, phone_number, nic_or_passport_number, address ) VALUES (?,?,?,?,?)", cus.getName(), cus.getEmail(), cus.getPhone_number(), cus.getNic_or_passport_number(), cus.getAddress());
     }
 
-    public boolean update(CustomerDTO cusDTO) throws SQLException {
-        return CrudUtil.execute("UPDATE Customer SET name = ?, email = ? , phone_number = ?, nic_or_passport_number = ? , address = ? WHERE customer_id  = ?", cusDTO.getName(), cusDTO.getEmail(), cusDTO.getPhone_number(), cusDTO.getNic_or_passport_number(), cusDTO.getAddress(), cusDTO.getCustomer_id());
+    public boolean update(Customer cus) throws SQLException {
+        return CrudUtil.execute("UPDATE Customer SET name = ?, email = ? , phone_number = ?, nic_or_passport_number = ? , address = ? WHERE customer_id  = ?", cus.getName(), cus.getEmail(), cus.getPhone_number(), cus.getNic_or_passport_number(), cus.getAddress(), cus.getCustomer_id());
     }
 
     public boolean delete(String id) throws SQLException {
@@ -24,13 +24,12 @@ public class CustomerDAOImpl implements CustomerDAO {
         return CrudUtil.execute("DELETE FROM Customer WHERE customer_id = ?", id);
     }
 
-    public List<CustomerDTO> getAll() throws SQLException {
+    public List<Customer> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT * FROM Customer ORDER BY customer_id DESC");
-
-        ArrayList<CustomerDTO> customerList = new ArrayList<>();
+        ArrayList<Customer> customerList = new ArrayList<>();
 
         while (rs.next()) {
-            CustomerDTO customerDTO = new CustomerDTO(
+            Customer customer = new Customer(
                     rs.getInt("customer_id"),
                     rs.getString("name"),
                     rs.getString("email"),
@@ -38,14 +37,14 @@ public class CustomerDAOImpl implements CustomerDAO {
                     rs.getString("nic_or_passport_number"),
                     rs.getString("address"));
 
-            customerList.add(customerDTO);
+            customerList.add(customer);
         }
 
         return customerList;
     }
 
-    public CustomerDTO search(String id) throws SQLException {
-        CustomerDTO cusDTO = null;
+    public Customer search(String id) throws SQLException {
+        Customer cus = null;
         ResultSet result = CrudUtil.execute("SELECT * FROM Customer WHERE customer_id = ?", id);
 
         if (result.next()) {
@@ -56,9 +55,9 @@ public class CustomerDAOImpl implements CustomerDAO {
             String cusNicOrPassportNumber = result.getString("nic_or_passport_number");
             String cusAddress = result.getString("address");
 
-            cusDTO = new CustomerDTO(cusID, cusName, cusEmail, cusPhoneNumber, cusNicOrPassportNumber, cusAddress);
+            cus = new Customer(cusID, cusName, cusEmail, cusPhoneNumber, cusNicOrPassportNumber, cusAddress);
         }
-        return cusDTO;
+        return cus;
     }
 
     public String searchId(String name) {

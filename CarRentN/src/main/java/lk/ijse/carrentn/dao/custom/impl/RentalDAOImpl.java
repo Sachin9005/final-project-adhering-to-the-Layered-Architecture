@@ -3,7 +3,7 @@ package lk.ijse.carrentn.dao.custom.impl;
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.RentalDAO;
 import lk.ijse.carrentn.db.DBConnection;
-import lk.ijse.carrentn.dto.RentalDTO;
+import lk.ijse.carrentn.entity.Rental;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -20,12 +20,12 @@ import java.util.Map;
 public class RentalDAOImpl implements RentalDAO {
 
     @Override
-    public boolean save(RentalDTO cusDTO) throws SQLException {
+    public boolean save(Rental cusDTO) throws SQLException {
         return false;
     }
 
     @Override
-    public boolean update(RentalDTO cusDTO) throws SQLException {
+    public boolean update(Rental cusDTO) throws SQLException {
         return false;
     }
 
@@ -33,13 +33,13 @@ public class RentalDAOImpl implements RentalDAO {
         return CrudUtil.execute("DELETE FROM Rental WHERE rental_id = ?",id);
     }
 
-    public List<RentalDTO> getAll() throws SQLException {
+    public List<Rental> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute( "SELECT * FROM Rental ORDER BY rental_id DESC");
 
-        ArrayList<RentalDTO> rentalList = new ArrayList<>();
+        ArrayList<Rental> rentalList = new ArrayList<>();
 
         while(rs.next()) {
-            RentalDTO rentalDTOs = new RentalDTO(
+            Rental rentals = new Rental(
                     rs.getInt("rental_id"),
                     rs.getInt("customer_id"),
                     rs.getInt("vehicle_id"),
@@ -47,13 +47,13 @@ public class RentalDAOImpl implements RentalDAO {
                     rs.getDate("start_DATE").toLocalDate(),
                     rs.getInt("dates_of_rent"),
                     rs.getDate("return_date").toLocalDate());
-            rentalList.add(rentalDTOs);
+            rentalList.add(rentals);
         }
         return rentalList;
     }
 
-    public RentalDTO search(String id) throws SQLException {
-        RentalDTO rentalDTO = null;
+    public Rental search(String id) throws SQLException {
+        Rental rental = null;
 
         ResultSet result = CrudUtil.execute("SELECT * FROM Rental r JOIN Customer c ON r.customer_id = c.customer_id LEFT JOIN last_Payment lp ON r.rental_id = lp.rental_id WHERE lp.last_payment_id IS NULL AND r.customer_id = ?",id);
 
@@ -66,9 +66,9 @@ public class RentalDAOImpl implements RentalDAO {
             int days = result.getInt("dates_of_rent");
             Date eDate = result.getDate("return_date");
 
-            rentalDTO = new RentalDTO(rentalId,cusID,vehicleId,DriverId,sdate.toLocalDate(),days,eDate.toLocalDate());
+            rental = new Rental(rentalId,cusID,vehicleId,DriverId,sdate.toLocalDate(),days,eDate.toLocalDate());
         }
-        return rentalDTO;
+        return rental;
     }
 
     public String getSaveLastRentalId()throws SQLException{
@@ -125,7 +125,7 @@ public class RentalDAOImpl implements RentalDAO {
 
     }
 
-    public int getSaveId(RentalDTO rentalDTO) throws SQLException {
+    public int getSaveId(Rental rental) throws SQLException {
         return CrudUtil.executeInsertAndGetId("INSERT INTO Rental" +
                         " (customer_id, " +
                         "vehicle_id, " +
@@ -134,12 +134,12 @@ public class RentalDAOImpl implements RentalDAO {
                         "dates_of_rent, " +
                         "return_date ) " +
                         "VALUES (?,?,?,?,?,?)",
-                rentalDTO.getCustomer_id(),
-                rentalDTO.getVehicle_id(),
-                rentalDTO.getDriver_id(),
-                rentalDTO.getStart_date(),
-                rentalDTO.getDates_of_rent(),
-                rentalDTO.getReturn_date());
+                rental.getCustomer_id(),
+                rental.getVehicle_id(),
+                rental.getDriver_id(),
+                rental.getStart_DATE(),
+                rental.getDates_of_rent(),
+                rental.getReturn_date());
     }
 
 }

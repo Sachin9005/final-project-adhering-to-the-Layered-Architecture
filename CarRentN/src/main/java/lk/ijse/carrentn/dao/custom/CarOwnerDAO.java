@@ -2,11 +2,10 @@ package lk.ijse.carrentn.dao.custom;
 
 import lk.ijse.carrentn.dao.CrudDAO;
 import lk.ijse.carrentn.dao.SuperDAO;
-import lk.ijse.carrentn.dto.CarOwnerDTO;
+import lk.ijse.carrentn.entity.CarOwner;
 
 import java.sql.SQLException;
-import java.util.List;
 
-public interface CarOwnerDAO extends CrudDAO<CarOwnerDTO> , SuperDAO {
+public interface CarOwnerDAO extends CrudDAO<CarOwner> , SuperDAO {
     String searchId(String name) throws SQLException;
 }

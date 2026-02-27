@@ -3,19 +3,21 @@ package lk.ijse.carrentn.dao.custom.impl;
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
 import lk.ijse.carrentn.dto.DiscountDTO;
+import lk.ijse.carrentn.entity.Discount;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountDAOImpl implements DiscountDAO {
-    public boolean save(DiscountDTO discountDTO) throws SQLException {
-        return CrudUtil.execute("INSERT INTO Discount (description,percentage) VALUES (?,?)", discountDTO.getDescription(), discountDTO.getPercentage());
+    public boolean save(Discount discount) throws SQLException {
+        return CrudUtil.execute("INSERT INTO Discount (description,percentage) VALUES (?,?)", discount.getDescription(), discount.getPercentage());
     }
 
-    public boolean update(DiscountDTO discountDTO) throws SQLException {
-        return CrudUtil.execute("UPDATE Discount SET description = ?, percentage = ? WHERE discount_id  = ?", discountDTO.getDescription(), discountDTO.getPercentage(), discountDTO.getDiscount_id());
+    public boolean update(Discount discount) throws SQLException {
+        return CrudUtil.execute("UPDATE Discount SET description = ?, percentage = ? WHERE discount_id  = ?", discount.getDescription(), discount.getPercentage(), discount.getDiscount_id());
     }
 
     public boolean delete(String id) throws SQLException {
@@ -23,47 +25,48 @@ public class DiscountDAOImpl implements DiscountDAO {
         return CrudUtil.execute("DELETE FROM Discount WHERE discount_id = ?",id);
     }
 
-    public DiscountDTO search(String id) throws SQLException {
-        DiscountDTO discountDTO = null;
+    public Discount search(String id) throws SQLException {
+        Discount discount = null;
         ResultSet result = CrudUtil.execute("SELECT * FROM Discount WHERE discount_id = ?",id);
 
         if (result.next()) {
             int discountId = result.getInt("discount_id");
             String discountDisc = result.getString("description");
-            double discountPerc = result.getDouble("percentage");
+            BigDecimal discountPerc = result.getBigDecimal("percentage");
 
-            discountDTO = new DiscountDTO(discountId, discountDisc, discountPerc);
+            discount = new Discount(discountId, discountDisc, discountPerc);
         }
-        return discountDTO;
+        return discount;
     }
 
-    public List<DiscountDTO> getAll() throws SQLException {
+    public List<Discount> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute( "SELECT * FROM Discount ORDER BY discount_id DESC");
 
-        ArrayList<DiscountDTO> discountList = new ArrayList<>();
+        ArrayList<Discount> discountList = new ArrayList<>();
 
         while(rs.next()) {
-            DiscountDTO discountDTO = new DiscountDTO(
+            Discount discount = new Discount(
                     rs.getInt("discount_id"),
                     rs.getString("description"),
-                    rs.getDouble("percentage"));
-            discountList.add(discountDTO);
+                    rs.getBigDecimal("percentage"));
+            discountList.add(discount);
         }
         return discountList;
     }
 
-    public DiscountDTO searchId(String description)  {
-        DiscountDTO discountDTO = null;
+    public Discount searchId(String description)  {
+        Discount discount = null;
         try {
             ResultSet result = CrudUtil.execute("SELECT * FROM Discount WHERE description = ?", description);
             if (result.next()) {
                 int discountId = result.getInt("discount_id");
                 String discountDisc = result.getString("description");
-                double discountPerc = result.getDouble("percentage");
-                discountDTO = new DiscountDTO(discountId, discountDisc, discountPerc);            }
+                BigDecimal discountPerc = result.getBigDecimal("percentage");
+
+                discount = new Discount(discountId, discountDisc, discountPerc);            }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return discountDTO ;
+        return discount;
     }
 }

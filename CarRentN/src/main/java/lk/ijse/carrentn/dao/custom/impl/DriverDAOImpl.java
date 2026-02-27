@@ -2,9 +2,9 @@ package lk.ijse.carrentn.dao.custom.impl;
 
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.DriverDAO;
-import lk.ijse.carrentn.dto.DriverDTO;
-import lk.ijse.carrentn.dto.TM.DriverTM;
+import lk.ijse.carrentn.entity.Driver;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,23 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DriverDAOImpl implements DriverDAO {
-    public boolean save(DriverDTO driverDTO) throws SQLException {
+    public boolean save(Driver driver) throws SQLException {
 
         return CrudUtil.execute("INSERT INTO Driver (name,phone_number, license_number, driver_rate_per_day) VALUES (?,?,?,?)",
-                driverDTO.getName(),
-                driverDTO.getPhone_number(),
-                driverDTO.getLicense_number(),
-                driverDTO.getDriver_rate_per_day());
+                driver.getName(),
+                driver.getPhone_number(),
+                driver.getLicense_number(),
+                driver.getDriver_rate_per_day());
     }
 
-    public boolean update(DriverDTO driverDTO) throws SQLException {
+    public boolean update(Driver driver) throws SQLException {
 
         return CrudUtil.execute("UPDATE Driver SET name = ?, phone_number = ?, license_number = ? , driver_rate_per_day = ? WHERE driver_id  = ?",
-                driverDTO.getName(),
-                driverDTO.getPhone_number(),
-                driverDTO.getLicense_number(),
-                driverDTO.getDriver_rate_per_day(),
-                driverDTO.getDriver_id());
+                driver.getName(),
+                driver.getPhone_number(),
+                driver.getLicense_number(),
+                driver.getDriver_rate_per_day(),
+                driver.getDriver_id());
     }
 
     public boolean delete(String id) throws SQLException {
@@ -37,8 +37,8 @@ public class DriverDAOImpl implements DriverDAO {
         return CrudUtil.execute("DELETE FROM Driver WHERE driver_id = ?",id);
     }
 
-    public DriverDTO search(String id) throws SQLException {
-        DriverDTO driverDTO = null;
+    public Driver search(String id) throws SQLException {
+        Driver driver = null;
         ResultSet result = CrudUtil.execute("SELECT * FROM Driver WHERE driver_id = ?",id);
 
         if (result.next()) {
@@ -46,30 +46,30 @@ public class DriverDAOImpl implements DriverDAO {
             String driverName = result.getString("name");
             String driverPhoneNumber = result.getString("phone_number");
             String driverLiceNo = result.getString("license_number");
-            double driverRatePerDay = result.getDouble("driver_rate_per_day");
+            BigDecimal driverRatePerDay = result.getBigDecimal("driver_rate_per_day");
 
 
-            driverDTO = new DriverDTO(driverId, driverName, driverPhoneNumber,driverLiceNo,driverRatePerDay);
+            driver = new Driver(driverId, driverName, driverPhoneNumber,driverLiceNo,driverRatePerDay);
         }
-        return driverDTO;
+        return driver;
     }
 
-    public List<DriverDTO> getAll() throws SQLException {
+    public List<Driver> getAll() throws SQLException {
         ResultSet rs = CrudUtil.execute("SELECT * FROM Driver ORDER BY driver_id DESC");
 
-        ArrayList<DriverDTO> driverDTOList = new ArrayList<>();
+        ArrayList<Driver> driverList = new ArrayList<>();
 
         while(rs.next()) {
-            DriverDTO driverDTO = new DriverDTO(
+            Driver driver = new Driver(
                     rs.getInt("driver_id"),
                     rs.getString("name"),
                     rs.getString("phone_number"),
                     rs.getString("license_number"),
-                    rs.getDouble("driver_rate_per_day"));
+                    rs.getBigDecimal("driver_rate_per_day"));
 
-            driverDTOList.add(driverDTO);
+            driverList.add(driver);
         }
-        return driverDTOList;
+        return driverList;
     }
 
     public String searchId(String name) {
@@ -86,20 +86,21 @@ public class DriverDAOImpl implements DriverDAO {
         return id ;
     }
 
-    public List<DriverTM> getAvailableDrivers(LocalDate startDate) throws SQLException {
+    public List<Driver> getAvailableDrivers(LocalDate startDate) throws SQLException {
 
         String sql = "SELECT DISTINCT d.driver_id, d.name, d.phone_number, d.driver_rate_per_day FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
 
         ResultSet rs = CrudUtil.execute(sql, Date.valueOf(startDate));
 
-        List<DriverTM> list = new ArrayList<>();
+        List<Driver> list = new ArrayList<>();
 
         while (rs.next()) {
-            list.add(new DriverTM(
+            list.add(new Driver(
                     rs.getInt("driver_id"),
                     rs.getString("name"),
                     rs.getString("phone_number"),
-                    rs.getDouble("driver_rate_per_day")));
+                    rs.getString("license_number"),
+                    rs.getBigDecimal("driver_rate_per_day")));
         }
         return list;
     }

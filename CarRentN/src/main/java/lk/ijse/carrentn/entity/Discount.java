@@ -3,7 +3,7 @@ package lk.ijse.carrentn.entity;
 import java.math.BigDecimal;
 
 public class Discount {
-    String discount_id;
+    int discount_id;
     String description;
     BigDecimal percentage;
 
@@ -15,17 +15,17 @@ public class Discount {
         this.percentage = percentage;
     }
 
-    public Discount(String discount_id, String description, BigDecimal percentage) {
+    public Discount(int discount_id, String description, BigDecimal percentage) {
         this.discount_id = discount_id;
         this.description = description;
         this.percentage = percentage;
     }
 
-    public String getDiscount_id() {
+    public int getDiscount_id() {
         return discount_id;
     }
 
-    public void setDiscount_id(String discount_id) {
+    public void setDiscount_id(int discount_id) {
         this.discount_id = discount_id;
     }
 

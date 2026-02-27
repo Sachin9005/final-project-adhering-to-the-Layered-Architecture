@@ -2,34 +2,35 @@ package lk.ijse.carrentn.dao.custom.impl;
 
 import lk.ijse.carrentn.dao.CrudUtil;
 import lk.ijse.carrentn.dao.custom.RentalDiscountDAO;
-import lk.ijse.carrentn.dto.RentalDTO;
 import lk.ijse.carrentn.dto.RentalDiscountDTO;
+import lk.ijse.carrentn.entity.RentalDiscount;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 public class RentalDiscountDAOImpl implements RentalDiscountDAO {
-    public RentalDiscountDTO search(String rentId) throws SQLException{
-        RentalDiscountDTO rentalDiscountDTO = null;
+    public RentalDiscount search(String rentId) throws SQLException{
+        RentalDiscount rentalDiscount = null;
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM Rental_Discount WHERE rental_id = ?", rentId);
 
         if (resultSet.next()) {
             int rentalId = resultSet.getInt("rental_id");
             int discountId = resultSet.getInt("discount_id");
-            double discount_amount_applied = resultSet.getDouble("discount_amount_applied");
+            BigDecimal discount_amount_applied = resultSet.getBigDecimal("discount_amount_applied");
 
-            rentalDiscountDTO = new RentalDiscountDTO(rentalId, discountId, discount_amount_applied);
+            rentalDiscount = new RentalDiscount(rentalId, discountId, discount_amount_applied);
         }
-        return rentalDiscountDTO;
+        return rentalDiscount;
     }
 
-    public boolean save(RentalDiscountDTO rentalDiscountDTO)throws SQLException{
+    public boolean save(RentalDiscount rentalDiscount)throws SQLException{
         boolean isSaved = CrudUtil.execute(
                 "INSERT INTO Rental_Discount (rental_id, discount_id, discount_amount_applied ) VALUES (?,?,?)",
-                rentalDiscountDTO.getRental_id(),
-                rentalDiscountDTO.getDiscount_id(),
-                rentalDiscountDTO.getDiscount_amount_applied());
+                rentalDiscount.getRental_id(),
+                rentalDiscount.getDiscount_id(),
+                rentalDiscount.getDiscount_amount_applied());
 
         if (isSaved) {
             System.out.println("Base Payment Saved Successfully");
@@ -38,7 +39,7 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
     }
 
     @Override
-    public boolean update(RentalDiscountDTO cusDTO) throws SQLException {
+    public boolean update(RentalDiscount cusDTO) throws SQLException {
         return false;
     }
 
@@ -47,7 +48,7 @@ public class RentalDiscountDAOImpl implements RentalDiscountDAO {
     }
 
     @Override
-    public List<RentalDiscountDTO> getAll() throws SQLException{
+    public List<RentalDiscount> getAll() throws SQLException{
         return List.of();
     }
 }
