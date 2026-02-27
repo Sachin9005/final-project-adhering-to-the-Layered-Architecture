@@ -1,8 +1,8 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.DriverBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.DriverDAO;
-import lk.ijse.carrentn.dao.custom.impl.DriverDAOImpl;
 import lk.ijse.carrentn.dto.DriverDTO;
 import lk.ijse.carrentn.dto.TM.DriverTM;
 import lk.ijse.carrentn.entity.Driver;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DriverBOimpl implements DriverBO {
 
-    DriverDAO driverDAO = new DriverDAOImpl();
+    private final DriverDAO driverDAO = (DriverDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.DRIVER);
     @Override
     public boolean saveDriver(DriverDTO driverDTO) throws SQLException {
         Driver driver = new Driver(driverDTO.getName(),driverDTO.getPhone_number(),driverDTO.getLicense_number(), BigDecimal.valueOf(driverDTO.getDriver_rate_per_day()));

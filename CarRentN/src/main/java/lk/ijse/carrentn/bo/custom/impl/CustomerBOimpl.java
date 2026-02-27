@@ -1,8 +1,8 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.CustomerBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.CustomerDAO;
-import lk.ijse.carrentn.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.carrentn.dto.CustomerDTO;
 import lk.ijse.carrentn.entity.Customer;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerBOimpl implements CustomerBO {
-    CustomerDAO customerDAO = new CustomerDAOImpl();
+    private final CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.CUSTOMER);
 
     @Override
     public boolean saveCustomer(CustomerDTO cusDTO) throws SQLException {

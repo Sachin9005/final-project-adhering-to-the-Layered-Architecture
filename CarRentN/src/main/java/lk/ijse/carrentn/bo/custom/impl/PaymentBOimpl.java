@@ -1,10 +1,9 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.PaymentBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.FirstPaymentDAO;
 import lk.ijse.carrentn.dao.custom.LastPaymentDAO;
-import lk.ijse.carrentn.dao.custom.impl.FirstPaymentDAOImpl;
-import lk.ijse.carrentn.dao.custom.impl.LastPaymentDAOImpl;
 import lk.ijse.carrentn.dto.FirstPaymentDTO;
 import lk.ijse.carrentn.dto.LastPaymentDTO;
 import lk.ijse.carrentn.entity.FirstPayment;
@@ -16,8 +15,8 @@ import java.sql.SQLException;
 
 public class PaymentBOimpl implements PaymentBO {
 
-    FirstPaymentDAO firstPaymentDAO =  new FirstPaymentDAOImpl();
-    LastPaymentDAO lastPaymentDAO = new LastPaymentDAOImpl();
+    private final FirstPaymentDAO firstPaymentDAO = (FirstPaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.FIRST_PAYMENT);
+    private final LastPaymentDAO lastPaymentDAO = (LastPaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.LAST_PAYMENT);
 
     @Override
     public boolean saveFirstPayment(FirstPaymentDTO firstPaymentDTO) throws Exception {

@@ -1,15 +1,15 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.UserBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.UserDAO;
-import lk.ijse.carrentn.dao.custom.impl.UserDAOImpl;
 import lk.ijse.carrentn.dto.UserDTO;
 import lk.ijse.carrentn.entity.User;
 
 import java.sql.SQLException;
 
 public class UserBOimpl implements UserBO {
-    UserDAO userDAO = new UserDAOImpl();
+    private final UserDAO userDAO = (UserDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.USER);
 
     @Override
     public UserDTO getUserDetails() throws SQLException {

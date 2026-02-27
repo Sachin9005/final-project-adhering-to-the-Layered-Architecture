@@ -1,14 +1,11 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.RentalBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
 import lk.ijse.carrentn.dao.custom.FirstPaymentDAO;
 import lk.ijse.carrentn.dao.custom.RentalDAO;
 import lk.ijse.carrentn.dao.custom.RentalDiscountDAO;
-import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
-import lk.ijse.carrentn.dao.custom.impl.FirstPaymentDAOImpl;
-import lk.ijse.carrentn.dao.custom.impl.RentalDAOImpl;
-import lk.ijse.carrentn.dao.custom.impl.RentalDiscountDAOImpl;
 import lk.ijse.carrentn.db.DBConnection;
 import lk.ijse.carrentn.dto.FirstPaymentDTO;
 import lk.ijse.carrentn.dto.RentalDTO;
@@ -26,10 +23,11 @@ import java.util.List;
 import java.util.Map;
 
 public class RentalBOimpl implements RentalBO {
-    RentalDAO rentalDAO =  new RentalDAOImpl();
-    FirstPaymentDAO firstPaymentDAO = new FirstPaymentDAOImpl();
-    DiscountDAO discountDAO = new DiscountDAOImpl();
-    RentalDiscountDAO rentalDiscountDAO = new RentalDiscountDAOImpl();
+    private final RentalDAO rentalDAO = (RentalDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.RENTAL);
+    private final FirstPaymentDAO firstPaymentDAO = (FirstPaymentDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.FIRST_PAYMENT);
+    private final DiscountDAO discountDAO = (DiscountDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.DISCOUNT);
+    private final RentalDiscountDAO rentalDiscountDAO = (RentalDiscountDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.RENTAL_DISCOUNT);
+
     @Override
     public int getGenerateRentalId(RentalDTO rentalDTO) throws SQLException {
         Rental rental = new Rental(rentalDTO.getCustomer_id(),rentalDTO.getVehicle_id(),rentalDTO.getDriver_id(),rentalDTO.getStart_date(),rentalDTO.getDates_of_rent(),rentalDTO.getReturn_date());

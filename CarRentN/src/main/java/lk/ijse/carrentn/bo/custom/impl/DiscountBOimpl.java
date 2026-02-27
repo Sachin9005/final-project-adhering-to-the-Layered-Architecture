@@ -1,8 +1,8 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.DiscountBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.DiscountDAO;
-import lk.ijse.carrentn.dao.custom.impl.DiscountDAOImpl;
 import lk.ijse.carrentn.dto.DiscountDTO;
 import lk.ijse.carrentn.entity.Discount;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public class DiscountBOimpl implements DiscountBO {
 
-    DiscountDAO discountDAO = new DiscountDAOImpl();
+    private final DiscountDAO discountDAO = (DiscountDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.DISCOUNT);
 
     @Override
     public boolean saveDiscount(DiscountDTO discountDTO) throws SQLException {

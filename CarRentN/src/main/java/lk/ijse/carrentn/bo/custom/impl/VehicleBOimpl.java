@@ -1,8 +1,8 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.VehicleBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.VehicleDAO;
-import lk.ijse.carrentn.dao.custom.impl.VehicleDAOImpl;
 import lk.ijse.carrentn.dto.TM.VehicleTM;
 import lk.ijse.carrentn.dto.VehicleDTO;
 import lk.ijse.carrentn.entity.Vehicle;
@@ -15,7 +15,8 @@ import java.util.List;
 
 public class VehicleBOimpl implements VehicleBO {
 
-    VehicleDAO vehicleDAO =  new VehicleDAOImpl();
+    private final VehicleDAO vehicleDAO = (VehicleDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.VEHICLE);
+
     @Override
     public boolean saveVehicle(VehicleDTO vehicleDTO) throws SQLException {
         Vehicle vehicle = new Vehicle(vehicleDTO.getOwner_id(),vehicleDTO.getModel(), vehicleDTO.getManufacturer(), vehicleDTO.getType(), BigDecimal.valueOf(vehicleDTO.getRate_per_day()),BigDecimal.valueOf(vehicleDTO.getOwnership_percentage()),vehicleDTO.getVehicleNo());

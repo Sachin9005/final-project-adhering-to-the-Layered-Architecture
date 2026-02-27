@@ -1,6 +1,7 @@
 package lk.ijse.carrentn.bo.custom.impl;
 
 import lk.ijse.carrentn.bo.custom.CarOwnerBO;
+import lk.ijse.carrentn.dao.DAOFactory;
 import lk.ijse.carrentn.dao.custom.CarOwnerDAO;
 import lk.ijse.carrentn.dao.custom.impl.CarOwnerDAOImpl;
 import lk.ijse.carrentn.dto.CarOwnerDTO;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarOwnerBOimpl implements CarOwnerBO {
-    CarOwnerDAO carOwnerDAO =  new CarOwnerDAOImpl();
+    private final CarOwnerDAO carOwnerDAO = (CarOwnerDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.CAR_OWNER);
 
     @Override
     public boolean saveOwner(CarOwnerDTO carOwnerDTO) throws SQLException {
