@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerDAOImpl implements CustomerDAO {
+public class
+CustomerDAOImpl implements CustomerDAO {
 
     public boolean save(Customer cus) throws SQLException {
         return CrudUtil.execute("INSERT INTO Customer (name, email, phone_number, nic_or_passport_number, address ) VALUES (?,?,?,?,?)", cus.getName(), cus.getEmail(), cus.getPhone_number(), cus.getNic_or_passport_number(), cus.getAddress());

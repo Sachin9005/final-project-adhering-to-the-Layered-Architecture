@@ -88,7 +88,7 @@ public class DriverDAOImpl implements DriverDAO {
 
     public List<Driver> getAvailableDrivers(LocalDate startDate) throws SQLException {
 
-        String sql = "SELECT DISTINCT d.driver_id, d.name, d.phone_number, d.driver_rate_per_day FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
+        String sql = "SELECT DISTINCT * FROM Driver d LEFT JOIN Rental r ON d.driver_id = r.driver_id AND r.return_date >= ? WHERE r.driver_id IS NULL";
 
         ResultSet rs = CrudUtil.execute(sql, Date.valueOf(startDate));
 

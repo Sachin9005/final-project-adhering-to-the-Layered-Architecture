@@ -196,6 +196,7 @@ public class CurrentRentalCalculateController implements Initializable {
             total = vehicleTotal + driverTotal + lateFee;
 
             //first payment
+            System.out.println(rentalDTO.getRental_id());
             basePay = (paymentBO.searchFirstPayment(String.valueOf(rentalDTO.getRental_id())).getBase_payment());
 
             firstPayId = paymentBO.searchFirstPayment(String.valueOf(rentalDTO.getRental_id())).getFirst_payment_id();

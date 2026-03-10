@@ -186,7 +186,7 @@ private final DiscountBO discountBO= (DiscountBO) BOFactory.getInstance().getBO(
                 total = vehicleBO.searchVehicle(vehicleId).getRate_per_day() * days;
             }else{
                 //with vehicle pay,discount,driver payment
-                total = (vehicleBO.searchVehicle(driverId).getRate_per_day() * days)+(driverBO.searchDriver(driverId).getDriver_rate_per_day()*days);
+                total = (vehicleBO.searchVehicle(vehicleId).getRate_per_day() * days)+(driverBO.searchDriver(driverId).getDriver_rate_per_day()*days);
             }
         }catch (Exception e){
             e.printStackTrace();

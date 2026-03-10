@@ -91,10 +91,6 @@ public class VehicleManageController implements Initializable {
 
         setCarOwnersCheckBox();
         typeBox.getItems().addAll(typeList);
-
-        carOwnersBox.setOnAction(this::handleButtonAction1);
-        typeBox.setOnAction(this::handleButtonAction2);
-
         lordVehicleTable();
     }
 
@@ -133,6 +129,9 @@ public class VehicleManageController implements Initializable {
     @FXML
     private void handleSaveVehicle(){
 
+        carOwnersBox.setOnAction(this::handleButtonAction1);
+        typeBox.setOnAction(this::handleButtonAction2);
+
         String vehicleNO = vehicleNoField.getText().trim();
         String ownerId = ownerIdField.getText().trim();
         String model = modelField.getText().trim();
@@ -140,6 +139,7 @@ public class VehicleManageController implements Initializable {
         String type = typeField.getText().trim();
         String dayRate = dayRateFied.getText().trim();
         String ownerPrec = ownerRateField.getText().trim();
+
 
 
         if (!vehicleNO.matches(VEHICLE_NO_REGEX)) {
