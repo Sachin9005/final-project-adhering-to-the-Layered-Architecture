@@ -118,7 +118,11 @@ public class VehicleManageController implements Initializable {
             for (CarOwnerDTO carOwnerDTO : carOwners) {
                 carOwnerNames.add(carOwnerDTO.getName());
             }
-            carOwnersBox.getItems().setAll(carOwnerNames);
+
+            if (carOwnerNames.isEmpty()) {
+                System.out.println("No car owner found");
+            }
+            carOwnersBox.getItems().addAll(carOwnerNames);
 
         } catch (Exception e) {
             e.printStackTrace();
