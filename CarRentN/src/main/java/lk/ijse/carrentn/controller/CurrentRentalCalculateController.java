@@ -153,6 +153,7 @@ public class CurrentRentalCalculateController implements Initializable {
     @FXML
     private void handleSearchRentByCustomerName() {
         try {
+            System.out.println(cusId);
             customeNICField.setText(customerBO.searchCustomer(cusId).getNic_or_passport_number());
             RentalDTO rentalDTO = rentalBO.searchRent(cusId);
             rentalId = rentalDTO.getRental_id();

@@ -86,6 +86,7 @@ CustomerDAOImpl implements CustomerDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
         return cuatomerNameList;
     }
 
