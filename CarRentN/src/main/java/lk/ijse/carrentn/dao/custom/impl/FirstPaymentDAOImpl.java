@@ -25,18 +25,7 @@ public class FirstPaymentDAOImpl implements FirstPaymentDAO {
     }
 
     public FirstPayment search(int rentId)throws SQLException {
-        FirstPayment firstPayment = null ;
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM First_Payment WHERE rental_id = ?", rentId);
-        if (resultSet.next()) {
-            int firstPayId = resultSet.getInt("first_payment_id");
-            int rentalId = resultSet.getInt("rental_id");
-            BigDecimal basePay = resultSet.getBigDecimal("base_payment");
-            BigDecimal finalPay = resultSet.getBigDecimal("final_payment");
-            LocalDate basePaymentDate = resultSet.getDate("base_payment_date").toLocalDate();
-
-            firstPayment = new FirstPayment(firstPayId,rentalId,basePay,finalPay,basePaymentDate);
-        }
-        return firstPayment ;
+        return null;
     }
 
     @Override
@@ -57,5 +46,21 @@ public class FirstPaymentDAOImpl implements FirstPaymentDAO {
     @Override
     public FirstPayment search(String id) throws SQLException {
         return null;
+    }
+
+    @Override
+    public FirstPayment getFirstPaymentByRentalId(int rentalId) throws SQLException {
+        FirstPayment firstPayment = null ;
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM First_Payment WHERE rental_id = ?", rentalId);
+        if (resultSet.next()) {
+            int firstPayId = resultSet.getInt("first_payment_id");
+            int rentId = resultSet.getInt("rental_id");
+            BigDecimal basePay = resultSet.getBigDecimal("base_payment");
+            BigDecimal finalPay = resultSet.getBigDecimal("final_payment");
+            LocalDate basePaymentDate = resultSet.getDate("base_payment_date").toLocalDate();
+
+            firstPayment = new FirstPayment(firstPayId,rentId,basePay,finalPay,basePaymentDate);
+        }
+        return firstPayment ;
     }
 }

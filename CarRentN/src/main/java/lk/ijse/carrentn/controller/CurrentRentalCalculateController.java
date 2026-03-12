@@ -202,8 +202,15 @@ public class CurrentRentalCalculateController implements Initializable {
 
             firstPayId = paymentBO.searchFirstPayment(String.valueOf(rentalDTO.getRental_id())).getFirst_payment_id();
 
+            int days= Math.toIntExact(ChronoUnit.DAYS.between(rentalDTO.getReturn_date(), LocalDate.now()));
 
-            lateDatesLable.setText(String.valueOf(ChronoUnit.DAYS.between(rentalDTO.getReturn_date(), LocalDate.now())));
+            if (days > 0 ){
+                lateDays = days;
+            }else {
+                lateDays = 0;
+            }
+
+            lateDatesLable.setText(String.valueOf(lateDays));
             daysLable.setText(String.valueOf(rentalDTO.getDates_of_rent()));
             sDateLable.setText(String.valueOf(rentalDTO.getStart_date()));
             eDateLable.setText(String.valueOf(rentalDTO.getReturn_date()));
@@ -213,8 +220,6 @@ public class CurrentRentalCalculateController implements Initializable {
             vehicleTotalLable.setText(String.valueOf(vehicleTotal) + 0);
             driverTotalLable.setText(String.valueOf(driverTotal) + 0);
             lateFeeLable.setText(String.valueOf(lateFee) + 0);
-
-            lateDays = Integer.parseInt(lateDatesLable.getText());
 
 
         } catch (Exception e) {
@@ -248,6 +253,7 @@ public class CurrentRentalCalculateController implements Initializable {
         daysLable.setText("-");
         sDateLable.setText("-");
         eDateLable.setText("-");
+        NoLable.setText("-");
         returnedDateLable.setText("-");
         lateDatesLable.setText("-");
         vehicleTotalLable.setText("-");

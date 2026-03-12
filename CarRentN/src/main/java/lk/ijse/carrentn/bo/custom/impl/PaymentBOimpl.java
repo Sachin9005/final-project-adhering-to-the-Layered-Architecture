@@ -26,7 +26,7 @@ public class PaymentBOimpl implements PaymentBO {
 
     @Override
     public FirstPaymentDTO searchFirstPayment(String rentId) throws SQLException {
-        FirstPayment firstPayment = firstPaymentDAO.search(rentId);
+        FirstPayment firstPayment = firstPaymentDAO.getFirstPaymentByRentalId(Integer.parseInt(rentId));
         return new FirstPaymentDTO(firstPayment.getFirst_payment_id(),firstPayment.getRental_id(),firstPayment.getFinal_payment().doubleValue(),firstPayment.getFinal_payment().doubleValue(),firstPayment.getBase_payment_date());
     }
 
