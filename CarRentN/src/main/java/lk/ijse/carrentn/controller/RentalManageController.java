@@ -166,6 +166,7 @@ public class RentalManageController implements Initializable {
                     System.out.println(driverId);
                 } else {
                     // driver not selected
+                    System.out.println("Empty driverId");
                 }
 
                 boolean result = rentalBO.saveRent(rentalDTO,Double.parseDouble(basePay),Double.parseDouble(total),discountId);
@@ -305,9 +306,7 @@ public class RentalManageController implements Initializable {
                 double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
                 totalPriceLable.setText(String.valueOf(discountedTotal));
             }
-        }catch (Exception e){
-        }
-
+        }catch (Exception e){}
     }
 
     @FXML
