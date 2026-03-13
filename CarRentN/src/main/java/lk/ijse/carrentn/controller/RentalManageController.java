@@ -237,9 +237,9 @@ public class RentalManageController implements Initializable {
         try {
             String id = retalIDField.getText();
             if (id.matches(RENTAL_ID_REGEX)) {
-                boolean result2 = rentalDiscountBO.deleteRentalDiscount(id);
-                boolean result3 = paymentBO.deleteFirstPayment(id);
-                boolean result4 = paymentBO.deleteLastPayment(id);
+                rentalDiscountBO.deleteRentalDiscount(id);
+                paymentBO.deleteFirstPayment(id);
+                paymentBO.deleteLastPayment(id);
                 boolean result1 = rentalBO.deleteRent(id);
                 lordRentalTable();
                 if(result1) {
