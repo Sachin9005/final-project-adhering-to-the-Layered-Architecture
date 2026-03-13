@@ -36,8 +36,9 @@ public class VehicleManageController implements Initializable {
     private TextField dayRateFied;
     @FXML
     private TextField ownerRateField;
+
     @FXML
-    private ChoiceBox<String> carOwnersBox;
+    private ChoiceBox<String> carOwners;
     @FXML
     private ChoiceBox<String> typeBox;
     @FXML
@@ -96,7 +97,7 @@ public class VehicleManageController implements Initializable {
 
 // to get choiceBox select item
     public void handleButtonAction1(ActionEvent event) {
-        String carOwnerid = carOwnersBox.getValue();
+        String carOwnerid = carOwners.getValue();
         ownerLabel.setText("");
         try {
             ownerIdField.setText(carOwnerBO.searchOwnerId(carOwnerid));
@@ -113,16 +114,16 @@ public class VehicleManageController implements Initializable {
 // lord Owner choiceBox
     public void setCarOwnersCheckBox() {
         try {
-            List<CarOwnerDTO> carOwners = carOwnerBO.getAllOwners();
+            List<CarOwnerDTO> carOwner = carOwnerBO.getAllOwners();
             List<String> carOwnerNames = new ArrayList<>();
-            for (CarOwnerDTO carOwnerDTO : carOwners) {
+            for (CarOwnerDTO carOwnerDTO : carOwner) {
                 carOwnerNames.add(carOwnerDTO.getName());
             }
 
             if (carOwnerNames.isEmpty()) {
                 System.out.println("No car owner found");
             }
-            carOwnersBox.getItems().addAll(carOwnerNames);
+           carOwners.getItems().addAll(carOwnerNames);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -133,7 +134,7 @@ public class VehicleManageController implements Initializable {
     @FXML
     private void handleSaveVehicle(){
 
-        carOwnersBox.setOnAction(this::handleButtonAction1);
+        carOwners.setOnAction(this::handleButtonAction1);
         typeBox.setOnAction(this::handleButtonAction2);
 
         String vehicleNO = vehicleNoField.getText().trim();
@@ -285,7 +286,7 @@ public class VehicleManageController implements Initializable {
         dayRateFied.setText("");
         ownerRateField.setText("");
         typeBox.setValue(null);
-        carOwnersBox.setValue(null);
+        carOwners.setValue(null);
         ownerLabel.setText("Select Owner");
         typeLable.setText("Select Type");
 
