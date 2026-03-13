@@ -242,7 +242,7 @@ public class RentalManageController implements Initializable {
                 boolean result4 = paymentBO.deleteLastPayment(id);
                 boolean result1 = rentalBO.deleteRent(id);
                 lordRentalTable();
-                if(result2 && result3 && result4 &&result1) {
+                if(result1) {
                     System.out.println("Rental Delete successfully!");
                     cleanFileds();
                     lordRentalTable();
