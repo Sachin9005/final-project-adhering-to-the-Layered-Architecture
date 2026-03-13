@@ -111,14 +111,19 @@ private final DiscountBO discountBO= (DiscountBO) BOFactory.getInstance().getBO(
 
     @FXML
     private void handleSelectDiscount() {
-        String discountDesc = discountCbox.getSelectionModel().getSelectedItem();
-        DiscountDTO discountDTO = discountBO.searchDiscountId(discountDesc);
-        discountIdField.setText(discountDesc);
-        discountLable.setText("");
-        if (discountDTO != null){
-            double discountPrec = discountDTO.getPercentage();
-            double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
-            totalPriceLable.setText(String.valueOf(discountedTotal));
+        try {
+            int discountId = 0;
+            String discountDesc = discountCbox.getSelectionModel().getSelectedItem();
+            discountId = discountBO.searchDiscountId(discountDesc);
+            discountIdField.setText(discountDesc);
+            discountLable.setText("");
+            if (discountId > 0){
+                double discountPrec = discountBO.searchDiscount(String.valueOf(discountId)).getPercentage();
+                double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
+                totalPriceLable.setText(String.valueOf(discountedTotal));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

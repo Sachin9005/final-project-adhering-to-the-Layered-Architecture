@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class QueryDAOimpl implements QueryDAO {
+
     @Override
-    public List<CustomDTO> getOrderDetails() throws SQLException {
+    public List<CustomDTO> getOrderDetails(String sql, int id) throws SQLException {
         return List.of();
     }
 }

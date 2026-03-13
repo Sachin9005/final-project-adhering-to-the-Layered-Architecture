@@ -8,7 +8,6 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -59,30 +58,22 @@ public class LastPaymentDAOImpl implements LastPaymentDAO {
     }
 
     public void printLastPayInvoice(int finalPaymentId,double vehicleDamage,double customerPay) throws JRException, SQLException {
-
-        Connection conn = DBConnection.getInstance().getConnection();
-
         // Step 01
         InputStream reportObject = getClass().getResourceAsStream("/lk/ijse/carrentn/reports/lastPaymentInvoice.jrxml");
         if (reportObject == null) {
             throw new RuntimeException("lastPaymentInvoice.jrxml not found in /reports folder");
         }
-
         // Step 02
         JasperReport jr = JasperCompileManager.compileReport(reportObject); // this method thorws JRException
 
         // Step 03
-
         Map<String, Object> params = new HashMap<>();
         params.put("FINAL_PAYMENT_ID", finalPaymentId);
         params.put("VEHICLE_DAMAGE_FEE", vehicleDamage);
         params.put("CUSTOMER_PAY", customerPay);
-
-
-        JasperPrint jp = JasperFillManager.fillReport(jr, params, conn); // fillReport(japerreport, params, connection_obj)
+        JasperPrint jp = JasperFillManager.fillReport(jr, params, DBConnection.getInstance().getConnection()); // fillReport(japerreport, params, connection_obj)
 
         // Step 04
         JasperViewer.viewReport(jp, false);
-
     }
 }

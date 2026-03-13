@@ -13,5 +13,5 @@ public interface DiscountBO extends SuperBO {
     boolean deleteDiscount(String id) throws SQLException;
     DiscountDTO searchDiscount(String id) throws SQLException;
     List<DiscountDTO> getAllDiscounts() throws SQLException;
-    DiscountDTO searchDiscountId(String description);
+    int searchDiscountId(String description);
 }

@@ -101,9 +101,6 @@ public class RentalDAOImpl implements RentalDAO {
     }
 
     public void printBasePayInvoice(int basePaymentId) throws JRException, SQLException {
-
-        Connection conn = DBConnection.getInstance().getConnection();
-
         // Step 01
         InputStream reportObject = getClass().getResourceAsStream("/lk/ijse/carrentn/reports/InvoiceForBasePay.jrxml");
         if (reportObject == null) {
@@ -114,15 +111,12 @@ public class RentalDAOImpl implements RentalDAO {
         JasperReport jr = JasperCompileManager.compileReport(reportObject); // this method thorws JRException
 
         // Step 03
-
         Map<String, Object> params = new HashMap<>();
         params.put("PAYMENT_ID", basePaymentId);
-
-        JasperPrint jp = JasperFillManager.fillReport(jr, params, conn); // fillReport(japerreport, params, connection_obj)
+        JasperPrint jp = JasperFillManager.fillReport(jr, params, DBConnection.getInstance().getConnection()); // fillReport(japerreport, params, connection_obj)
 
         // Step 04
         JasperViewer.viewReport(jp, false);
-
     }
 
     public int getSaveId(Rental rental) throws SQLException {

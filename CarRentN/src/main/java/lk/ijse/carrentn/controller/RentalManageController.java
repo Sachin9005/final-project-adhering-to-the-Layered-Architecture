@@ -150,10 +150,7 @@ public class RentalManageController implements Initializable {
             Integer discountId = null;
 
             if (discountDesc != null) {
-                DiscountDTO discountDTO = discountBO.searchDiscountId(discountDesc);
-                if (discountDTO != null) {
-                    discountId = discountDTO.getDiscount_id();
-                }
+                discountId = discountBO.searchDiscountId(discountDesc);
             }
             try {
                 RentalDTO rentalDTO = new RentalDTO(
@@ -298,14 +295,17 @@ public class RentalManageController implements Initializable {
 
     @FXML
     private void handleSelectDiscountId() {
-        String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
-        DiscountDTO discount = discountBO.searchDiscountId(discountDesc);
-        discountLable.setText("");
+        try {
+            String discountDesc = comboDiscountId.getSelectionModel().getSelectedItem();
+            Integer discount = discountBO.searchDiscountId(discountDesc);
+            discountLable.setText("");
 
-        if (discount != null){
-            double discountPrec = discount.getPercentage();
-            double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
-            totalPriceLable.setText(String.valueOf(discountedTotal));
+            if (discount != null){
+                double discountPrec = discountBO.searchDiscount(String.valueOf(discount)).getPercentage() ;
+                double discountedTotal = Double.parseDouble(totalPrice) - ((Double.parseDouble(totalPrice)*discountPrec)/100);
+                totalPriceLable.setText(String.valueOf(discountedTotal));
+            }
+        }catch (Exception e){
         }
 
     }

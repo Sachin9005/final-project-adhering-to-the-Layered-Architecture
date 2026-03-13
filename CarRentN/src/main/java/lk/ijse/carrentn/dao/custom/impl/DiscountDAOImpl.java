@@ -26,8 +26,8 @@ public class DiscountDAOImpl implements DiscountDAO {
 
     public Discount search(String id) throws SQLException {
         Discount discount = null;
-        ResultSet result = CrudUtil.execute("SELECT * FROM Discount WHERE discount_id = ?",id);
 
+        ResultSet result = CrudUtil.execute("SELECT * FROM Discount WHERE discount_id = ?",id);
         if (result.next()) {
             int discountId = result.getInt("discount_id");
             String discountDisc = result.getString("description");
@@ -53,19 +53,16 @@ public class DiscountDAOImpl implements DiscountDAO {
         return discountList;
     }
 
-    public Discount searchId(String description)  {
-        Discount discount = null;
+    public int searchId(String description)  {
+        int discountId = 0 ;
         try {
-            ResultSet result = CrudUtil.execute("SELECT * FROM Discount WHERE description = ?", description);
+            ResultSet result = CrudUtil.execute("SELECT discount_id FROM Discount WHERE description = ?", description);
             if (result.next()) {
-                int discountId = result.getInt("discount_id");
-                String discountDisc = result.getString("description");
-                BigDecimal discountPerc = result.getBigDecimal("percentage");
-
-                discount = new Discount(discountId, discountDisc, discountPerc);            }
+                discountId = result.getInt("discount_id");
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return discount;
+        return discountId;
     }
 }

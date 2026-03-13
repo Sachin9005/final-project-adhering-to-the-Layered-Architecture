@@ -49,8 +49,7 @@ public class DiscountBOimpl implements DiscountBO {
     }
 
     @Override
-    public DiscountDTO searchDiscountId(String description) {
-        Discount discount= discountDAO.searchId(description);
-        return new DiscountDTO(discount.getDiscount_id(),discount.getDescription(),discount.getPercentage().doubleValue());
+    public int searchDiscountId(String description) {
+        return discountDAO.searchId(description);
     }
 }

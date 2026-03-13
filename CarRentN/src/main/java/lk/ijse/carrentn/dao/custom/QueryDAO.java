@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface QueryDAO extends SuperDAO {
 
-    List<CustomDTO> getOrderDetails() throws SQLException;
+    List<CustomDTO> getOrderDetails(String sql,int id) throws SQLException;
 
 }

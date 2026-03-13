@@ -6,5 +6,5 @@ import lk.ijse.carrentn.entity.Discount;
 
 
 public interface DiscountDAO extends CrudDAO<Discount>, SuperDAO {
-    Discount searchId(String description);
+    int searchId(String description);
 }

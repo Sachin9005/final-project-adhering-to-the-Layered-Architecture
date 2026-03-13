@@ -20,7 +20,11 @@ public class RentalDTO {
     public RentalDTO(int customer_id, int vehicle_id, Integer driver_id, LocalDate start_date, int dates_of_rent, LocalDate return_date) {
         this.customer_id = customer_id;
         this.vehicle_id = vehicle_id;
-        this.driver_id = driver_id;
+        if (driver_id != null) {
+            this.driver_id = driver_id;
+        } else {
+            this.driver_id = 0; // or default value
+        }
         this.start_date = start_date;
         this.dates_of_rent = dates_of_rent;
         this.return_date = return_date;
@@ -30,22 +34,16 @@ public class RentalDTO {
         this.rental_id = rental_id;
         this.customer_id = customer_id;
         this.vehicle_id = vehicle_id;
-        this.driver_id = driver_id;
+        if (driver_id != null) {
+            this.driver_id = driver_id;
+        } else {
+            this.driver_id = 0; // or default value
+        }
         this.start_date = start_date;
         this.dates_of_rent = dates_of_rent;
         this.return_date = return_date;
     }
 
-    public RentalDTO(int rental_id, int customer_id, int vehicle_id, Integer driver_id, LocalDate start_date, int dates_of_rent, LocalDate return_date, double total) {
-        this.rental_id = rental_id;
-        this.customer_id = customer_id;
-        this.vehicle_id = vehicle_id;
-        this.driver_id = driver_id;
-        this.start_date = start_date;
-        this.dates_of_rent = dates_of_rent;
-        this.return_date = return_date;
-        this.total = total;
-    }
     public double getTotal() {
         return total;
     }
@@ -83,7 +81,11 @@ public class RentalDTO {
     }
 
     public void setDriver_id(Integer driver_id) {
-        this.driver_id = driver_id;
+        if (driver_id != null) {
+            this.driver_id = driver_id;
+        } else {
+            this.driver_id = 0; // or default value
+        }
     }
 
     public LocalDate getStart_date() {
